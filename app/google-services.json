@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "776249429224",
+    "project_id": "carpick-f6ffb",
+    "storage_bucket": "carpick-f6ffb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776249429224:android:08bd384c51d02bab1ccd5d",
+        "android_client_info": {
+          "package_name": "com.carpick.carpickapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD13XHsCkAm7Jr-Rl2m_C5lTGFnigQMvk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
