@@ -14,6 +14,7 @@ import com.carpick.carpickapp.ui.theme.CarpickAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
         setContent {
             CarpickAppTheme {
