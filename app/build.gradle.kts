@@ -80,7 +80,10 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
 
+
     implementation("com.google.dagger:hilt-android:2.38.1")
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
     implementation("androidx.activity:activity-ktx:1.5.0")
+
+    implementation("androidx.navigation:navigation-compose:2.5.3")
 }
