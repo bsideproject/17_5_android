@@ -35,7 +35,9 @@ import com.carpick.carpickapp.screen.CarPoorTest
 import com.carpick.carpickapp.screen.CarStanding
 import com.carpick.carpickapp.screen.RecommandMyCar
 import com.carpick.carpickapp.ui.theme.CarpickAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.SplashTheme)
