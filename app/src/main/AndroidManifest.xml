@@ -32,6 +32,12 @@
             android:name=".screen.TestActivity"
             android:exported="true"
             android:theme="@style/Theme.Activity.CarpickApp"/>
+        <activity android:name=".screen.BottomNavTestActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Activity.CarpickApp"/>
+        <activity android:name=".screen.ComposeFragment"
+            android:exported="true"
+            android:theme="@style/Theme.Activity.CarpickApp"/>
     </application>
 
 </manifest>

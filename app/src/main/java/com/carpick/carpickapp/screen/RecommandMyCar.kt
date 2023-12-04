@@ -51,7 +51,7 @@ fun RecommandMyCarView(
             }
 
             Button(onClick = {
-                val intent = Intent(context, TestActivity::class.java)
+                val intent = Intent(context, BottomNavTestActivity::class.java)
                 context.startActivity(intent)
             }) {
                 Text(text = "select 테스트")
