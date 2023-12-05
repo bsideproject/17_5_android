@@ -1,36 +1,47 @@
 package com.carpick.carpickapp.screen
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.databinding.ActivityMainBinding
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
-class BottomNavTestActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.bottom_nav_test)
 
         var nav = findViewById<BottomNavigationView>(R.id.nav_bar)
 
         nav.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.AFragment -> {
+                R.id.car_recommend_fragment -> {
                     changeFragment(AFragment())
                 }
-                R.id.BFragment -> {
+                R.id.car_wishlist_fragment -> {
                     changeFragment(ComposeFragment())
+                }
+                R.id.car_ranking_fragment -> {
+                    changeFragment(ComposeFragment())
+                }
+                R.id.car_poor_fragment -> {
+                    changeFragment(AFragment())
                 }
             }
             true
         }
     }
     private fun changeFragment(fragment: Fragment) {
-        getSupportFragmentManager()
+        supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav_host, fragment)
             .commit()
+    }
+
+    override fun getViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 }
