@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.databinding.ActivityTestBinding
+import com.carpick.carpickapp.screen.activity.BaseActivity
 import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
 import com.carpick.carpickapp.viewModel.NetworkTestViewModel
 import dagger.hilt.android.AndroidEntryPoint

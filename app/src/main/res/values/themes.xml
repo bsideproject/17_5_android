@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.CarpickApp" parent="android:Theme.Material.Light.NoActionBar" />
-    <style name="Theme.Activity.CarpickApp" parent="Theme.Material3.Light.NoActionBar"/>
+    <style name="Theme.Activity.CarpickApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@android:color/transparent</item>
     </style>

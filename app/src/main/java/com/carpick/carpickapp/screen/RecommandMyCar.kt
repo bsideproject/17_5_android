@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
 
 @Composable

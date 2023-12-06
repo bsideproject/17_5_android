@@ -1,4 +1,4 @@
-package com.carpick.carpickapp.screen
+package com.carpick.carpickapp.screen.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
