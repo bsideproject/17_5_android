@@ -2,7 +2,9 @@
 <resources>
 
     <style name="Theme.CarpickApp" parent="android:Theme.Material.Light.NoActionBar" />
-    <style name="Theme.Activity.CarpickApp" parent="Theme.Material3.Light.NoActionBar"/>
+
+    <style name="Theme.Activity.CarpickApp" parent="Theme.Material3.Light.NoActionBar" />
+
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
