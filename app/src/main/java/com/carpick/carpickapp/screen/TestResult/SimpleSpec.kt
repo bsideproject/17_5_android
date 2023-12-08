@@ -2,6 +2,7 @@ package com.carpick.carpickapp.screen.TestResult
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,34 +35,76 @@ fun SimpleSpec() {
         SimpleSpecItemData("배기량", "1,987cc"),
         SimpleSpecItemData("최고출력", "152/6000ps/rpm")
     ).chunked(2)
-    val dataRowSize = testData.size
 
     Column(
         modifier = Modifier.padding(0.dp, 28.dp, 0.dp, 0.dp)
     ) {
-        Text(
-            text = "간단스펙",
-            fontSize = 18.sp,
-            color = Color.White,
-            fontWeight = FontWeight(700),
-            modifier = Modifier.padding(24.dp, 0.dp)
-        )
 
-        Box(
+        SimpleSpecTitle()
+        Body(testData)
+        ShowMoreButton()
+
+    }
+}
+
+@Composable
+fun SimpleSpecTitle() {
+    Text(
+        text = "간단스펙",
+        fontSize = 18.sp,
+        color = Color.White,
+        fontWeight = FontWeight(700),
+        modifier = Modifier.padding(24.dp, 0.dp)
+    )
+}
+
+@Composable
+fun Body(
+    testData: List<List<SimpleSpecItemData>>
+) {
+    val dataRowSize = testData.size
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp, 16.dp, 24.dp, 0.dp)
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp, 16.dp, 24.dp, 0.dp)
+                .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
-            ) {
-                for (i in 0 until dataRowSize) {
-                    Log.d("testData $i", (i == dataRowSize-1).toString())
-                    SimpleSpecRow(testData[i], i == dataRowSize-1)
-                }
+            for (i in 0 until dataRowSize) {
+                Log.d("testData $i", (i == dataRowSize-1).toString())
+                SimpleSpecRow(testData[i], i == dataRowSize-1)
             }
+        }
+
+    }
+}
+
+@Composable
+fun ShowMoreButton() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(24.dp, 16.dp, 24.dp, 0.dp)
+    ) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color(0xFF4B4B6B)
+            ),
+            shape = RoundedCornerShape(99.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Text(
+                text = "더보기",
+                fontSize = 14.sp,
+                color = Color.White,
+                fontWeight = FontWeight(700)
+            )
         }
     }
 }
@@ -78,7 +123,7 @@ fun SimpleSpecRow(
                     color = Color(0xFF4B4B6B),
                     start = Offset(0f, size.height),
                     end = Offset(size.width, size.height),
-                    strokeWidth = if(isLastIdx) 0.dp.toPx() else  1.dp.toPx()
+                    strokeWidth = if (isLastIdx) 0.dp.toPx() else 1.dp.toPx()
                 )
             }
     }
@@ -104,7 +149,9 @@ fun SimpleSpecRowItem(
     itemData: SimpleSpecItemData
 ) {
     Column(
-        modifier = Modifier.width(132.dp).padding(0.dp, 16.dp, 0.dp, 16.dp)
+        modifier = Modifier
+            .width(132.dp)
+            .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,

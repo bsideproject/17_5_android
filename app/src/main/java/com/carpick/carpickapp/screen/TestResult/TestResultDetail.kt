@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TestResultDetail(
     scrollState: ScrollState

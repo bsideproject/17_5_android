@@ -26,15 +26,20 @@ fun BasicSpec() {
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
-        Text(
-            text = "주요특징",
-            fontSize = 18.sp,
-            color = Color.White,
-            fontWeight = FontWeight(700),
-            modifier = Modifier.padding(24.dp, 0.dp)
-        )
+        BasicSpecTitle()
         BasicSpecTags()
     }
+}
+
+@Composable
+fun BasicSpecTitle() {
+    Text(
+        text = "주요특징",
+        fontSize = 18.sp,
+        color = Color.White,
+        fontWeight = FontWeight(700),
+        modifier = Modifier.padding(24.dp, 0.dp)
+    )
 }
 
 @OptIn(ExperimentalLayoutApi::class)
