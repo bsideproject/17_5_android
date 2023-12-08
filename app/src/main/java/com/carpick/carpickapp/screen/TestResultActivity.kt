@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,7 +43,7 @@ class TestResultActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Page() {
-    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Concealed)
+    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     BackdropScaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.fillMaxSize(),
@@ -58,18 +59,30 @@ fun Page() {
             }
         },
         frontLayerContent = {
-            LazyColumn {
-                items(50) {
-                    ListItem(
-                        text = { Text("Item $it", color = Color.White) },
-                    )
-                }
-            }
+            ResultDetail()
         },
         backLayerBackgroundColor = Color.White,
         frontLayerBackgroundColor = popupBackground,
-        frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
+        frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+        frontLayerScrimColor = popupBackground,
     )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ResultDetail() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = popupBackground
+    ) {
+        LazyColumn{
+            items(50) {
+                ListItem(
+                    text = { Text("Item $it", color = Color.White) },
+                )
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
