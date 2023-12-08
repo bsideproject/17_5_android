@@ -1,8 +1,6 @@
 package com.carpick.carpickapp.screen.TestResult
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,31 +22,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SimpleSpec() {
-    var testData = mutableListOf<SimpleSpecItemData>(
-        SimpleSpecItemData("가격", "3,187만원"),
-        SimpleSpecItemData("차종", "준중형"),
-        SimpleSpecItemData("연료", "하이브리드"),
-        SimpleSpecItemData("연비", "20.9km/l"),
-        SimpleSpecItemData("배기량", "1,987cc"),
-        SimpleSpecItemData("최고출력", "152/6000ps/rpm")
-    ).chunked(2)
-
+fun ResultDetailOption() {
     Column(
-        modifier = Modifier.padding(0.dp, 28.dp, 0.dp, 0.dp)
+        modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 16.dp)
     ) {
-
-        SimpleSpecTitle()
-        SimpleSpecBody(testData)
-        ShowMoreButton()
-
+        ResultDetailOptionTitle()
+        ResultDetailOptionBody()
     }
 }
 
 @Composable
-fun SimpleSpecTitle() {
+fun ResultDetailOptionTitle() {
     Text(
-        text = "간단스펙",
+        text = "옵션",
         fontSize = 18.sp,
         color = Color.White,
         fontWeight = FontWeight(700),
@@ -59,10 +43,7 @@ fun SimpleSpecTitle() {
 }
 
 @Composable
-fun SimpleSpecBody(
-    testData: List<List<SimpleSpecItemData>>
-) {
-    val dataRowSize = testData.size
+fun ResultDetailOptionBody() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,55 +54,25 @@ fun SimpleSpecBody(
                 .fillMaxWidth()
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            for (i in 0 until dataRowSize) {
-                Log.d("testData $i", (i == dataRowSize-1).toString())
-                SimpleSpecRow(testData[i], i == 0, i == dataRowSize-1)
-            }
-        }
-
-    }
-}
-
-@Composable
-fun ShowMoreButton() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp, 16.dp, 24.dp, 0.dp)
-    ) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color(0xFF4B4B6B)
-            ),
-            shape = RoundedCornerShape(99.dp),
-            onClick = { /*TODO*/ }
-        ) {
-            Text(
-                text = "더보기",
-                fontSize = 14.sp,
-                color = Color.White,
-                fontWeight = FontWeight(700)
-            )
+            ResultDetailRow(true, false)
+            ResultDetailRow(false, false)
+            ResultDetailRow(false, true)
         }
     }
 }
 
 @Composable
-fun SimpleSpecRow(
-    rowData: List<SimpleSpecItemData>,
+fun ResultDetailRow(
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
-    val topPadding = if(isFirstIdx) 8 else 0
-    val bottomPadding = if(isLastIdx) 8 else 0
+    val topPadding = if(isFirstIdx) 24 else 16
+    val bottomPadding = if(isLastIdx) 24 else 16
 
     val modifier = if (!isLastIdx) {
         Modifier
             .fillMaxWidth()
-            .padding(16.dp, topPadding.dp, 16.dp, bottomPadding.dp)
+            .padding(16.dp, 0.dp, 16.dp, 0.dp)
             .drawBehind {
                 drawLine(
                     color = Color(0xFF4B4B6B),
@@ -134,35 +85,21 @@ fun SimpleSpecRow(
     else {
         Modifier
             .fillMaxWidth()
-            .padding(16.dp, topPadding.dp, 16.dp, bottomPadding.dp)
+            .padding(16.dp, 0.dp, 16.dp, 0.dp)
     }
 
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        rowData.forEach { it ->
-            SimpleSpecRowItem(it)
-        }
-    }
-}
-
-@Composable
-fun SimpleSpecRowItem(
-    itemData: SimpleSpecItemData
-) {
     Column(
-        modifier = Modifier
-            .width(132.dp)
-            .padding(0.dp, 16.dp, 0.dp, 16.dp)
+        modifier = modifier,
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Center
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(0.dp, topPadding.dp, 0.dp, 0.dp)
         ) {
             Text(
-                text = itemData.title,
+                text = "안전",
                 fontSize = 14.sp,
                 color = Color(0xFFD4D4E1),
                 fontWeight = FontWeight(500),
@@ -186,16 +123,12 @@ fun SimpleSpecRowItem(
         }
 
         Text(
-            text = itemData.value,
+            text = "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)",
             fontSize = 14.sp,
             color = Color.White,
             fontWeight = FontWeight(700),
-            modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
+            modifier = Modifier
+                .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp)
         )
     }
 }
-
-data class SimpleSpecItemData(
-    val title: String,
-    val value: String
-)

@@ -22,6 +22,7 @@ fun TestResultDetail(
     ) {
         BasicSpec()
         SimpleSpec()
+        ResultDetailOption()
     }
 
 }
