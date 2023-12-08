@@ -37,6 +37,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
+import com.carpick.carpickapp.screen.TestResult.TestResultDetail
+import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
@@ -74,102 +77,18 @@ fun Page(
         frontLayerBackgroundColor = popupBackground,
         backLayerBackgroundColor = Color.White,
         appBar = {
-            Header(
+            TestResultHeader(
                 onPressBack,
                 onPressWishList
             )
         },
         backLayerContent = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .background(Color.White)
-            ) {
-
-            }
+            TestResultBackLayer()
         },
         frontLayerContent = {
-            ResultDetail()
+            TestResultDetail()
         },
     )
-}
-
-@Composable
-fun Header(
-    onPressBack: () -> Unit,
-    onPressWishList: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(54.dp)
-            .drawBehind {
-                val borderSize = 4.dp.toPx();
-                drawLine(
-                    color = Color(0xFFEFEFEF),
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
-                    strokeWidth = borderSize
-                )
-            }
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(Color.White)
-                .padding(16.dp, 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = "뒤로가기",
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable {
-                       onPressBack()
-                    },
-            )
-
-            Text(
-                text = "추천결과",
-                fontSize = 16.sp,
-                color = Color(0xFF21212F),
-                fontWeight = FontWeight(600)
-            )
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_favorite),
-                contentDescription = "위시리스트",
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable {
-                        onPressWishList()
-                    }
-            )
-        }
-    }
-
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun ResultDetail() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = popupBackground
-    ) {
-        LazyColumn{
-            items(50) {
-                ListItem(
-                    text = { Text("Item $it", color = Color.White) },
-                )
-            }
-        }
-    }
-
 }
 
 @Preview(showBackground = true)
