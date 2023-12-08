@@ -49,15 +49,18 @@ fun Page() {
         scaffoldState = scaffoldState,
         modifier = Modifier.fillMaxSize(),
         frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        frontLayerScrimColor = popupBackground,
-        frontLayerBackgroundColor = Color.White,
+        frontLayerScrimColor = Color.Unspecified,
+        frontLayerBackgroundColor = popupBackground,
         backLayerBackgroundColor = Color.White,
         appBar = {
             Header()
         },
         backLayerContent = {
             Box(
-                modifier = Modifier.fillMaxWidth().height(200.dp).background(Color.White)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .background(Color.White)
             ) {
 
             }
@@ -85,7 +88,7 @@ fun Header() {
 fun ResultDetail() {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = popupBackground,
+        color = popupBackground
     ) {
         LazyColumn{
             items(50) {
@@ -95,6 +98,7 @@ fun ResultDetail() {
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)
