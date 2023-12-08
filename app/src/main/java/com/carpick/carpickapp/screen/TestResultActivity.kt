@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,13 +48,16 @@ fun Page() {
     BackdropScaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.fillMaxSize(),
+        frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+        frontLayerScrimColor = popupBackground,
+        frontLayerBackgroundColor = Color.White,
+        backLayerBackgroundColor = Color.White,
         appBar = {
-
+            Header()
         },
         backLayerContent = {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = Color.White
+            Box(
+                modifier = Modifier.fillMaxWidth().height(200.dp).background(Color.White)
             ) {
 
             }
@@ -61,11 +65,19 @@ fun Page() {
         frontLayerContent = {
             ResultDetail()
         },
-        backLayerBackgroundColor = Color.White,
-        frontLayerBackgroundColor = popupBackground,
-        frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        frontLayerScrimColor = popupBackground,
     )
+}
+
+@Composable
+fun Header() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(Color.White)
+    ){
+
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -73,7 +85,7 @@ fun Page() {
 fun ResultDetail() {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = popupBackground
+        color = popupBackground,
     ) {
         LazyColumn{
             items(50) {
