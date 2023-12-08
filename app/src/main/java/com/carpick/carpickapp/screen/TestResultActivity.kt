@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -9,28 +10,26 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.ListItem
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,7 +46,14 @@ class TestResultActivity : ComponentActivity() {
         setContent {
             CarpickAppTheme {
                 // A surface container using the 'background' color from the theme
-                Page()
+                Page(
+                    onPressBack = {
+                        Log.d("TestResult", "onPressBack")
+                    },
+                    onPressWishList = {
+                        Log.d("TestResult", "onPressWishList")
+                    }
+                )
             }
         }
     }
@@ -55,7 +61,10 @@ class TestResultActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Page() {
+fun Page(
+    onPressBack: () -> Unit,
+    onPressWishList: () -> Unit
+) {
     val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     BackdropScaffold(
         scaffoldState = scaffoldState,
@@ -65,7 +74,10 @@ fun Page() {
         frontLayerBackgroundColor = popupBackground,
         backLayerBackgroundColor = Color.White,
         appBar = {
-            Header()
+            Header(
+                onPressBack,
+                onPressWishList
+            )
         },
         backLayerContent = {
             Box(
@@ -84,38 +96,62 @@ fun Page() {
 }
 
 @Composable
-fun Header() {
-    Row(
+fun Header(
+    onPressBack: () -> Unit,
+    onPressWishList: () -> Unit
+) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
-            .background(Color.White)
-            .padding(16.dp, 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ){
-        Image(
-            painter = painterResource(id = R.drawable.ic_back),
-            contentDescription = "뒤로가기",
+            .height(54.dp)
+            .drawBehind {
+                val borderSize = 4.dp.toPx();
+                drawLine(
+                    color = Color(0xFFEFEFEF),
+                    start = Offset(0f, size.height),
+                    end = Offset(size.width, size.height),
+                    strokeWidth = borderSize
+                )
+            }
+    ) {
+        Row(
             modifier = Modifier
-                .size(30.dp)
-                .clickable { },
-        )
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.White)
+                .padding(16.dp, 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Image(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = "뒤로가기",
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable {
+                       onPressBack()
+                    },
+            )
 
-        Text(
-            text = "추천결과",
-            fontSize = 16.sp,
-            color = Color(0xFF21212F),
-            fontWeight = FontWeight(600)
-        )
+            Text(
+                text = "추천결과",
+                fontSize = 16.sp,
+                color = Color(0xFF21212F),
+                fontWeight = FontWeight(600)
+            )
 
-        Image(
-            painter = painterResource(id = R.drawable.ic_favorite),
-            contentDescription = "위시리스트",
-            modifier = Modifier
-                .size(30.dp)
-                .clickable {  }
-        )
+            Image(
+                painter = painterResource(id = R.drawable.ic_favorite),
+                contentDescription = "위시리스트",
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable {
+                        onPressWishList()
+                    }
+            )
+        }
     }
+
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -140,6 +176,13 @@ fun ResultDetail() {
 @Composable
 fun GreetingPreview2() {
     CarpickAppTheme {
-        Page()
+        Page(
+            onPressBack = {
+                Log.d("TestResult", "onPressBack")
+            },
+            onPressWishList = {
+                Log.d("TestResult", "onPressWishList")
+            }
+        )
     }
 }
