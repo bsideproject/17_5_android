@@ -23,6 +23,7 @@ fun TestResultDetail(
         BasicSpec()
         SimpleSpec()
         ResultDetailOption()
+        DetailRetestButton()
     }
 
 }

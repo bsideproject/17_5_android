@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ResultDetailOption() {
     Column(
-        modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 16.dp)
+        modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
         ResultDetailOptionBody()
