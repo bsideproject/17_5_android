@@ -5,11 +5,7 @@
         android:title="내 차 추천"
         android:icon="@drawable/ic_car"
       />
-
-    <item
-        android:id="@+id/car_wishlist_fragment"
-        android:title="위시리스트"/>
-
+    
     <item
         android:id="@+id/car_ranking_fragment"
         android:icon="@drawable/frame_15"
