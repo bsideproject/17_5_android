@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberBackdropScaffoldState
@@ -72,26 +74,43 @@ fun Page(
     val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     val scrollState = rememberScrollState()
 
-    BackdropScaffold(
-        scaffoldState = scaffoldState,
-        modifier = Modifier.fillMaxSize(),
-        frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-        frontLayerScrimColor = Color.Unspecified,
-        frontLayerBackgroundColor = popupBackground,
-        backLayerBackgroundColor = Color.White,
-        appBar = {
-            TestResultHeader(
-                onPressBack,
-                onPressWishList
-            )
-        },
-        backLayerContent = {
-            TestResultBackLayer()
-        },
-        frontLayerContent = {
-            TestResultDetail(scrollState)
-        },
-    )
+    Scaffold(
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .border(1.dp, color = Color.Red)
+                    .background(Color(0xFF21212F))
+            ) {
+
+            }
+        }
+    ) {paddingValues ->
+        BackdropScaffold(
+            scaffoldState = scaffoldState,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+            frontLayerScrimColor = Color.Unspecified,
+            frontLayerBackgroundColor = popupBackground,
+            backLayerBackgroundColor = Color.White,
+            appBar = {
+                TestResultHeader(
+                    onPressBack,
+                    onPressWishList
+                )
+            },
+            backLayerContent = {
+                TestResultBackLayer()
+            },
+            frontLayerContent = {
+                TestResultDetail(scrollState)
+            },
+        )
+    }
+
 }
 
 @Preview(showBackground = true)
