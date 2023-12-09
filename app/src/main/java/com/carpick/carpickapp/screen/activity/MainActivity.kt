@@ -22,9 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.car_recommend_fragment -> {
                     changeFragment(CarPickStartFragment())
                 }
-                R.id.car_wishlist_fragment -> {
-                    changeFragment(ComposeFragment())
-                }
+
                 R.id.car_ranking_fragment -> {
                     changeFragment(ComposeFragment())
                 }
