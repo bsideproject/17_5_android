@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
+import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
@@ -76,15 +77,7 @@ fun Page(
 
     Scaffold(
         bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .border(1.dp, color = Color.Red)
-                    .background(Color(0xFF21212F))
-            ) {
-
-            }
+            TestResultFooter()
         }
     ) {paddingValues ->
         BackdropScaffold(
