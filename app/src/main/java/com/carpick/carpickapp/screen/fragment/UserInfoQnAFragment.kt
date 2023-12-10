@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentUserInfoQnaBinding
 import com.carpick.carpickapp.model.TestModel
@@ -17,18 +18,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     private var sex = ""
     private var age = ""
 
-    private val answerAdapter by lazy {
-        AnswerAdapter  { item ->
-            age = item.testData
-            if(sex != "" && age != "") {
-                val newFragment = CarpickQnAFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
-            }
-        }
-    }
+    private var answerAdapter : AnswerAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,10 +40,31 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         ageModel.add(TestModel(id= 9, testData = "65~69세"))
         ageModel.add(TestModel(id= 10, testData = "70세 이상"))
 
+        answerAdapter = AnswerAdapter()
+        answerAdapter?.setClickListener(object : ClickListener {
+            override fun click(item: TestModel) {
+                Log.e("ljy", "sex $sex age $age $item")
+                age = item.testData
+                if(sex != "" && age != "") {
+                    val newFragment = CarpickBudgetQnaFragment()
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.nav_host, newFragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
+            }
 
+        })
         binding.rvAge.adapter = answerAdapter
 
-        answerAdapter.submitList(ageModel)
+        answerAdapter?.submitList(ageModel)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        age = ""
+        sex = ""
     }
     private fun initListener() {
         binding.run {
@@ -64,7 +75,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
                 sex = "남자"
 
                 if(sex != "" && age != "") {
-                    val newFragment = CarpickQnAFragment()
+                    val newFragment = CarpickBudgetQnaFragment()
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.nav_host, newFragment)
                     transaction.addToBackStack(null)
@@ -77,7 +88,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
                 sex = "여자"
 
                 if(sex != "" && age != "") {
-                    val newFragment = CarpickQnAFragment()
+                    val newFragment = CarpickBudgetQnaFragment()
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.nav_host, newFragment)
                     transaction.addToBackStack(null)

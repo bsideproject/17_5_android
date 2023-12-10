@@ -7,13 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ItemAnswerBinding
 import com.carpick.carpickapp.model.TestModel
 
-class AnswerAdapter(
-    private val listener: (item: TestModel) -> Unit
-): ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
+class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
     object: DiffUtil.ItemCallback<TestModel>() {
         override fun areItemsTheSame(oldItem: TestModel, newItem: TestModel): Boolean {
             return oldItem == newItem
@@ -26,6 +25,8 @@ class AnswerAdapter(
     }
 ) {
 
+    private var listener : ClickListener?= null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
         return AnswerViewHolder(
             ItemAnswerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -35,6 +36,11 @@ class AnswerAdapter(
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun setClickListener(listener: ClickListener) {
+        this.listener = listener
+    }
+
     private var selectedPosition = RecyclerView.NO_POSITION
     inner class AnswerViewHolder(
         private val binding : ItemAnswerBinding
@@ -55,7 +61,7 @@ class AnswerAdapter(
                 // 선택된 항목의 위치 갱신
                 selectedPosition = clickedPosition
 
-                item?.let { listener.invoke(it) }
+                item?.let { listener?.click(it) }
             }
         }
 
