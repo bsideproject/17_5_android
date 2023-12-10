@@ -31,11 +31,18 @@ import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun ResultDetailOption() {
+
+    val testData = mutableListOf<DetailOptionData>(
+        DetailOptionData("안전", "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)", "test tooltip"),
+        DetailOptionData("외장", "헤드램프(LED), 주간 주행등", "test tooltip"),
+        DetailOptionData("내장", "스티어링 휠(가죽), 기어 노브(전자식 노브), 계기판(디지털)", "test tooltip"),
+        DetailOptionData("편의", "정속주행(cc(차간조절)), 주차 브레이크(전자식, 오토홀드), 엔진시동(버튼시동)", "test tooltip"),
+    )
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
-        ResultDetailOptionBody()
+        ResultDetailOptionBody(testData)
     }
 }
 
@@ -51,7 +58,9 @@ fun ResultDetailOptionTitle() {
 }
 
 @Composable
-fun ResultDetailOptionBody() {
+fun ResultDetailOptionBody(
+    testData: MutableList<DetailOptionData>
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,15 +71,16 @@ fun ResultDetailOptionBody() {
                 .fillMaxWidth()
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            ResultDetailRow(true, false)
-            ResultDetailRow(false, false)
-            ResultDetailRow(false, true)
+            for(i in 0 until testData.size) {
+                ResultDetailRow( testData[i], i == 0, i == testData.size-1)
+            }
         }
     }
 }
 
 @Composable
 fun ResultDetailRow(
+    itemData: DetailOptionData,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
@@ -102,11 +112,12 @@ fun ResultDetailRow(
         verticalArrangement = Arrangement.Center
     ) {
         ResultDetailRowTitle(
+            itemData,
             topPadding
         )
 
         Text(
-            text = "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)",
+            text = itemData.content,
             fontSize = 14.sp,
             color = Color.White,
             fontWeight = FontWeight(700),
@@ -118,6 +129,7 @@ fun ResultDetailRow(
 
 @Composable
 fun ResultDetailRowTitle(
+    itemData: DetailOptionData,
     topPadding: Int
 ) {
     val builder = rememberBalloonBuilder {
@@ -139,7 +151,7 @@ fun ResultDetailRowTitle(
         builder = builder,
         balloonContent = {
             Text(
-                text = "테스트",
+                text = itemData.tooltipContent,
                 fontSize = 14.sp,
                 color = popupBackground,
                 fontWeight = FontWeight(500)
@@ -156,7 +168,7 @@ fun ResultDetailRowTitle(
                 }
         ) {
             Text(
-                text = "안전",
+                text = itemData.title,
                 fontSize = 14.sp,
                 color = Color(0xFFD4D4E1),
                 fontWeight = FontWeight(500),
@@ -181,3 +193,9 @@ fun ResultDetailRowTitle(
     }
 
 }
+
+data class DetailOptionData(
+    val title: String,
+    val content: String,
+    val tooltipContent: String
+)
