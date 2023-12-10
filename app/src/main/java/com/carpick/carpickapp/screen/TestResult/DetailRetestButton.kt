@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
 
 @Composable
-fun DetailRetestButton() {
+fun DetailRetestButton(
+    onPressRetest: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(0.dp, 28.dp, 0.dp, 24.dp),
         horizontalArrangement = Arrangement.Center,
@@ -28,7 +30,7 @@ fun DetailRetestButton() {
     ) {
         Row(
             modifier = Modifier.clickable {
-
+                onPressRetest()
             },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
