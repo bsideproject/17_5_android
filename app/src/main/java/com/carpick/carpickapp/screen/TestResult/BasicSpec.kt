@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun BasicSpec() {
@@ -45,11 +52,16 @@ fun BasicSpecTitle() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BasicSpecTags() {
-    val testList = mutableListOf<String>("testa", "testb", "testc", "testd", "teste")
+    val testList = mutableListOf<HashTagData>(
+        HashTagData("testa", Color.White, "tooltipa"),
+        HashTagData("testb", Color.White, "tooltipb"),
+        HashTagData("testc", Color.White, "tooltipc"),
+        HashTagData("testd", Color.White, "tooltipd"),
+        HashTagData("teste", Color.White, "tooltipe")
+    )
     FlowRow(
         modifier = Modifier.padding(20.dp, 12.dp),
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top,
         maxItemsInEachRow = 4,
     ) {
         testList.forEach { hashTag ->
@@ -62,41 +74,82 @@ fun BasicSpecTags() {
 
 @Composable
 fun HashTag(
-    value: String
+    value: HashTagData
 ) {
-    Box(
-        modifier = Modifier.padding(4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .background(Color.White, shape = RoundedCornerShape(99.dp))
-                .padding(15.dp, 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.1f)
+        setBackgroundColor(value.backgroundColor.hashCode())
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPaddingHorizontal(21)
+        setPaddingVertical(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+        setArrowOrientation(ArrowOrientation.TOP)
+    }
 
-        ) {
+    Balloon(
+        builder = builder,
+        modifier = Modifier
+            .padding(4.dp)
+            .background(value.backgroundColor, shape = RoundedCornerShape(99.dp)),
+        balloonContent = {
             Text(
-                text = value,
+                text = value.tooltipContent,
                 fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                color = Color(0xFF21212F),
-                modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
+                color = popupBackground,
+                fontWeight = FontWeight(500)
             )
+        },
 
-            Box(
+    ) {balloonWindow ->
+        Box(
+            modifier = Modifier.clickable {
+                balloonWindow.showAlignBottom()
+            }
+        ) {
+
+            Row(
                 modifier = Modifier
-                    .width(15.dp)
-                    .height(15.dp)
-                    .background(popupBackground, shape = RoundedCornerShape(99.dp)),
-                contentAlignment = Alignment.Center
+                    .background(value.backgroundColor, shape = RoundedCornerShape(99.dp))
+                    .padding(15.dp, 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+
             ) {
                 Text(
-                    text = "?",
-                    fontSize = 10.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight(500)
+                    text = value.content,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF21212F),
+                    modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
+
+                Box(
+                    modifier = Modifier
+                        .width(15.dp)
+                        .height(15.dp)
+                        .background(popupBackground, shape = RoundedCornerShape(99.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "?",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight(500)
+                    )
+                }
             }
         }
     }
 
+
 }
+
+data class HashTagData(
+    val content: String,
+    val backgroundColor: Color,
+    val tooltipContent: String
+)
