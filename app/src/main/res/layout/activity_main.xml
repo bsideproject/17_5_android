@@ -20,9 +20,12 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="84dp"
+        android:layout_height="80dp"
         android:background="@color/white"
         app:menu="@menu/nav_menu"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemBackground="@drawable/my_shape"
         app:labelVisibilityMode="labeled"
         app:itemIconTint="@drawable/menu_selector"
         app:itemTextColor="@drawable/menu_selector"

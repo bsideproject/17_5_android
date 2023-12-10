@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ActivityMainBinding

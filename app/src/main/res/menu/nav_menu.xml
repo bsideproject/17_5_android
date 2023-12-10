@@ -3,16 +3,16 @@
     <item
         android:id="@+id/car_recommend_fragment"
         android:title="내 차 추천"
-        android:icon="@drawable/ic_car"
+        android:icon="@drawable/ic_bottom_car"
       />
-    
+
     <item
         android:id="@+id/car_ranking_fragment"
-        android:icon="@drawable/frame_15"
-        android:title="자동차순위"/>
+        android:icon="@drawable/ic_bottom_car_ranking"
+        android:title="자동차 순위표"/>
 
     <item
         android:id="@+id/car_poor_fragment"
-        android:icon="@drawable/ic_preparing"
-        android:title="카푸어측정기"/>
+        android:icon="@drawable/ic_bottom_car_poor"
+        android:title="카푸어 측정기"/>
 </menu>
