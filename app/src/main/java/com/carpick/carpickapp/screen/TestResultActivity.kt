@@ -59,6 +59,12 @@ class TestResultActivity : ComponentActivity() {
                     },
                     onPressWishList = {
                         Log.d("TestResult", "onPressWishList")
+                    },
+                    onPressShareBtn = {
+                        Log.d("TestResult", "onPressShareBtn")
+                    },
+                    onPressAddWishListBtn = {
+                        Log.d("TestResult", "onPressAddWishListBtn")
                     }
                 )
             }
@@ -70,14 +76,16 @@ class TestResultActivity : ComponentActivity() {
 @Composable
 fun Page(
     onPressBack: () -> Unit,
-    onPressWishList: () -> Unit
+    onPressWishList: () -> Unit,
+    onPressShareBtn: () -> Unit,
+    onPressAddWishListBtn: () -> Unit
 ) {
     val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     val scrollState = rememberScrollState()
 
     Scaffold(
         bottomBar = {
-            TestResultFooter()
+            TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
         }
     ) {paddingValues ->
         BackdropScaffold(
@@ -116,6 +124,12 @@ fun GreetingPreview2() {
             },
             onPressWishList = {
                 Log.d("TestResult", "onPressWishList")
+            },
+            onPressShareBtn = {
+                Log.d("TestResult", "onPressShareBtn")
+            },
+            onPressAddWishListBtn = {
+                Log.d("TestResult", "onPressAddWishListBtn")
             }
         )
     }

@@ -21,7 +21,10 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
-fun TestResultFooter() {
+fun TestResultFooter(
+    onPressShareBtn: () -> Unit,
+    onPressAddWishListBtn: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,14 +37,16 @@ fun TestResultFooter() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ShareBtn()
-            AddWishListBtn()
+            ShareBtn(onPressShareBtn)
+            AddWishListBtn(onPressAddWishListBtn)
         }
     }
 }
 
 @Composable
-fun ShareBtn() {
+fun ShareBtn(
+    onPressShareBtn: () -> Unit
+) {
     Button(
         onClick = { /*TODO*/ },
         modifier = Modifier
@@ -63,7 +68,9 @@ fun ShareBtn() {
 }
 
 @Composable
-fun AddWishListBtn() {
+fun AddWishListBtn(
+    onPressAddWishListBtn: () -> Unit
+) {
     Button(
         onClick = { /*TODO*/ },
         modifier = Modifier

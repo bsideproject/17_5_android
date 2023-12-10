@@ -22,7 +22,7 @@ import com.carpick.carpickapp.R
 @Composable
 fun DetailRetestButton() {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(0.dp, 28.dp, 0.dp, 0.dp),
+        modifier = Modifier.fillMaxWidth().padding(0.dp, 28.dp, 0.dp, 24.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
