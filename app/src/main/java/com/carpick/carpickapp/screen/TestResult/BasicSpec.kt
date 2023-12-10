@@ -21,11 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
-import com.skydoves.balloon.ArrowOrientation
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun BasicSpec() {
@@ -75,20 +70,6 @@ fun BasicSpecTags() {
 fun HashTag(
     value: HashTagData
 ) {
-    val builder = rememberBalloonBuilder {
-        setArrowSize(10)
-        setArrowPosition(0.7f)
-        setBackgroundColor(value.backgroundColor.hashCode())
-        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-        setWidth(BalloonSizeSpec.WRAP)
-        setHeight(BalloonSizeSpec.WRAP)
-        setPaddingHorizontal(21)
-        setPaddingVertical(12)
-        setMarginHorizontal(12)
-        setCornerRadius(8f)
-        setBalloonAnimation(BalloonAnimation.ELASTIC)
-        setArrowOrientation(ArrowOrientation.TOP)
-    }
 
     TestResultCommonTooltip(
         arrowPosition = 0.7f,
