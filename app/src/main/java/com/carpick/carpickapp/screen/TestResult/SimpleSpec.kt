@@ -2,7 +2,6 @@ package com.carpick.carpickapp.screen.TestResult
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,13 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.carpick.carpickapp.screen.ui.theme.popupBackground
-import com.skydoves.balloon.ArrowOrientation
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.compose.Balloon
-import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun SimpleSpec() {
@@ -181,31 +173,10 @@ fun SimpleSpecRowItem(
 fun SimpleSpecRowItemTitle(
     itemData: SimpleSpecItemData
 ) {
-    val builder = rememberBalloonBuilder {
-        setArrowSize(10)
-        setArrowPosition(0.8f)
-        setBackgroundColor(Color.White.hashCode())
-        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-        setWidth(BalloonSizeSpec.WRAP)
-        setHeight(BalloonSizeSpec.WRAP)
-        setPaddingHorizontal(21)
-        setPaddingVertical(12)
-        setMarginHorizontal(12)
-        setCornerRadius(8f)
-        setBalloonAnimation(BalloonAnimation.ELASTIC)
-        setArrowOrientation(ArrowOrientation.TOP)
-    }
 
-    Balloon(
-        builder = builder,
-        balloonContent = {
-            Text(
-                text = itemData.tooltipContent,
-                fontSize = 14.sp,
-                color = popupBackground,
-                fontWeight = FontWeight(500)
-            )
-        },
+    TestResultCommonTooltip(
+        arrowPosition = 0.8f,
+        toolTipContent = itemData.tooltipContent
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -237,6 +208,7 @@ fun SimpleSpecRowItemTitle(
                 )
             }
         }
+
     }
 
 }

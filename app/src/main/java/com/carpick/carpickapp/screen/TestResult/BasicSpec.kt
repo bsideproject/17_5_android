@@ -25,7 +25,6 @@ import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.compose.Balloon
 import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
@@ -91,20 +90,13 @@ fun HashTag(
         setArrowOrientation(ArrowOrientation.TOP)
     }
 
-    Balloon(
-        builder = builder,
+    TestResultCommonTooltip(
+        arrowPosition = 0.7f,
+        toolTipContent = value.tooltipContent,
+        backgroundColor = value.backgroundColor,
         modifier = Modifier
             .padding(4.dp)
             .background(value.backgroundColor, shape = RoundedCornerShape(99.dp)),
-        balloonContent = {
-            Text(
-                text = value.tooltipContent,
-                fontSize = 14.sp,
-                color = popupBackground,
-                fontWeight = FontWeight(500)
-            )
-        },
-
     ) {balloonWindow ->
         Box(
             modifier = Modifier.clickable {
