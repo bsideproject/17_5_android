@@ -63,6 +63,9 @@ class TestResultActivity : ComponentActivity() {
                     onPressWishList = {
                         Log.d("TestResult", "onPressWishList")
                     },
+                    onPressMoreAtSimpleSpec = {
+                        Log.d("TestResult", "onPressMoreAtSimpleSpec")
+                    },
                     onPressShareBtn = {
                         Log.d("TestResult", "onPressShareBtn")
                     },
@@ -79,6 +82,7 @@ class TestResultActivity : ComponentActivity() {
 fun Page(
     onPressBack: () -> Unit,
     onPressWishList: () -> Unit,
+    onPressMoreAtSimpleSpec: () -> Unit,
     onPressShareBtn: () -> Unit,
     onPressAddWishListBtn: () -> Unit
 ) {
@@ -98,7 +102,7 @@ fun Page(
                 onPressWishList
             )
             TestResultBackLayer()
-            TestResultDetail()
+            TestResultDetail(onPressMoreAtSimpleSpec)
             TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
         }
 
@@ -116,6 +120,9 @@ fun GreetingPreview2() {
             },
             onPressWishList = {
                 Log.d("TestResult", "onPressWishList")
+            },
+            onPressMoreAtSimpleSpec = {
+                Log.d("TestResult", "onPressMoreAtSimpleSpec")
             },
             onPressShareBtn = {
                 Log.d("TestResult", "onPressShareBtn")

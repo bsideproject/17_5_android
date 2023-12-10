@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SimpleSpec() {
+fun SimpleSpec(
+    onPressMoreAtSimpleSpec: () -> Unit
+) {
     var testData = mutableListOf<SimpleSpecItemData>(
         SimpleSpecItemData("가격", "3,187만원","tooltip test"),
         SimpleSpecItemData("차종", "준중형","tooltip test"),
@@ -42,7 +44,7 @@ fun SimpleSpec() {
 
         SimpleSpecTitle()
         SimpleSpecBody(testData)
-        ShowMoreButton()
+        ShowMoreButton(onPressMoreAtSimpleSpec)
 
     }
 }
@@ -83,7 +85,9 @@ fun SimpleSpecBody(
 }
 
 @Composable
-fun ShowMoreButton() {
+fun ShowMoreButton(
+    onPressMoreAtSimpleSpec: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,7 +101,7 @@ fun ShowMoreButton() {
                 backgroundColor = Color(0xFF4B4B6B)
             ),
             shape = RoundedCornerShape(99.dp),
-            onClick = { /*TODO*/ }
+            onClick = onPressMoreAtSimpleSpec
         ) {
             Text(
                 text = "더보기",

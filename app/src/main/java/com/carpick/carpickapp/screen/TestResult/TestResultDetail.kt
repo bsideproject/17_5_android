@@ -15,7 +15,7 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultDetail(
-
+    onPressMoreAtSimpleSpec: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -24,7 +24,7 @@ fun TestResultDetail(
 
     ) {
         BasicSpec()
-        SimpleSpec()
+        SimpleSpec(onPressMoreAtSimpleSpec)
         ResultDetailOption()
         DetailRetestButton()
     }
