@@ -25,7 +25,6 @@ fun TestResultFooter() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .border(1.dp, color = Color.Red)
             .background(popupBackground)
     ) {
         Row(
@@ -35,24 +34,52 @@ fun TestResultFooter() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(44.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFFD4D4E1)
-                ),
-                shape = RoundedCornerShape(99.dp)
-            ) {
-                Text(
-                    text = "공유하기",
-                    fontSize = 14.sp,
-                    color = popupBackground,
-                    fontWeight = FontWeight(700)
-                )
-            }
-
+            ShareBtn()
+            AddWishListBtn()
         }
+    }
+}
+
+@Composable
+fun ShareBtn() {
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .fillMaxWidth(0.5f)
+            .height(44.dp)
+            .padding(0.dp, 0.dp, 4.dp, 0.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(0xFFD4D4E1)
+        ),
+        shape = RoundedCornerShape(99.dp)
+    ) {
+        Text(
+            text = "공유하기",
+            fontSize = 14.sp,
+            color = popupBackground,
+            fontWeight = FontWeight(700)
+        )
+    }
+}
+
+@Composable
+fun AddWishListBtn() {
+    Button(
+        onClick = { /*TODO*/ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(44.dp)
+            .padding(4.dp, 0.dp, 0.dp, 0.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(0xFF3872FF)
+        ),
+        shape = RoundedCornerShape(99.dp)
+    ) {
+        Text(
+            text = "위시리스트 담기",
+            fontSize = 14.sp,
+            color = Color.White,
+            fontWeight = FontWeight(700)
+        )
     }
 }
