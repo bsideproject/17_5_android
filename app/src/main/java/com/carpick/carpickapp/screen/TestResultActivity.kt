@@ -10,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -31,6 +33,7 @@ import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -72,7 +75,6 @@ class TestResultActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Page(
     onPressBack: () -> Unit,
@@ -80,36 +82,26 @@ fun Page(
     onPressShareBtn: () -> Unit,
     onPressAddWishListBtn: () -> Unit
 ) {
-    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
     val scrollState = rememberScrollState()
-
-    Scaffold(
-        bottomBar = {
-            TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
-        }
-    ) {paddingValues ->
-        BackdropScaffold(
-            scaffoldState = scaffoldState,
+    Surface(
+        modifier = Modifier
+            .fillMaxSize(),
+        color = Color.White
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            frontLayerShape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
-            frontLayerScrimColor = Color.Unspecified,
-            frontLayerBackgroundColor = popupBackground,
-            backLayerBackgroundColor = Color.White,
-            appBar = {
-                TestResultHeader(
-                    onPressBack,
-                    onPressWishList
-                )
-            },
-            backLayerContent = {
-                TestResultBackLayer()
-            },
-            frontLayerContent = {
-                TestResultDetail(scrollState)
-            },
-        )
+                .verticalScroll(scrollState)
+        ) {
+            TestResultHeader(
+                onPressBack,
+                onPressWishList
+            )
+            TestResultBackLayer()
+            TestResultDetail()
+            TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
+        }
+
     }
 
 }
