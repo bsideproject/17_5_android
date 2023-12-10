@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun ResultDetailOption() {
@@ -93,10 +101,59 @@ fun ResultDetailRow(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center
     ) {
+        ResultDetailRowTitle(
+            topPadding
+        )
+
+        Text(
+            text = "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)",
+            fontSize = 14.sp,
+            color = Color.White,
+            fontWeight = FontWeight(700),
+            modifier = Modifier
+                .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp)
+        )
+    }
+}
+
+@Composable
+fun ResultDetailRowTitle(
+    topPadding: Int
+) {
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.8f)
+        setBackgroundColor(Color.White.hashCode())
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPaddingHorizontal(21)
+        setPaddingVertical(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+        setArrowOrientation(ArrowOrientation.TOP)
+    }
+
+    Balloon(
+        builder = builder,
+        balloonContent = {
+            Text(
+                text = "테스트",
+                fontSize = 14.sp,
+                color = popupBackground,
+                fontWeight = FontWeight(500)
+            )
+        },
+    ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(0.dp, topPadding.dp, 0.dp, 0.dp)
+            modifier = Modifier
+                .padding(0.dp, topPadding.dp, 0.dp, 0.dp)
+                .clickable {
+                    balloonWindow.showAlignBottom()
+                }
         ) {
             Text(
                 text = "안전",
@@ -121,14 +178,6 @@ fun ResultDetailRow(
                 )
             }
         }
-
-        Text(
-            text = "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)",
-            fontSize = 14.sp,
-            color = Color.White,
-            fontWeight = FontWeight(700),
-            modifier = Modifier
-                .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp)
-        )
     }
+
 }
