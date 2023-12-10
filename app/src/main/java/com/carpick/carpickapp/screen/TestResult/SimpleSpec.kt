@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.TestResult
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,16 +25,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun SimpleSpec() {
     var testData = mutableListOf<SimpleSpecItemData>(
-        SimpleSpecItemData("가격", "3,187만원"),
-        SimpleSpecItemData("차종", "준중형"),
-        SimpleSpecItemData("연료", "하이브리드"),
-        SimpleSpecItemData("연비", "20.9km/l"),
-        SimpleSpecItemData("배기량", "1,987cc"),
-        SimpleSpecItemData("최고출력", "152/6000ps/rpm")
+        SimpleSpecItemData("가격", "3,187만원","tooltip test"),
+        SimpleSpecItemData("차종", "준중형","tooltip test"),
+        SimpleSpecItemData("연료", "하이브리드","tooltip test"),
+        SimpleSpecItemData("연비", "20.9km/l","tooltip test"),
+        SimpleSpecItemData("배기량", "1,987cc","tooltip test"),
+        SimpleSpecItemData("최고출력", "152/6000ps/rpm","tooltip test")
     ).chunked(2)
 
     Column(
@@ -157,9 +165,54 @@ fun SimpleSpecRowItem(
             .width(132.dp)
             .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
+        SimpleSpecRowItemTitle(itemData)
+
+        Text(
+            text = itemData.value,
+            fontSize = 14.sp,
+            color = Color.White,
+            fontWeight = FontWeight(700),
+            modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
+        )
+    }
+}
+
+@Composable
+fun SimpleSpecRowItemTitle(
+    itemData: SimpleSpecItemData
+) {
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.8f)
+        setBackgroundColor(Color.White.hashCode())
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPaddingHorizontal(21)
+        setPaddingVertical(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+        setArrowOrientation(ArrowOrientation.TOP)
+    }
+
+    Balloon(
+        builder = builder,
+        balloonContent = {
+            Text(
+                text = itemData.tooltipContent,
+                fontSize = 14.sp,
+                color = popupBackground,
+                fontWeight = FontWeight(500)
+            )
+        },
+    ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.clickable {
+                balloonWindow.showAlignBottom()
+            }
         ) {
             Text(
                 text = itemData.title,
@@ -184,18 +237,12 @@ fun SimpleSpecRowItem(
                 )
             }
         }
-
-        Text(
-            text = itemData.value,
-            fontSize = 14.sp,
-            color = Color.White,
-            fontWeight = FontWeight(700),
-            modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
-        )
     }
+
 }
 
 data class SimpleSpecItemData(
     val title: String,
-    val value: String
+    val value: String,
+    val tooltipContent: String
 )

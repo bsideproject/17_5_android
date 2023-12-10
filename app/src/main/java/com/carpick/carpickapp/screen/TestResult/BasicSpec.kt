@@ -78,7 +78,7 @@ fun HashTag(
 ) {
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
-        setArrowPosition(0.1f)
+        setArrowPosition(0.7f)
         setBackgroundColor(value.backgroundColor.hashCode())
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
