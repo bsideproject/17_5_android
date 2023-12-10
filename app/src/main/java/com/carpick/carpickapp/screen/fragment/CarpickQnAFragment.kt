@@ -61,7 +61,7 @@ class CarpickQnAFragment : BaseFragment<FragmentCarpickQnaBinding>() {
             btnNext.setOnSingleClickListener {
                 if (nowPage < totalPage) {
                     nowPage++
-                    tvNowQnaPos.text = nowPage.toString()
+                    tvNowQnaPos.text = "$nowPage "
 
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
@@ -73,7 +73,7 @@ class CarpickQnAFragment : BaseFragment<FragmentCarpickQnaBinding>() {
             btnPrev.setOnSingleClickListener {
                 if (nowPage > 1) {
                     nowPage--
-                    tvNowQnaPos.text = nowPage.toString()
+                    tvNowQnaPos.text = "$nowPage "
 
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
