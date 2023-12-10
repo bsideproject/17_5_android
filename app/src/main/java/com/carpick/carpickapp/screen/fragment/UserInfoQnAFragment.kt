@@ -19,7 +19,6 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
 
     private val answerAdapter by lazy {
         AnswerAdapter  { item ->
-            Log.e("ljy", "$item")
             age = item.testData
             if(sex != "" && age != "") {
                 val newFragment = CarpickQnAFragment()
@@ -84,14 +83,6 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }
-            }
-
-            tvMainTitle.setOnSingleClickListener {
-                val newFragment = CarpickQnAFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
             }
         }
     }
