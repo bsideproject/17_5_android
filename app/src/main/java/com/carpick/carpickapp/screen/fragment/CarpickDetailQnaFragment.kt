@@ -124,7 +124,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
 
             btnPrev.setOnSingleClickListener {
-                if (nowPage > 1) {
+                if (nowPage > 2) {
                     nowPage--
                     tvNowQnaPos.text = "$nowPage "
 
@@ -133,6 +133,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerLessAdapter?.hashMapTest(hashMap, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
+                }else {
+                    val fragmentManager = requireActivity().supportFragmentManager
+
+                    fragmentManager.popBackStackImmediate()
                 }
             }
         }
