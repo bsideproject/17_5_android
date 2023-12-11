@@ -14,6 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
+    interface BottomNavigationListener {
+        fun showTextView()
+    }
+
+    private var listener : BottomNavigationListener?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,14 +32,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 }
 
                 R.id.car_ranking_fragment -> {
-                    changeFragment(ComposeFragment())
+                    changeFragment(CarPickStartFragment())
+                    listener?.showTextView()
                 }
                 R.id.car_poor_fragment -> {
                     changeFragment(CarPickStartFragment())
+                    listener?.showTextView()
                 }
             }
             true
         }
+    }
+    fun setSelectedTabListener(listener : BottomNavigationListener) {
+        this.listener = listener
     }
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager

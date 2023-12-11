@@ -40,7 +40,6 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
     }
 
     private var nowPage = -1
-    private var pairTest = ArrayList<Pair<Int, Int>>()
 
     private var hashMapTest = HashMap<Int, Int>()
 
