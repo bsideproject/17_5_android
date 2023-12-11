@@ -68,11 +68,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 //                    pairTest.add(Pair(nowPage-1, item.id))
                     hashMap[nowPage-1] = item.id
 
-                    if(nowPage == 3) {
-                        answerLessAdapter?.submitList(testResult[1])
-                    }else if(nowPage == 4){
-                        answerLessAdapter?.submitList(testResult[2])
-                    }else{}
+                    if(nowPage-2 < testResult.size) {
+                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                        answerLessAdapter?.submitList(testResult[nowPage - 2])
+                    }
                 }
             })
         }
@@ -107,6 +106,9 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
+
+                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.submitList(testResult[nowPage-2])
                 }
             }
 
@@ -118,6 +120,8 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
+                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.submitList(testResult[nowPage-2])
                 }
             }
         }
