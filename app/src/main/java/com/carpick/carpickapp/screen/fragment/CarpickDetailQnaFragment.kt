@@ -6,13 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
+import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>() {
     private var nowPage = 2
     private var totalPage = 10 // api 나오면 수정
@@ -22,10 +27,12 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var testModel2 = ArrayList<TestModel>()
     private var testModel3 = ArrayList<TestModel>()
 
-    private var pairTest = ArrayList<Pair<Int,Int>>()
-    private var hashMap = HashMap<Int, Int>()
-
+    private var hashMap = HashMap<Int, Int>() // ui용
     private var answerPage = arrayListOf<Int>()
+
+    private var answerList = HashMap<Int, TestModel>() // request용
+
+    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,14 +41,17 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     }
 
     private fun initView() {
-        testModel1.add(TestModel(id=1, testData = "밟으면 나가는 빠른 가속!"))
-        testModel1.add(TestModel(id=2, testData = "팝콘 터지는 배기음!"))
+        Log.e("ljyljyljy", "${answerViewModel.getBudgetResult()}")
+        answerViewModel.getBudgetResult()?.let { answerList.put(1, it) }
 
-        testModel2.add(TestModel(id=3, testData = "시내 주행"))
-        testModel2.add(TestModel(id=4, testData = "장거리 운행"))
+        testModel1.add(TestModel(id=11, testData = "2페이지 밟으면 나가는 빠른 가속!"))
+        testModel1.add(TestModel(id=22, testData = "2페이지 팝콘 터지는 배기음!"))
 
-        testModel3.add(TestModel(id=5, testData = "3페이지 첫번째"))
-        testModel3.add(TestModel(id=6, testData = "3페이지 두번째"))
+        testModel2.add(TestModel(id=33, testData = "3페이지 시내 주행"))
+        testModel2.add(TestModel(id=44, testData = "3페이지 장거리 운행"))
+
+        testModel3.add(TestModel(id=55, testData = "4페이지 첫번째"))
+        testModel3.add(TestModel(id=66, testData = "4페이지 두번째"))
 
         testResult.add(testModel1)
         testResult.add(testModel2)
@@ -65,9 +75,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-//                    pairTest.add(Pair(nowPage-1, item.id))
                     hashMap[nowPage-1] = item.id
+                    answerList[nowPage-1] = item
 
+                    Log.e("ljy", "answer list $answerList")
                     if(nowPage-2 < testResult.size) {
                         answerLessAdapter?.hashMapTest(hashMap, nowPage)
                         answerLessAdapter?.submitList(testResult[nowPage - 2])

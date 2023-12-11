@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.activity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelStoreOwner
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ActivityMainBinding
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
@@ -12,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

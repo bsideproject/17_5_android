@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickQnaBinding
@@ -13,15 +13,18 @@ import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
+import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
     private var nowPage = 1
     private var totalPage = 10 // api 나오면 수정
     private val ageModel = ArrayList<TestModel>()
     private var answerAdapter : AnswerAdapter? = null
-    private var answerLessAdapter : AnswerLessAdapter? = null
     private var selectAnswer = ""
 
+    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,16 +41,16 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
 
         ageModel.add(TestModel(id= 1, testData = "2500만원 이하"))
         ageModel.add(TestModel(id= 2, testData = "3000만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "4000만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "4500만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "5000만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "5500만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "6000만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "8000만원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "1억원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "1.5억원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "2억원 이하"))
-        ageModel.add(TestModel(id= 2, testData = "2억원 초과"))
+        ageModel.add(TestModel(id= 3, testData = "4000만원 이하"))
+        ageModel.add(TestModel(id= 4, testData = "4500만원 이하"))
+        ageModel.add(TestModel(id= 5, testData = "5000만원 이하"))
+        ageModel.add(TestModel(id= 6, testData = "5500만원 이하"))
+        ageModel.add(TestModel(id= 7, testData = "6000만원 이하"))
+        ageModel.add(TestModel(id= 8, testData = "8000만원 이하"))
+        ageModel.add(TestModel(id= 9, testData = "1억원 이하"))
+        ageModel.add(TestModel(id= 10, testData = "1.5억원 이하"))
+        ageModel.add(TestModel(id= 11, testData = "2억원 이하"))
+        ageModel.add(TestModel(id= 12, testData = "2억원 초과"))
 
 
         answerAdapter?.submitList(ageModel)
@@ -57,6 +60,8 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
                 //viewmodel에 데이터저장해야됨
                 selectAnswer = item.testData
 
+                answerViewModel.saveBudgetResult(item)
+
                 val newFragment = CarpickDetailQnaFragment()
                 val transaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.nav_host, newFragment)
@@ -64,8 +69,6 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
                 transaction.commit()
             }
         })
-
-
     }
 
     private fun initListener() {
@@ -101,6 +104,13 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        answerViewModel.getBudgetResult()?.let {
+            answerAdapter?.setSelectedItem(it)
+        }
+    }
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCarpickQnaBinding {
         return FragmentCarpickQnaBinding.inflate(layoutInflater)
     }

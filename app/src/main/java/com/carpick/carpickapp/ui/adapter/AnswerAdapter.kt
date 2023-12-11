@@ -26,6 +26,7 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
 ) {
 
     private var listener : ClickListener?= null
+    private var selectedItem : TestModel?= null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
         return AnswerViewHolder(
@@ -36,7 +37,9 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
+    fun setSelectedItem(selected : TestModel) {
+        selectedItem = selected
+    }
     fun setClickListener(listener: ClickListener) {
         this.listener = listener
     }
@@ -46,6 +49,7 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
         private val binding : ItemAnswerBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         private var item : TestModel? = null
+
 
         init {
             binding.root.setOnClickListener {
@@ -65,17 +69,48 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
             }
         }
 
+
         fun bind(item : TestModel) {
             this.item = item
 
             binding.tvAnswer.text = item.testData
 
-            if (adapterPosition == selectedPosition) {
-                binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_3872ff)
-                binding.tvAnswer.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-            } else {
-                binding.tvAnswer.setBackgroundColor(0)
-                binding.tvAnswer.setTextColor(ContextCompat.getColor(binding.root.context, R.color.color_36364d))
+            binding.tvAnswer.setBackgroundColor(0)
+            binding.tvAnswer.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.color_36364d
+                )
+            )
+
+            selectedItem?.let { selectedItem ->
+                if(item.id == selectedItem.id) {
+                    binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_3872ff)
+                    binding.tvAnswer.setTextColor(
+                        ContextCompat.getColor(
+                            binding.root.context,
+                            R.color.white
+                        )
+                    )
+                }
+            } ?: run {
+                if (adapterPosition == selectedPosition) {
+                    binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_3872ff)
+                    binding.tvAnswer.setTextColor(
+                        ContextCompat.getColor(
+                            binding.root.context,
+                            R.color.white
+                        )
+                    )
+                } else {
+                    binding.tvAnswer.setBackgroundColor(0)
+                    binding.tvAnswer.setTextColor(
+                        ContextCompat.getColor(
+                            binding.root.context,
+                            R.color.color_36364d
+                        )
+                    )
+                }
             }
         }
     }
