@@ -88,17 +88,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     tvNowQnaPos.text = "$nowPage "
 
-                    if(nowPage == 3) {
-                        Log.e("ljy", "back nowpage 3 $hashMap ${testResult[nowPage-2]}")
-//                        answerLessAdapter?.pairTest(pairTest, nowPage-1)
-                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
-                        answerLessAdapter?.submitList(testResult[nowPage-2])
-                    }else if(nowPage == 2){
-                        Log.e("ljy", "back nowpage 2 $hashMap $nowPage")
-//                        answerLessAdapter?.pairTest(pairTest, nowPage-1)
-                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
-                        answerLessAdapter?.submitList(testResult[nowPage-2])
-                    }else{}
+                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.submitList(testResult[nowPage-2])
+
+
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
 
