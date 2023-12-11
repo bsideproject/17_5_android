@@ -43,7 +43,6 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         answerAdapter = AnswerAdapter()
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: TestModel) {
-                Log.e("ljy", "sex $sex age $age $item")
                 age = item.testData
                 if(sex != "" && age != "") {
                     val newFragment = CarpickBudgetQnaFragment()

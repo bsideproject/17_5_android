@@ -39,18 +39,24 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
         holder.bind(getItem(position))
     }
 
-    fun clearSelection() {
-        val previousSelectedPosition = selectedPosition
-        selectedPosition = RecyclerView.NO_POSITION
-        notifyItemChanged(previousSelectedPosition)
-    }
 
     private var answerPage = arrayListOf<Int>()
     private var nowPage = -1
-    fun test(answerPage : ArrayList<Int>, nowPage: Int) {
-        this.answerPage = answerPage
+    private var pairTest = ArrayList<Pair<Int, Int>>()
+
+    private var hashMapTest = HashMap<Int, Int>()
+
+    fun pairTest(pairTest : ArrayList<Pair<Int,Int>>, nowPage: Int) {
+        this.pairTest = pairTest
         this.nowPage = nowPage
     }
+
+    fun hashMapTest(hashmap : HashMap<Int,Int>, nowPage: Int) {
+        this.hashMapTest = hashmap
+        this.nowPage = nowPage
+    }
+
+
     fun setClickListener(param: ClickListener) {
         listener = param
     }
@@ -89,11 +95,12 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
             binding.clAnswerList.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.color_d1deff))
             binding.tvAnswer.setTextColor(ContextCompat.getColor(binding.root.context, R.color.color_3872ff))
 
-
-            Log.e("ljy", "dd $answerPage $nowPage")
-            if(answerPage.contains(nowPage)) {
-                Log.e("ljy", "여기 $answerPage $nowPage")
-                if (adapterPosition == selectedPosition) {
+            if(hashMapTest.size > 0) {
+                Log.e(
+                    "ljy",
+                    "pair $hashMapTest nowpage $nowPage second ${hashMapTest[nowPage]} ${item.id}"
+                )
+                if (hashMapTest[nowPage] == item.id) {
                     binding.clAnswerList.backgroundTintList = ColorStateList.valueOf(
                         ContextCompat.getColor(
                             binding.root.context,

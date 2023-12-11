@@ -22,6 +22,9 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var testModel2 = ArrayList<TestModel>()
     private var testModel3 = ArrayList<TestModel>()
 
+    private var pairTest = ArrayList<Pair<Int,Int>>()
+    private var hashMap = HashMap<Int, Int>()
+
     private var answerPage = arrayListOf<Int>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,8 +40,8 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         testModel2.add(TestModel(id=3, testData = "시내 주행"))
         testModel2.add(TestModel(id=4, testData = "장거리 운행"))
 
-        testModel3.add(TestModel(id=3, testData = "시내 주행1"))
-        testModel3.add(TestModel(id=4, testData = "장거리 운행1"))
+        testModel3.add(TestModel(id=5, testData = "3페이지 첫번째"))
+        testModel3.add(TestModel(id=6, testData = "3페이지 두번째"))
 
         testResult.add(testModel1)
         testResult.add(testModel2)
@@ -62,11 +65,12 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
+//                    pairTest.add(Pair(nowPage-1, item.id))
+                    hashMap[nowPage-1] = item.id
+
                     if(nowPage == 3) {
-                        answerLessAdapter?.test(answerPage, nowPage)
                         answerLessAdapter?.submitList(testResult[1])
                     }else if(nowPage == 4){
-                        answerLessAdapter?.test(answerPage, nowPage)
                         answerLessAdapter?.submitList(testResult[2])
                     }else{}
                 }
@@ -82,14 +86,18 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-
                     tvNowQnaPos.text = "$nowPage "
+
                     if(nowPage == 3) {
-                        answerLessAdapter?.test(answerPage, nowPage)
-                        answerLessAdapter?.submitList(testResult[1])
+                        Log.e("ljy", "back nowpage 3 $hashMap ${testResult[nowPage-2]}")
+//                        answerLessAdapter?.pairTest(pairTest, nowPage-1)
+                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                        answerLessAdapter?.submitList(testResult[nowPage-2])
                     }else if(nowPage == 2){
-                        answerLessAdapter?.test(answerPage, nowPage)
-                        answerLessAdapter?.submitList(testResult[0])
+                        Log.e("ljy", "back nowpage 2 $hashMap $nowPage")
+//                        answerLessAdapter?.pairTest(pairTest, nowPage-1)
+                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                        answerLessAdapter?.submitList(testResult[nowPage-2])
                     }else{}
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
