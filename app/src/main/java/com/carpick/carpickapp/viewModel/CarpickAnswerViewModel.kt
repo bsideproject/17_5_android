@@ -7,13 +7,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CarpickAnswerViewModel @Inject constructor() : ViewModel() {
-    private var _answerResult = ArrayList<TestModel>()
-    val answerResult : ArrayList<TestModel>
+    private var _answerResult = HashMap<Int,TestModel>()
+    val answerResult : HashMap<Int,TestModel>
         get() = _answerResult
 
     private var answerBudgetResult : TestModel?= null
 
-    fun saveAnswerResult(answer : ArrayList<TestModel>) {
+    fun saveAnswerResult(answer : HashMap<Int,TestModel>) {
         _answerResult = answer
     }
 

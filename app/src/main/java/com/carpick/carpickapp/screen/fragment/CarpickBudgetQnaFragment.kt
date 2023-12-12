@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,7 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
                 //viewmodel에 데이터저장해야됨
                 selectAnswer = item.testData
 
+                Log.e("ljy", "연봉 $item")
                 answerViewModel.saveBudgetResult(item)
 
                 val newFragment = CarpickDetailQnaFragment()

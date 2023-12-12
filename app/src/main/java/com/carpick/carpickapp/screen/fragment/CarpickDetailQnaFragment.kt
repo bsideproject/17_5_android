@@ -27,7 +27,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var testModel2 = ArrayList<TestModel>()
     private var testModel3 = ArrayList<TestModel>()
 
-    private var hashMap = HashMap<Int, Int>() // ui용
+//    private var hashMap = HashMap<Int, Int>() // ui용
     private var answerPage = arrayListOf<Int>()
 
     private var answerList = HashMap<Int, TestModel>() // request용
@@ -41,8 +41,16 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     }
 
     private fun initView() {
-        Log.e("ljyljyljy", "${answerViewModel.getBudgetResult()}")
-        answerViewModel.getBudgetResult()?.let { answerList.put(1, it) }
+        answerViewModel.answerResult.map {
+            answerList.put(it.key, it.value)
+        }
+        answerViewModel.getBudgetResult()?.let {
+            Log.e("ljy", "다시옴 $it")
+            answerList.put(1, it)
+        }
+        answerViewModel.saveAnswerResult(answerList)
+
+        Log.e("ljyljyljy", "${answerViewModel.answerResult}")
 
         testModel1.add(TestModel(id=11, testData = "2페이지 밟으면 나가는 빠른 가속!"))
         testModel1.add(TestModel(id=22, testData = "2페이지 팝콘 터지는 배기음!"))
@@ -60,6 +68,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         binding.run {
             answerLessAdapter = AnswerLessAdapter()
             rvAnswer.adapter = answerLessAdapter
+            answerLessAdapter?.hashMapTest(answerList, nowPage)
             answerLessAdapter?.submitList(testModel1)
 
             roundProgressBar.progress = totalPage / nowPage
@@ -75,12 +84,13 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    hashMap[nowPage-1] = item.id
+//                    hashMap[nowPage-1] = item.id
                     answerList[nowPage-1] = item
-
+                    Log.e("ljy", "save 전 $answerList")
+                    answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
                     if(nowPage-2 < testResult.size) {
-                        answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                        answerLessAdapter?.hashMapTest(answerList, nowPage)
                         answerLessAdapter?.submitList(testResult[nowPage - 2])
                     }
                 }
@@ -98,7 +108,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     tvNowQnaPos.text = "$nowPage "
 
-                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.hashMapTest(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
 
 
@@ -118,7 +128,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.hashMapTest(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
                 }
             }
@@ -131,7 +141,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    answerLessAdapter?.hashMapTest(hashMap, nowPage)
+                    answerLessAdapter?.hashMapTest(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager

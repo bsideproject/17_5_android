@@ -41,9 +41,9 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
 
     private var nowPage = -1
 
-    private var hashMapTest = HashMap<Int, Int>()
+    private var hashMapTest = HashMap<Int, TestModel>()
 
-    fun hashMapTest(hashmap : HashMap<Int,Int>, nowPage: Int) {
+    fun hashMapTest(hashmap : HashMap<Int,TestModel>, nowPage: Int) {
         this.hashMapTest = hashmap
         this.nowPage = nowPage
     }
@@ -88,7 +88,7 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
             binding.tvAnswer.setTextColor(ContextCompat.getColor(binding.root.context, R.color.color_3872ff))
 
             if(hashMapTest.size > 0) {
-                if (hashMapTest[nowPage] == item.id) {
+                if (hashMapTest[nowPage]?.id == item.id) {
                     binding.clAnswerList.backgroundTintList = ColorStateList.valueOf(
                         ContextCompat.getColor(
                             binding.root.context,
