@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintDimensionRatio="360:202"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_wait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="잠시만 기다려주세요."
+        android:textColor="@color/color_36364d"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_loading" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_recomend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/pretendard_extrabold"
+        android:text="차량 추천중입니다!"
+        android:textColor="@color/color_21212f"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_wait" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_loading_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_recomend">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/first_img"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:handwritingBoundsOffsetBottom="@dimen/cardview_compat_inset_shadow"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="나이/성별 분석중"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/first_img"
+            app:layout_constraintStart_toEndOf="@id/first_img"
+            app:layout_constraintTop_toTopOf="@id/first_img" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_loading_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/cl_loading_1"
+        app:layout_constraintTop_toBottomOf="@id/cl_loading_1">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/second_img"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="예산 분석 중"
+            android:textSize="16dp"
+            app:layout_constraintStart_toEndOf="@id/second_img"
+            app:layout_constraintBottom_toBottomOf="@id/tv_second"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cl_loading_2"
+        app:layout_constraintStart_toStartOf="@id/cl_loading_2">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/third_img"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="개별 답변 분석 중"
+            android:textSize="16dp"
+
+            app:layout_constraintStart_toEndOf="@id/third_img"
+            app:layout_constraintBottom_toBottomOf="@id/third_img"
+            app:layout_constraintTop_toTopOf="parent" />/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
