@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
     private var nowPage = 1
     private var totalPage = 10 // api 나오면 수정
-    private val ageModel = ArrayList<TestModel>()
     private var answerAdapter : AnswerAdapter? = null
     private var selectAnswer = ""
 
@@ -37,7 +36,7 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
             rvAnswer.adapter = answerAdapter
             roundProgressBar.progress = totalPage/nowPage
         }
-
+        val ageModel = ArrayList<TestModel>()
 
         ageModel.add(TestModel(id= 1, testData = "2500만원 이하"))
         ageModel.add(TestModel(id= 2, testData = "3000만원 이하"))
