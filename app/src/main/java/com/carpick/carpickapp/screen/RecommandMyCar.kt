@@ -56,6 +56,18 @@ fun RecommandMyCarView(
             }) {
                 Text(text = "select 테스트")
             }
+            Button(onClick = {
+                val intent = Intent(context, TestResultActivity::class.java)
+                context.startActivity(intent)
+            }) {
+                Text(text = "결과 페이지 이동")
+            }
+            Button(onClick = {
+                val intent = Intent(context, WishListActivity::class.java)
+                context.startActivity(intent)
+            }) {
+                Text(text = "위시리스트 이동")
+            }
         }
     }
 }
