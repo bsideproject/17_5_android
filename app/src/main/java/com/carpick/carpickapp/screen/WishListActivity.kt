@@ -9,7 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.carpick.carpickapp.screen.WishList.WishListHeader
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 
 class WishListActivity : ComponentActivity() {
@@ -18,12 +20,7 @@ class WishListActivity : ComponentActivity() {
         setContent {
             CarpickAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+                Page()
             }
         }
     }
@@ -37,10 +34,20 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Composable
+fun Page() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
+    ) {
+        WishListHeader()
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview3() {
     CarpickAppTheme {
-        Greeting("Android")
+        Page()
     }
 }
