@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ActivityMainBinding
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
+import com.carpick.carpickapp.screen.fragment.WorkingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,10 +23,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 }
 
                 R.id.car_ranking_fragment -> {
-                    changeFragment(CarPickStartFragment())
+                    changeFragment(WorkingFragment())
                 }
                 R.id.car_poor_fragment -> {
-                    changeFragment(CarPickStartFragment())
+                    changeFragment(WorkingFragment())
                 }
             }
             true
