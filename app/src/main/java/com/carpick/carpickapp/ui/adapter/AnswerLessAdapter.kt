@@ -43,7 +43,7 @@ class AnswerLessAdapter : ListAdapter<TestModel, AnswerLessAdapter.AnswerViewHol
 
     private var hashMapTest = HashMap<Int, TestModel>()
 
-    fun hashMapTest(hashmap : HashMap<Int,TestModel>, nowPage: Int) {
+    fun setUiState(hashmap : HashMap<Int,TestModel>, nowPage: Int) {
         this.hashMapTest = hashmap
         this.nowPage = nowPage
     }

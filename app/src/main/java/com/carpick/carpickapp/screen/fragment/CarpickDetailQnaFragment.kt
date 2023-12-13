@@ -68,7 +68,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         binding.run {
             answerLessAdapter = AnswerLessAdapter()
             rvAnswer.adapter = answerLessAdapter
-            answerLessAdapter?.hashMapTest(answerList, nowPage)
+            answerLessAdapter?.setUiState(answerList, nowPage)
             answerLessAdapter?.submitList(testModel1)
 
             roundProgressBar.progress = totalPage / nowPage
@@ -90,7 +90,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
                     if(nowPage-2 < testResult.size) {
-                        answerLessAdapter?.hashMapTest(answerList, nowPage)
+                        answerLessAdapter?.setUiState(answerList, nowPage)
                         answerLessAdapter?.submitList(testResult[nowPage - 2])
                     }
                 }
@@ -108,7 +108,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     tvNowQnaPos.text = "$nowPage "
 
-                    answerLessAdapter?.hashMapTest(answerList, nowPage)
+                    answerLessAdapter?.setUiState(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
 
 
@@ -128,7 +128,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    answerLessAdapter?.hashMapTest(answerList, nowPage)
+                    answerLessAdapter?.setUiState(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
                 }
             }
@@ -141,7 +141,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    answerLessAdapter?.hashMapTest(answerList, nowPage)
+                    answerLessAdapter?.setUiState(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager

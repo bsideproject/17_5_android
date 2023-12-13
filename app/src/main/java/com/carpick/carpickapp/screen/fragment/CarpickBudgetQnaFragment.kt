@@ -57,7 +57,6 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
 
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: TestModel) {
-                //viewmodel에 데이터저장해야됨
                 selectAnswer = item.testData
 
                 Log.e("ljy", "연봉 $item")
