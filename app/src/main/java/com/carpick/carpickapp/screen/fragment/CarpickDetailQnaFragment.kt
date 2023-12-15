@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.ui.CommonDialog
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -27,7 +28,6 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var testModel2 = ArrayList<TestModel>()
     private var testModel3 = ArrayList<TestModel>()
 
-//    private var hashMap = HashMap<Int, Int>() // ui용
     private var answerPage = arrayListOf<Int>()
 
     private var answerList = HashMap<Int, TestModel>() // request용
@@ -45,12 +45,9 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             answerList.put(it.key, it.value)
         }
         answerViewModel.getBudgetResult()?.let {
-            Log.e("ljy", "다시옴 $it")
             answerList.put(1, it)
         }
         answerViewModel.saveAnswerResult(answerList)
-
-        Log.e("ljyljyljy", "${answerViewModel.answerResult}")
 
         testModel1.add(TestModel(id=11, testData = "2페이지 밟으면 나가는 빠른 가속!"))
         testModel1.add(TestModel(id=22, testData = "2페이지 팝콘 터지는 배기음!"))
@@ -84,9 +81,8 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-//                    hashMap[nowPage-1] = item.id
                     answerList[nowPage-1] = item
-                    Log.e("ljy", "save 전 $answerList")
+
                     answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
                     if(nowPage-2 < testResult.size) {
@@ -110,8 +106,6 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     answerLessAdapter?.submitList(testResult[nowPage-2])
-
-
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
 
@@ -121,15 +115,21 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
 
             btnNext.setOnSingleClickListener {
-                if (nowPage < totalPage) {
-                    nowPage++
-                    tvNowQnaPos.text = "$nowPage "
+                if(answerList[nowPage] == null) {
+                    CommonDialog
+                        .getInstance("테스트", "테스트1", "확인")
+                        .show(childFragmentManager, null)
+                }else {
+                    if (nowPage < totalPage) {
+                        nowPage++
+                        tvNowQnaPos.text = "$nowPage "
 
-                    val progressBarValue = nowPage * 100 / totalPage
-                    roundProgressBar.progress = progressBarValue
+                        val progressBarValue = nowPage * 100 / totalPage
+                        roundProgressBar.progress = progressBarValue
 
-                    answerLessAdapter?.setUiState(answerList, nowPage)
-                    answerLessAdapter?.submitList(testResult[nowPage-2])
+                        answerLessAdapter?.setUiState(answerList, nowPage)
+                        answerLessAdapter?.submitList(testResult[nowPage - 2])
+                    }
                 }
             }
 
