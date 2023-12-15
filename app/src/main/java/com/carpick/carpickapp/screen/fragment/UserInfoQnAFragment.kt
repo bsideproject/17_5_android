@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,19 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentUserInfoQnaBinding
 import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.screen.TestActivity
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
+import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 
 class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     private var sex = ""
     private var age = ""
 
     private var answerAdapter : AnswerAdapter? = null
-
+    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,6 +44,9 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         ageModel.add(TestModel(id= 9, testData = "65~69세"))
         ageModel.add(TestModel(id= 10, testData = "70세 이상"))
 
+        if(answerViewModel.lastPage <= 1) {
+            answerViewModel.saveLastPage(1)
+        }
         answerAdapter = AnswerAdapter()
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: TestModel) {
@@ -64,11 +71,25 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
 
         age = ""
         sex = ""
+
+        Log.e("ljy", "${answerViewModel.lastPage}")
+        if(answerViewModel.lastPage != 1 && answerViewModel.lastPage != 2) {
+            answerViewModel.saveLastPage(1)
+            val newFragment = CarpickDetailQnaFragment()
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_host, newFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
     private fun initListener() {
         binding.run {
             val sexTextviewGroup = arrayListOf(tvMan, tvGirl)
 
+            titleLayout.icWish.setOnSingleClickListener {
+                val intent = Intent(binding.root.context, TestActivity::class.java)
+                startActivity(intent)
+            }
             tvMan.setOnSingleClickListener {
                 setClickStatus(sexTextviewGroup,tvMan)
                 sex = "남자"

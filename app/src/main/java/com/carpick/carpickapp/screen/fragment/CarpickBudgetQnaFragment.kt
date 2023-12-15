@@ -32,6 +32,10 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
         initListener()
     }
     private fun initView() {
+        if(answerViewModel.lastPage <= 2) {
+            answerViewModel.saveLastPage(2)
+        }
+
         binding.run {
             answerAdapter = AnswerAdapter()
             rvAnswer.adapter = answerAdapter

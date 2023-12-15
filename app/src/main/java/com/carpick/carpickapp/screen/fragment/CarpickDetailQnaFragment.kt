@@ -47,6 +47,9 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         answerViewModel.getBudgetResult()?.let {
             answerList.put(1, it)
         }
+
+        answerViewModel.saveLastPage(3)
+        Log.e("ljy", "answer ${answerViewModel.lastPage}")
         answerViewModel.saveAnswerResult(answerList)
 
         testModel1.add(TestModel(id=11, testData = "2페이지 밟으면 나가는 빠른 가속!"))
