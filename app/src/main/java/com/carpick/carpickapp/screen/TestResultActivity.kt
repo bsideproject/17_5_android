@@ -66,9 +66,9 @@ fun Page(
 ) {
     val scrollState = rememberScrollState()
     val testCarList = mutableListOf<CarListItem>(
-        CarListItem(0, "쏘나타 디 엣지", "2024년형 가솔린 2.0 하이브리드\n프리미엄 A/T", R.drawable.test_car_image, 1),
-        CarListItem(1, "디 올 뉴 코나", "2023년형 가솔린 1.6 하이브리드\n모던 2WD A/T", R.drawable.test_car_image1, 2),
-        CarListItem(2, "디 올 뉴 코나 일렉트릭", "2023년형 전기 (롱레인지)\n프리미엄 A/T", R.drawable.test_car_image1, 3),
+        CarListItem(0, "쏘나타 디 엣지", "2024년형 가솔린 2.0 하이브리드\n프리미엄 A/T", R.drawable.test_car_image, 1, 31870000),
+        CarListItem(1, "디 올 뉴 코나", "2023년형 가솔린 1.6 하이브리드\n모던 2WD A/T", R.drawable.test_car_image1, 2, 29990000),
+        CarListItem(2, "디 올 뉴 코나 일렉트릭", "2023년형 전기 (롱레인지)\n프리미엄 A/T", R.drawable.test_car_image1, 3, 47520000),
     )
     var selectedIdx by remember {
         mutableStateOf(0)
@@ -137,4 +137,5 @@ data class CarListItem(
     val simpleInfo: String,
     val carImg: Int,
     val rank: Int,
+    val price: Int
 )
