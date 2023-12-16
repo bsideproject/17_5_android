@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.carpick.carpickapp.screen.DetailSpec.DetailSpecBody
 import com.carpick.carpickapp.screen.DetailSpec.DetailSpecHeader
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
@@ -50,6 +51,7 @@ fun DetailSpecPage(
             DetailSpecHeader(
                 onPressBack
             )
+            DetailSpecBody(scrollState)
         }
     }
 }

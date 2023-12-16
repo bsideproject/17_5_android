@@ -58,13 +58,14 @@ fun SimpleSpecTitle() {
 
 @Composable
 fun SimpleSpecBody(
-    chunkedSpecs: List<List<CarDetailSpecTest>>
+    chunkedSpecs: List<List<CarDetailSpecTest>>,
+    paddingTop: Int = 16
 ) {
     val dataRowSize = chunkedSpecs.size
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp, 16.dp, 24.dp, 0.dp)
+            .padding(24.dp, paddingTop.dp, 24.dp, 0.dp)
     ) {
         Column(
             modifier = Modifier

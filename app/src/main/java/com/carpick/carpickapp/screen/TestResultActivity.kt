@@ -54,6 +54,8 @@ class TestResultActivity : ComponentActivity() {
                     },
                     onPressMoreAtSimpleSpec = {
                         Log.d("TestResult", "onPressMoreAtSimpleSpec")
+                        val intent = Intent(this, DetailSpecActivity::class.java)
+                        startActivity(intent)
                     },
                     onPressShareBtn = {
                         Log.d("TestResult", "onPressShareBtn")
