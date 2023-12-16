@@ -20,15 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.model.CarDetailHashTagTest
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
-fun BasicSpec() {
+fun BasicSpec(
+    hashtags: List<CarDetailHashTagTest>
+) {
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         BasicSpecTitle()
-        BasicSpecTags()
+        BasicSpecTags(hashtags)
     }
 }
 
@@ -45,20 +48,16 @@ fun BasicSpecTitle() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun BasicSpecTags() {
-    val testList = mutableListOf<HashTagData>(
-        HashTagData("testa", Color.White, "tooltipa"),
-        HashTagData("testb", Color.White, "tooltipb"),
-        HashTagData("testc", Color.White, "tooltipc"),
-        HashTagData("testd", Color.White, "tooltipd"),
-        HashTagData("teste", Color.White, "tooltipe")
-    )
+fun BasicSpecTags(
+    hashtags: List<CarDetailHashTagTest>
+) {
+
     FlowRow(
         modifier = Modifier.padding(20.dp, 12.dp),
         horizontalArrangement = Arrangement.Start,
         maxItemsInEachRow = 4,
     ) {
-        testList.forEach { hashTag ->
+        hashtags.forEach { hashTag ->
             run {
                 HashTag(value = hashTag)
             }
@@ -68,7 +67,7 @@ fun BasicSpecTags() {
 
 @Composable
 fun HashTag(
-    value: HashTagData
+    value: CarDetailHashTagTest
 ) {
 
     TestResultCommonTooltip(
@@ -120,9 +119,3 @@ fun HashTag(
 
 
 }
-
-data class HashTagData(
-    val content: String,
-    val backgroundColor: Color,
-    val tooltipContent: String
-)

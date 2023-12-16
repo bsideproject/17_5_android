@@ -24,26 +24,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.model.CarDetailSpecTest
 
 @Composable
 fun SimpleSpec(
-    onPressMoreAtSimpleSpec: () -> Unit
+    onPressMoreAtSimpleSpec: () -> Unit,
+    specs: List<CarDetailSpecTest>
 ) {
-    var testData = mutableListOf<SimpleSpecItemData>(
-        SimpleSpecItemData("가격", "3,187만원","tooltip test"),
-        SimpleSpecItemData("차종", "준중형","tooltip test"),
-        SimpleSpecItemData("연료", "하이브리드","tooltip test"),
-        SimpleSpecItemData("연비", "20.9km/l","tooltip test"),
-        SimpleSpecItemData("배기량", "1,987cc","tooltip test"),
-        SimpleSpecItemData("최고출력", "152/6000ps/rpm","tooltip test")
-    ).chunked(2)
+
+    var chunkedSpecs = specs.chunked(2)
 
     Column(
         modifier = Modifier.padding(0.dp, 28.dp, 0.dp, 0.dp)
     ) {
 
         SimpleSpecTitle()
-        SimpleSpecBody(testData)
+        SimpleSpecBody(chunkedSpecs)
         ShowMoreButton(onPressMoreAtSimpleSpec)
 
     }
@@ -62,9 +58,9 @@ fun SimpleSpecTitle() {
 
 @Composable
 fun SimpleSpecBody(
-    testData: List<List<SimpleSpecItemData>>
+    chunkedSpecs: List<List<CarDetailSpecTest>>
 ) {
-    val dataRowSize = testData.size
+    val dataRowSize = chunkedSpecs.size
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +73,7 @@ fun SimpleSpecBody(
         ) {
             for (i in 0 until dataRowSize) {
                 Log.d("testData $i", (i == dataRowSize-1).toString())
-                SimpleSpecRow(testData[i], i == 0, i == dataRowSize-1)
+                SimpleSpecRow(chunkedSpecs[i], i == 0, i == dataRowSize-1)
             }
         }
 
@@ -115,7 +111,7 @@ fun ShowMoreButton(
 
 @Composable
 fun SimpleSpecRow(
-    rowData: List<SimpleSpecItemData>,
+    rowData: List<CarDetailSpecTest>,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
@@ -154,7 +150,7 @@ fun SimpleSpecRow(
 
 @Composable
 fun SimpleSpecRowItem(
-    itemData: SimpleSpecItemData
+    itemData: CarDetailSpecTest
 ) {
     Column(
         modifier = Modifier
@@ -175,7 +171,7 @@ fun SimpleSpecRowItem(
 
 @Composable
 fun SimpleSpecRowItemTitle(
-    itemData: SimpleSpecItemData
+    itemData: CarDetailSpecTest
 ) {
 
     TestResultCommonTooltip(
@@ -216,9 +212,3 @@ fun SimpleSpecRowItemTitle(
     }
 
 }
-
-data class SimpleSpecItemData(
-    val title: String,
-    val value: String,
-    val tooltipContent: String
-)

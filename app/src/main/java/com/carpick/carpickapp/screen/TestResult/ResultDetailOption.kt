@@ -21,21 +21,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.model.CarDetailOptionTest
 
 @Composable
-fun ResultDetailOption() {
+fun ResultDetailOption(
+    options: List<CarDetailOptionTest>
+) {
 
-    val testData = mutableListOf<DetailOptionData>(
-        DetailOptionData("안전", "에어백(운전석, 동승석, 사이드(앞), 커튼), 주행 안전(ABS, 전방 추돌 경우)", "test tooltip"),
-        DetailOptionData("외장", "헤드램프(LED), 주간 주행등", "test tooltip"),
-        DetailOptionData("내장", "스티어링 휠(가죽), 기어 노브(전자식 노브), 계기판(디지털)", "test tooltip"),
-        DetailOptionData("편의", "정속주행(cc(차간조절)), 주차 브레이크(전자식, 오토홀드), 엔진시동(버튼시동)", "test tooltip"),
-    )
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
-        ResultDetailOptionBody(testData)
+        ResultDetailOptionBody(options)
     }
 }
 
@@ -52,7 +49,7 @@ fun ResultDetailOptionTitle() {
 
 @Composable
 fun ResultDetailOptionBody(
-    testData: MutableList<DetailOptionData>
+    options: List<CarDetailOptionTest>
 ) {
     Box(
         modifier = Modifier
@@ -64,8 +61,8 @@ fun ResultDetailOptionBody(
                 .fillMaxWidth()
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            for(i in 0 until testData.size) {
-                ResultDetailRow( testData[i], i == 0, i == testData.size-1)
+            for(i in 0 until options.size) {
+                ResultDetailRow( options[i], i == 0, i == options.size-1)
             }
         }
     }
@@ -73,7 +70,7 @@ fun ResultDetailOptionBody(
 
 @Composable
 fun ResultDetailRow(
-    itemData: DetailOptionData,
+    itemData: CarDetailOptionTest,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
@@ -122,7 +119,7 @@ fun ResultDetailRow(
 
 @Composable
 fun ResultDetailRowTitle(
-    itemData: DetailOptionData,
+    itemData: CarDetailOptionTest,
     topPadding: Int
 ) {
     TestResultCommonTooltip(
@@ -164,9 +161,3 @@ fun ResultDetailRowTitle(
     }
 
 }
-
-data class DetailOptionData(
-    val title: String,
-    val content: String,
-    val tooltipContent: String
-)

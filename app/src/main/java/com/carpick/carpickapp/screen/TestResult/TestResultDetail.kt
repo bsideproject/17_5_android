@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultDetail(
     onPressMoreAtSimpleSpec: () -> Unit,
-    onPressRetest: () -> Unit
+    onPressRetest: () -> Unit,
+    selectedItem: CarDetailTestModel
 ) {
     Column(
         modifier = Modifier
@@ -24,9 +26,16 @@ fun TestResultDetail(
             .background(popupBackground, shape = RoundedCornerShape(30.dp, 30.dp, 0.dp, 0.dp)),
 
     ) {
-        BasicSpec()
-        SimpleSpec(onPressMoreAtSimpleSpec)
-        ResultDetailOption()
+        BasicSpec(
+            selectedItem.hashTags
+        )
+        SimpleSpec(
+            onPressMoreAtSimpleSpec,
+            selectedItem.specs
+        )
+        ResultDetailOption(
+            selectedItem.options
+        )
         DetailRetestButton(onPressRetest)
     }
 

@@ -21,16 +21,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.screen.CarListItem
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultBackLayer(
-    testCarList: MutableList<CarListItem>,
+    testCarList: List<CarDetailTestModel>,
+    selectedItem: CarDetailTestModel,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit
 ) {
-    val selectedItem = testCarList.filter { it.idx == selectedIdx }[0]
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -85,7 +86,7 @@ fun TestResultBackLayer(
 
 @Composable
 fun CarRankListView(
-    testCarList: MutableList<CarListItem>,
+    testCarList: List<CarDetailTestModel>,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit
 ) {
@@ -109,7 +110,7 @@ fun CarRankListView(
 
 @Composable
 fun CarRankListItem(
-    item: CarListItem,
+    item: CarDetailTestModel,
     isLastIdx: Boolean,
     onPressCarRankListItem: (idx: Int) -> Unit,
     selectedIdx: Int,
