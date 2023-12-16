@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -29,13 +30,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.screen.CarListItem
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import java.text.DecimalFormat
 
 @Composable
 fun WishListBody(
-    carList: MutableList<CarListItem>
+    carList: List<CarDetailTestModel>
 ) {
     Column(
         modifier = Modifier
@@ -118,7 +120,7 @@ fun WishListBodyTestBtn() {
 
 @Composable
 fun WishListBodyListView(
-    carList: MutableList<CarListItem>
+    carList: List<CarDetailTestModel>
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -132,8 +134,11 @@ fun WishListBodyListView(
             modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
         )
         LazyColumn {
-            items(carList) {item ->
-                WishListCarItem(item)
+            itemsIndexed(carList) {index, item ->
+                WishListCarItem(
+                    item,
+                    index === carList.size-1
+                )
             }
         }
     }
@@ -141,14 +146,16 @@ fun WishListBodyListView(
 
 @Composable
 fun WishListCarItem(
-    itemData: CarListItem
+    itemData: CarDetailTestModel,
+    isLastIdx: Boolean
 ) {
     val convertPrice = itemData.price/10000
     val dec = DecimalFormat("#,###만원")
+    val paddingBottom = if(isLastIdx) 16 else 0
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(24.dp, 16.dp, 24.dp, 0.dp)
+            .padding(24.dp, 16.dp, 24.dp, paddingBottom.dp)
     ) {
         Column(
             modifier = Modifier
