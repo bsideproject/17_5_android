@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.MainActivity
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.model.CarDetailSpecTest
 import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
@@ -48,7 +49,7 @@ class TestResultActivity : ComponentActivity() {
                         Log.d("TestResult", "onPressBack")
                         finish()
                     },
-                    onPressWishList = {
+                    onPressWishList = {it ->
                         Log.d("TestResult", "onPressWishList")
                     },
                     onPressMoreAtSimpleSpec = {
@@ -73,7 +74,7 @@ class TestResultActivity : ComponentActivity() {
 fun Page(
     networkTestViewModel: NetworkTestViewModel,
     onPressBack: () -> Unit,
-    onPressWishList: () -> Unit,
+    onPressWishList: (specs: List<CarDetailSpecTest>) -> Unit,
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
     onPressShareBtn: () -> Unit,
@@ -90,12 +91,7 @@ fun Page(
     }
 
     fun _onPressWishList() {
-        coroutineScope.launch {
-            networkTestViewModel.getSearchResult().collect {
-                Log.d("TestResultActivity", "result: ${it.toString()}")
-            }
 
-        }
     }
 
     Surface(
