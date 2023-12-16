@@ -10,14 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun RecommandMyCar() {
@@ -51,7 +48,7 @@ fun RecommandMyCarView(
             }
 
             Button(onClick = {
-                val intent = Intent(context, TestActivity::class.java)
+                val intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
             }) {
                 Text(text = "select 테스트")

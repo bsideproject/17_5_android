@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/car_recommend_fragment"
+        android:title="내 차 추천"
+        android:icon="@drawable/ic_bottom_car"
+      />
+
+    <item
+        android:id="@+id/car_ranking_fragment"
+        android:icon="@drawable/ic_bottom_car_ranking"
+        android:title="자동차 순위표"/>
+
+    <item
+        android:id="@+id/car_poor_fragment"
+        android:icon="@drawable/ic_bottom_car_poor"
+        android:title="카푸어 측정기"/>
+</menu>

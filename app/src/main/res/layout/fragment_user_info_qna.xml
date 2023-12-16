@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/title_layout"
+        layout="@layout/title_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_layout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/user_info_main_title"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_sex_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/sex_info"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@id/tv_main_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_man"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="남자"
+                android:textColor="@color/color_36364d"
+                android:fontFamily="@font/pretendard_semibold"
+                app:layout_constraintDimensionRatio="152:47"
+                app:layout_constraintStart_toStartOf="@id/tv_sex_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sex_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_girl"
+                android:layout_width="0dp"
+                android:layout_height="47dp"
+                android:gravity="center"
+                android:text="여자"
+                android:textColor="@color/color_36364d"
+                app:layout_constraintDimensionRatio="152:47"
+                android:fontFamily="@font/pretendard_semibold"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_man"
+                app:layout_constraintBottom_toBottomOf="@id/tv_man"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_age_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="만나이를 알려주세요."
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@id/tv_main_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_man" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_age"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_answer"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_age_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_18_24"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="18~24세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_title" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_25_29"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="25~29세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_age_18_24"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_age_18_24"/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_30_34"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="30~34세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_18_24" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_35_39"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="35~39세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/tv_age_25_29"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_age_30_34"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_age_30_34"/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_40_44"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="40~44세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_30_34" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_45_49"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="45~49세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/tv_age_25_29"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_age_40_44"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_age_40_44"/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_50_54"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="50~54세"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_40_44" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_55_59"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="55~59세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/tv_age_25_29"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_age_50_54"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_age_50_54"/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_60_64"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="60~64세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_50_54" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_65_69"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="65~69세"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/tv_age_25_29"-->
+<!--                app:layout_constraintTop_toTopOf="@id/tv_age_60_64"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/tv_age_60_64"/>-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_age_70"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="47dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="70세 이상"-->
+<!--                android:textColor="@color/color_36364d"-->
+<!--                android:fontFamily="@font/pretendard_semibold"-->
+<!--                app:layout_constraintDimensionRatio="152:47"-->
+<!--                app:layout_constraintStart_toStartOf="@id/tv_sex_title"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tv_age_60_64" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
