@@ -1,16 +1,22 @@
 package com.carpick.carpickapp.screen.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickQnaBinding
 import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.screen.ComposeTestActivity
+import com.carpick.carpickapp.ui.CommonDialog
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
@@ -75,19 +81,49 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }else {
-
+                    CommonDialog
+                        .getInstance("테스트", "테스트1", "확인")
+                        .show(childFragmentManager, null)
                 }
+            }
+
+            titleLayout.icWish.setOnSingleClickListener {
+                startComposeActivityForResult()
+            }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                val newFragment = UserInfoQnAFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private val myActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val resultValue = data?.getIntExtra("page",1) ?: 1
 
-//        answerViewModel.getBudgetResult()?.let {
-//            answerAdapter?.setSelectedItem(it)
-//        }
+                val newFragment = CarpickDetailQnaFragment.getInstance(resultValue)
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
+
+    private fun startComposeActivityForResult() {
+        val intent = Intent(requireContext(), ComposeTestActivity::class.java)
+
+        intent.putExtra("page", answerViewModel.lastPage)
+
+        myActivityResultLauncher.launch(intent)
     }
+
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCarpickQnaBinding {
         return FragmentCarpickQnaBinding.inflate(layoutInflater)
     }

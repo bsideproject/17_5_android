@@ -105,27 +105,17 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
                 val data: Intent? = result.data
                 val resultValue = data?.getIntExtra("page",1) ?: 1
 
-                Log.e("ljy", "result $resultValue")
-                if(resultValue>=3) {
-                    val newFragment = CarpickDetailQnaFragment()
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.nav_host, newFragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }else {
-                    val newFragment = CarpickBudgetQnaFragment()
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.nav_host, newFragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }
+                val newFragment = CarpickDetailQnaFragment.getInstance(resultValue)
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         }
 
     private fun startComposeActivityForResult() {
         val intent = Intent(requireContext(), ComposeTestActivity::class.java)
-        
-        Log.e("ljy", "start ${answerViewModel.lastPage}")
+
         intent.putExtra("page", answerViewModel.lastPage)
 
         myActivityResultLauncher.launch(intent)

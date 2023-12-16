@@ -19,7 +19,6 @@ class ComposeTestActivity : ComponentActivity() {
         setContent {
             CarpickAppTheme {
                 val receivedData = intent.getIntExtra("page", -1)
-                Log.e("ljy", "receive $receivedData")
                 Button(onClick = {
 
                     val resultIntent = Intent().apply {
