@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
+import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.ui.CommonDialog
@@ -51,10 +52,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         }
 
         answerViewModel.saveLastPage(3)
-        Log.e("ljy", "answer ${answerViewModel.lastPage}")
         answerViewModel.saveAnswerResult(answerList)
-
-        Log.e("lee", "answer ${answerViewModel.apiResponse[nowPage]}")
 
         binding.run {
             answerLessAdapter = AnswerLessAdapter()
@@ -62,10 +60,11 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
             apiResponse?.let { apiResponse ->
                 answerLessAdapter?.submitList(apiResponse[nowPage])
-                roundProgressBar.progress = nowPage * 100 / totalPage
-                tvNowQnaPos.text = "$nowPage "
-                answerPage.add(nowPage)
             }
+            roundProgressBar.progress = nowPage * 100 / totalPage
+            tvNowQnaPos.text = "$nowPage "
+            answerPage.add(nowPage)
+            answerLessAdapter?.setUiState(answerList, nowPage)
 
 //            if(page != -1) {
 //                apiResponse?.let { apiResponse ->
@@ -101,9 +100,19 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
                     apiResponse?.let { apiResponse ->
+                        /* nowPage - 2인이유는 어댑터가 여기부터 새로운걸 쓰고 있음
+                        *  hashmap을 사용중인데 hashmap을 이 페이지부터 저장하기에 앞에 성별, 연봉페이지를 빼야되서 -2
+                        * */
+
                         if (nowPage - 2 < apiResponse.size - 2) {
                             answerLessAdapter?.setUiState(answerList, nowPage)
                             answerLessAdapter?.submitList(apiResponse[nowPage])
+                        }else {
+                            val newFragment = LoadingFragment()
+                            val transaction = parentFragmentManager.beginTransaction()
+                            transaction.replace(R.id.nav_host, newFragment)
+                            transaction.addToBackStack(null)
+                            transaction.commit()
                         }
                     }
                 }
@@ -149,9 +158,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         roundProgressBar.progress = progressBarValue
 
                         answerLessAdapter?.setUiState(answerList, nowPage)
-                        apiResponse?.let { apiResponse ->
-                            answerLessAdapter?.submitList(apiResponse[nowPage])
-                        }
+                        answerLessAdapter?.submitList(apiResponse?.get(nowPage))
                     }
                 }
             }
@@ -165,9 +172,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
-                    apiResponse?.let { apiResponse ->
-                        answerLessAdapter?.submitList(apiResponse[nowPage])
-                    }
+                    answerLessAdapter?.submitList(apiResponse?.get(nowPage))
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
 

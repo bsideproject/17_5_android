@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +15,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentLoadingBinding
+import com.carpick.carpickapp.screen.ComposeTestActivity
+import com.carpick.carpickapp.screen.TestActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
     private val imgList by lazy { listOf(binding.firstImg, binding.secondImg, binding.thirdImg) }
-    private var currentIndex = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,8 +72,8 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
             delay(1000)
         }
 
-        // 모든 GIF가 재생된 후 액티비티로 이동
-//        navigateToNextActivity()
+        val intent = Intent(binding.root.context, ComposeTestActivity::class.java)
+        startActivity(intent)
     }
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoadingBinding {
         return FragmentLoadingBinding.inflate(layoutInflater)

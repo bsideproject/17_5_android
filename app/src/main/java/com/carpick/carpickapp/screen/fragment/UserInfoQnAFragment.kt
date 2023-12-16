@@ -107,7 +107,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
 
                 Log.e("ljy", "result $resultValue")
                 if(resultValue>=3) {
-                    val newFragment = CarpickDetailQnaFragment.getInstance(resultValue)
+                    val newFragment = CarpickDetailQnaFragment()
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.nav_host, newFragment)
                     transaction.addToBackStack(null)
@@ -124,8 +124,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
 
     private fun startComposeActivityForResult() {
         val intent = Intent(requireContext(), ComposeTestActivity::class.java)
-
-        // 데이터를 추가합니다.
+        
         Log.e("ljy", "start ${answerViewModel.lastPage}")
         intent.putExtra("page", answerViewModel.lastPage)
 
