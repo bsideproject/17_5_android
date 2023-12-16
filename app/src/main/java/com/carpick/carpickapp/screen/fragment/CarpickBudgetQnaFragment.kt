@@ -44,6 +44,11 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
 
         answerAdapter?.submitList(answerViewModel.apiResponse[1])
 
+        answerViewModel.getBudgetResult()?.let {
+            selectAnswer = it.testData
+            answerAdapter?.setSelectedItem(it)
+        }
+
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: TestModel) {
                 selectAnswer = item.testData
@@ -79,9 +84,9 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
     override fun onResume() {
         super.onResume()
 
-        answerViewModel.getBudgetResult()?.let {
-            answerAdapter?.setSelectedItem(it)
-        }
+//        answerViewModel.getBudgetResult()?.let {
+//            answerAdapter?.setSelectedItem(it)
+//        }
     }
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCarpickQnaBinding {
         return FragmentCarpickQnaBinding.inflate(layoutInflater)
