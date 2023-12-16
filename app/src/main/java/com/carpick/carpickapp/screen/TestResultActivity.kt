@@ -49,8 +49,9 @@ class TestResultActivity : ComponentActivity() {
                         Log.d("TestResult", "onPressBack")
                         finish()
                     },
-                    onPressWishList = {it ->
-                        Log.d("TestResult", "onPressWishList")
+                    onPressWishList = {
+                        val intent = Intent(this, WishListActivity::class.java)
+                        startActivity(intent)
                     },
                     onPressMoreAtSimpleSpec = {
                         Log.d("TestResult", "onPressMoreAtSimpleSpec")
@@ -76,7 +77,7 @@ class TestResultActivity : ComponentActivity() {
 fun Page(
     networkTestViewModel: NetworkTestViewModel,
     onPressBack: () -> Unit,
-    onPressWishList: (specs: List<CarDetailSpecTest>) -> Unit,
+    onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
     onPressShareBtn: () -> Unit,
@@ -92,9 +93,6 @@ fun Page(
         mutableStateOf<CarDetailTestModel>(testCarList[0])
     }
 
-    fun _onPressWishList() {
-
-    }
 
     Surface(
         modifier = Modifier
@@ -108,9 +106,7 @@ fun Page(
         ) {
             TestResultHeader(
                 onPressBack,
-                onPressWishList = {
-                    _onPressWishList()
-                }
+                onPressWishList
             )
             TestResultBackLayer(
                 testCarList,
