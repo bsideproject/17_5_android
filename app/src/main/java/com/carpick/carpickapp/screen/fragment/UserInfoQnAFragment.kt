@@ -7,9 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
@@ -89,6 +91,14 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
                     changeFragment()
                 }
             }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                val newFragment = CarPickStartFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
         }
     }
 
@@ -99,6 +109,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
     private val myActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
