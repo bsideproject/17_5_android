@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".screen.TestActivity"
+            android:name=".screen.ComposeTestActivity"
             android:exported="true"
             android:theme="@style/Theme.Activity.CarpickApp"/>
 

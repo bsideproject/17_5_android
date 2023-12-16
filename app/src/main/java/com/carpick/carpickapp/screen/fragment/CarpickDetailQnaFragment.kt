@@ -23,16 +23,14 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var nowPage = 2
     private var totalPage = 10 // api 나오면 수정
     private var answerLessAdapter: AnswerLessAdapter? = null
-    private var testResult = ArrayList<ArrayList<TestModel>>()
-    private var testModel1 = ArrayList<TestModel>()
-    private var testModel2 = ArrayList<TestModel>()
-    private var testModel3 = ArrayList<TestModel>()
 
     private var answerPage = arrayListOf<Int>()
 
     private var answerList = HashMap<Int, TestModel>() // request용
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private var apiResponse : ArrayList<ArrayList<TestModel>>?= null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,6 +39,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     }
 
     private fun initView() {
+        val page = arguments?.getInt("page") ?: -1
+
+        apiResponse = answerViewModel.apiResponse
+
         answerViewModel.answerResult.map {
             answerList.put(it.key, it.value)
         }
@@ -52,29 +54,37 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         Log.e("ljy", "answer ${answerViewModel.lastPage}")
         answerViewModel.saveAnswerResult(answerList)
 
-        testModel1.add(TestModel(id=11, testData = "2페이지 밟으면 나가는 빠른 가속!"))
-        testModel1.add(TestModel(id=22, testData = "2페이지 팝콘 터지는 배기음!"))
-
-        testModel2.add(TestModel(id=33, testData = "3페이지 시내 주행"))
-        testModel2.add(TestModel(id=44, testData = "3페이지 장거리 운행"))
-
-        testModel3.add(TestModel(id=55, testData = "4페이지 첫번째"))
-        testModel3.add(TestModel(id=66, testData = "4페이지 두번째"))
-
-        testResult.add(testModel1)
-        testResult.add(testModel2)
-        testResult.add(testModel3)
+        Log.e("lee", "answer ${answerViewModel.apiResponse[nowPage]}")
 
         binding.run {
             answerLessAdapter = AnswerLessAdapter()
             rvAnswer.adapter = answerLessAdapter
-            answerLessAdapter?.setUiState(answerList, nowPage)
-            answerLessAdapter?.submitList(testModel1)
 
-            roundProgressBar.progress = totalPage / nowPage
-            tvNowQnaPos.text = "$nowPage "
+            apiResponse?.let { apiResponse ->
+                answerLessAdapter?.submitList(apiResponse[nowPage])
+                roundProgressBar.progress = nowPage * 100 / totalPage
+                tvNowQnaPos.text = "$nowPage "
+                answerPage.add(nowPage)
+            }
 
-            answerPage.add(nowPage)
+//            if(page != -1) {
+//                apiResponse?.let { apiResponse ->
+//                    answerLessAdapter?.submitList(apiResponse[nowPage])
+//                    roundProgressBar.progress = totalPage / nowPage
+//                    tvNowQnaPos.text = "$nowPage "
+//                    answerPage.add(nowPage)
+//                }
+//            }else {
+//                answerLessAdapter?.setUiState(answerList, nowPage)
+//                answerLessAdapter?.submitList(testModel1)
+//
+//                roundProgressBar.progress = totalPage / nowPage
+//                tvNowQnaPos.text = "$nowPage "
+//                answerPage.add(nowPage)
+//            }
+
+
+
             answerLessAdapter?.setClickListener(object : ClickListener {
                 override fun click(item: TestModel) {
                     nowPage++
@@ -85,12 +95,16 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerList[nowPage-1] = item
+                    Log.e("ljy", "adapter $nowPage")
+                    answerViewModel.saveLastPage(nowPage)
 
                     answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
-                    if(nowPage-2 < testResult.size) {
-                        answerLessAdapter?.setUiState(answerList, nowPage)
-                        answerLessAdapter?.submitList(testResult[nowPage - 2])
+                    apiResponse?.let { apiResponse ->
+                        if (nowPage - 2 < apiResponse.size - 2) {
+                            answerLessAdapter?.setUiState(answerList, nowPage)
+                            answerLessAdapter?.submitList(apiResponse[nowPage])
+                        }
                     }
                 }
             })
@@ -108,7 +122,9 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     tvNowQnaPos.text = "$nowPage "
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
-                    answerLessAdapter?.submitList(testResult[nowPage-2])
+                    apiResponse?.let { apiResponse ->
+                        answerLessAdapter?.submitList(apiResponse[nowPage])
+                    }
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
 
@@ -127,11 +143,15 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         nowPage++
                         tvNowQnaPos.text = "$nowPage "
 
+                        answerViewModel.saveLastPage(nowPage)
+
                         val progressBarValue = nowPage * 100 / totalPage
                         roundProgressBar.progress = progressBarValue
 
                         answerLessAdapter?.setUiState(answerList, nowPage)
-                        answerLessAdapter?.submitList(testResult[nowPage - 2])
+                        apiResponse?.let { apiResponse ->
+                            answerLessAdapter?.submitList(apiResponse[nowPage])
+                        }
                     }
                 }
             }
@@ -145,11 +165,23 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
-                    answerLessAdapter?.submitList(testResult[nowPage-2])
+                    apiResponse?.let { apiResponse ->
+                        answerLessAdapter?.submitList(apiResponse[nowPage])
+                    }
                 }else {
                     val fragmentManager = requireActivity().supportFragmentManager
 
                     fragmentManager.popBackStackImmediate()
+                }
+            }
+        }
+    }
+    companion object {
+        @JvmStatic
+        fun getInstance(page : Int) : CarpickDetailQnaFragment {
+            return CarpickDetailQnaFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("page", page)
                 }
             }
         }
