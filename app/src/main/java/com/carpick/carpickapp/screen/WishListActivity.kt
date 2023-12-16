@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -23,14 +24,20 @@ class WishListActivity : ComponentActivity() {
         setContent {
             CarpickAppTheme {
                 // A surface container using the 'background' color from the theme
-                Page()
+                WishListPage(
+                    onPressBack = {
+                        finish()
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun Page() {
+fun WishListPage(
+    onPressBack: () -> Unit
+) {
 
     val testCarList = mutableListOf<CarListItem>(
         CarListItem(0, "쏘나타 디 엣지", "2024년형 가솔린 2.0 하이브리드\n프리미엄 A/T", R.drawable.wishlist_test_car_img1, 1, 31870000),
@@ -43,7 +50,9 @@ fun Page() {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            WishListHeader()
+            WishListHeader(
+                onPressBack
+            )
             WishListBody(testCarList)
         }
 
@@ -54,7 +63,11 @@ fun Page() {
 @Composable
 fun GreetingPreview3() {
     CarpickAppTheme {
-        Page()
+        WishListPage(
+            onPressBack = {
+                Log.d("WishListActivity", "onPressBack")
+            }
+        )
     }
 }
 

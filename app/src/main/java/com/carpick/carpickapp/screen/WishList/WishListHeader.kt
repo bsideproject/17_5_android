@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
 
 @Composable
-fun WishListHeader() {
+fun WishListHeader(
+    onPressBack: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +57,7 @@ fun WishListHeader() {
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-
+                        onPressBack()
                     },
             )
 
