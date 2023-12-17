@@ -14,6 +14,8 @@ import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
+import com.carpick.carpickapp.model.Choice
+import com.carpick.carpickapp.model.QnAListResponseModelItem
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.ComposeTestActivity
 import com.carpick.carpickapp.ui.CommonDialog
@@ -29,10 +31,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var totalPage = 10 // api 나오면 수정
     private var answerLessAdapter: AnswerLessAdapter? = null
 
-    private var answerList = HashMap<Int, TestModel>() // request용
+    private var answerList = HashMap<Int, Choice>() // request용
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
-    private var apiResponse : ArrayList<ArrayList<TestModel>>?= null
+    private var apiResponse : ArrayList<QnAListResponseModelItem>?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +58,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         if(page == -1) {
             binding.run {
                 apiResponse?.let { apiResponse ->
-                    answerLessAdapter?.submitList(apiResponse[nowPage])
+                    answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                 }
                 roundProgressBar.progress = nowPage * 100 / totalPage
                 tvNowQnaPos.text = "$nowPage "
@@ -67,7 +69,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             answerViewModel.saveLastPage(nowPage)
 
             apiResponse?.let { apiResponse ->
-                answerLessAdapter?.submitList(apiResponse[nowPage])
+                answerLessAdapter?.submitList(apiResponse[nowPage].choices)
             }
             binding.roundProgressBar.progress = nowPage * 100 / totalPage
             binding.tvNowQnaPos.text = "$nowPage "
@@ -84,7 +86,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         
         binding.run {
             answerLessAdapter?.setClickListener(object : ClickListener {
-                override fun click(item: TestModel) {
+                override fun click(item: Choice) {
                     nowPage++
 
                     tvNowQnaPos.text = "$nowPage "
@@ -107,7 +109,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                         if (nowPage - 2 < apiResponse.size - 2) {
                             answerLessAdapter?.setUiState(answerList, nowPage)
-                            answerLessAdapter?.submitList(apiResponse[nowPage])
+                            answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                         }else {
                             val newFragment = LoadingFragment()
                             val transaction = parentFragmentManager.beginTransaction()
@@ -133,7 +135,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     apiResponse?.let { apiResponse ->
-                        answerLessAdapter?.submitList(apiResponse[nowPage])
+                        answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                     }
                 }else {
                     moveCarPickBudgetFragment()
@@ -160,7 +162,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         roundProgressBar.progress = progressBarValue
 
                         answerLessAdapter?.setUiState(answerList, nowPage)
-                        answerLessAdapter?.submitList(apiResponse?.get(nowPage))
+                        answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                     }
                 }
             }
@@ -174,7 +176,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
-                    answerLessAdapter?.submitList(apiResponse?.get(nowPage))
+                    answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                 }else {
                     moveCarPickBudgetFragment()
                 }

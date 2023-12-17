@@ -1,0 +1,260 @@
+[
+  {
+    "question_name": "성별과 연령대를 선택해주세요!",
+    "choices": [
+      {
+        "choice_code": "20S_MEN",
+        "content": "20대 남성"
+      },
+      {
+        "choice_code": "20S_WOMEN",
+        "content": "20대 여성"
+      },
+      {
+        "choice_code": "30S_MEN",
+        "content": "30대 남성"
+      },
+      {
+        "choice_code": "30S_WOMEN",
+        "content": "30대 여성"
+      },
+      {
+        "choice_code": "40S_MEN",
+        "content": "40대 남성"
+      },
+      {
+        "choice_code": "40S_WOMEN",
+        "content": "40대 여성"
+      },
+      {
+        "choice_code": "50S_MEN",
+        "content": "50대 남성"
+      },
+      {
+        "choice_code": "50S_WOMEN",
+        "content": "50대 여성"
+      },
+      {
+        "choice_code": "60S_MEN",
+        "content": "60대 남성"
+      },
+      {
+        "choice_code": "60S_WOMEN",
+        "content": "60대 여성"
+      },
+      {
+        "choice_code": "70S_MEN",
+        "content": "70대 남성 이상"
+      },
+      {
+        "choice_code": "70S_WOMEN",
+        "content": "70대 여성 이상"
+      }
+    ]
+  },
+  {
+    "question_name": "가능한 예산은 얼마인가요?",
+    "choices": [
+      {
+        "choice_code": "PRICE_10000_BELOW",
+        "content": "1억원 이하"
+      },
+      {
+        "choice_code": "PRICE_15000_BELOW",
+        "content": "1.5억원 이하"
+      },
+      {
+        "choice_code": "PRICE_20000_BELOW",
+        "content": "2억원 이하"
+      },
+      {
+        "choice_code": "PRICE_20000_OVER",
+        "content": "2억원 초과"
+      },
+      {
+        "choice_code": "PRICE_2500_BELOW",
+        "content": "2500만원 이하"
+      },
+      {
+        "choice_code": "PRICE_3500_BELOW",
+        "content": "3500만원 이하"
+      },
+      {
+        "choice_code": "PRICE_4500_BELOW",
+        "content": "4500만원 이하"
+      },
+      {
+        "choice_code": "PRICE_5500_BELOW",
+        "content": "5500만원 이하"
+      },
+      {
+        "choice_code": "PRICE_6500_BELOW",
+        "content": "6500만원 이하"
+      },
+      {
+        "choice_code": "PRICE_8000_BELOW",
+        "content": "8000만원 이하"
+      }
+    ]
+  },
+  {
+    "question_name": "가장 선호하는 연로는 무엇인가요?",
+    "choices": [
+      {
+        "choice_code": "ANYTHING_FUEL",
+        "content": "상관없음"
+      },
+      {
+        "choice_code": "GASOLINE_OR_DIESEL",
+        "content": "가솔린 + 디젤"
+      },
+      {
+        "choice_code": "HYBRID_OR_EV",
+        "content": "하이브리드 + 전기"
+      }
+    ]
+  },
+  {
+    "question_name": "차량을 주로 어떤 용도로 많이 사용하실 건가요?",
+    "choices": [
+      {
+        "choice_code": "ANYTHING_USAGE",
+        "content": "시내 장거리 모두 좋아요!"
+      },
+      {
+        "choice_code": "DRIVING_AROUND_CITY",
+        "content": "시내 주행 (단거리 출퇴근, 아이 등하교 등)"
+      },
+      {
+        "choice_code": "DRIVING_LONG_DISTANCE",
+        "content": "장거리 운행 (장거리 출퇴근, 장거리 여행)"
+      }
+    ]
+  },
+  {
+    "question_name": "차량에 주로 누구를 태우실 건가요?",
+    "choices": [
+      {
+        "choice_code": "DRIVING_WITH_CHILD",
+        "content": "아이"
+      },
+      {
+        "choice_code": "DRIVING_WITH_COWORKER",
+        "content": "직장동료/상사"
+      },
+      {
+        "choice_code": "DRIVING_WITH_FRIENDS",
+        "content": "친구들"
+      },
+      {
+        "choice_code": "DRIVING_WITH_LOVER",
+        "content": "연인"
+      },
+      {
+        "choice_code": "DRIVING_WITH_NOBODY",
+        "content": "아무도 안태울건데?"
+      },
+      {
+        "choice_code": "DRIVING_WITH_PARENT",
+        "content": "부모님"
+      },
+      {
+        "choice_code": "DRIVING_WITH_SPOUSE",
+        "content": "배우자"
+      }
+    ]
+  },
+  {
+    "question_name": "운전의 재미는 무엇이라고 생각하시나요?",
+    "choices": [
+      {
+        "choice_code": "EASY_MAINTENANCE",
+        "content": "돈이 안나가야지 재밌지, 유지보수 쉬운 차량!"
+      },
+      {
+        "choice_code": "EXHAUST_SOUND_LIKE_POPCORN",
+        "content": "팝콘 터지는 배기음!"
+      },
+      {
+        "choice_code": "FAST_ACCELERATION",
+        "content": "밟으면 나가는 빠른 가속!"
+      }
+    ]
+  },
+  {
+    "question_name": "운전의 안전은 무엇이 가장 중요하다고 생각하시나요?",
+    "choices": [
+      {
+        "choice_code": "HIGHWAY_SAFETY_IMPORTANT",
+        "content": "고속 주행 시 안전이 중요해!"
+      },
+      {
+        "choice_code": "NIGHT_SAFETY_IMPORTANT",
+        "content": "야간 주행 시 안전이 중요해!"
+      },
+      {
+        "choice_code": "WET_ROAD_SAFETY_IMPORTANT",
+        "content": "빗길 주행 시 안전이 중요해!"
+      }
+    ]
+  },
+  {
+    "question_name": "드라이빙에 대한 로망은 무엇인가요?",
+    "choices": [
+      {
+        "choice_code": "CAMPING_ROMAN",
+        "content": "바리바리 싸들고 야외 드라이빙!"
+      },
+      {
+        "choice_code": "OPENNESS_ROMAN",
+        "content": "개방감 있는 드라이빙!"
+      },
+      {
+        "choice_code": "STABLE_DRIVING_ROMAN",
+        "content": "안정적인 승차감의 드라이빙!"
+      },
+      {
+        "choice_code": "STYLISH_INSIDE_ROMAN",
+        "content": "실내가 멋있는 드라이빙!"
+      }
+    ]
+  },
+  {
+    "question_name": "당신에 대해 알려주세요",
+    "choices": [
+      {
+        "choice_code": "DISLIKE_COLD",
+        "content": "추위 싫어"
+      },
+      {
+        "choice_code": "DISLIKE_HOT",
+        "content": "더위 싫어"
+      },
+      {
+        "choice_code": "DISLIKE_SMELL",
+        "content": "냄새에 민감"
+      }
+    ]
+  },
+  {
+    "question_name": "운전 중 무엇이 가장 걱정되시나요?",
+    "choices": [
+      {
+        "choice_code": "WORRY_ABOUT_ALLEY",
+        "content": "골목이 제일 걱정돼"
+      },
+      {
+        "choice_code": "WORRY_ABOUT_CHILD",
+        "content": "어린이가 제일 걱정돼"
+      },
+      {
+        "choice_code": "WORRY_ABOUT_NOTHING",
+        "content": "걱정되는 것이 없다"
+      },
+      {
+        "choice_code": "WORRY_ABOUT_PARKING",
+        "content": "주차가 제일 걱정돼"
+      }
+    ]
+  }
+]

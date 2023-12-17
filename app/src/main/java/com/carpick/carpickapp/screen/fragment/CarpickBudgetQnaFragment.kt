@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickQnaBinding
+import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.ComposeTestActivity
 import com.carpick.carpickapp.ui.CommonDialog
@@ -48,16 +49,16 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
             roundProgressBar.progress = totalPage/nowPage
         }
 
-        answerAdapter?.submitList(answerViewModel.apiResponse[1])
+        answerAdapter?.submitList(answerViewModel.apiResponse[1].choices)
 
         answerViewModel.getBudgetResult()?.let {
-            selectAnswer = it.testData
+            selectAnswer = it.content
             answerAdapter?.setSelectedItem(it)
         }
 
         answerAdapter?.setClickListener(object : ClickListener {
-            override fun click(item: TestModel) {
-                selectAnswer = item.testData
+            override fun click(item: Choice) {
+                selectAnswer = item.content
 
                 answerViewModel.saveBudgetResult(item)
 
