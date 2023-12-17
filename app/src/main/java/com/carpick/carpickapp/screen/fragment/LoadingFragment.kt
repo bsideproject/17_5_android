@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -25,6 +27,10 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {} }
+        )
 
         Glide.with(this@LoadingFragment)
             .asGif()
@@ -75,6 +81,7 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
         val intent = Intent(binding.root.context, ComposeTestActivity::class.java)
         startActivity(intent)
     }
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentLoadingBinding {
         return FragmentLoadingBinding.inflate(layoutInflater)
     }
