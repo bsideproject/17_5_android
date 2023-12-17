@@ -19,6 +19,7 @@ class CarpickAnswerViewModel @Inject constructor() : ViewModel() {
         get() = _lastPage
 
     private var answerBudgetResult : Choice?= null
+    private var answerUserInfoResult : Choice?= null
 
     private var _apiResponse = ArrayList<QnAListResponseModelItem>()
     val apiResponse : ArrayList<QnAListResponseModelItem>
@@ -36,6 +37,13 @@ class CarpickAnswerViewModel @Inject constructor() : ViewModel() {
     }
     fun saveBudgetResult(answer : Choice) {
         answerBudgetResult = answer
+    }
+
+    fun getUserInfo() : Choice?{
+        return answerUserInfoResult
+    }
+    fun saveUserInfo(answer : Choice) {
+        answerUserInfoResult = answer
     }
 
     fun saveLastPage(page : Int) {

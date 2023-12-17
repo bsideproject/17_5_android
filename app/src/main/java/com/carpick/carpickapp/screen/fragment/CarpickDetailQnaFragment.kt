@@ -81,6 +81,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         answerViewModel.answerResult.map {
             answerList.put(it.key, it.value)
         }
+
+        answerViewModel.getUserInfo()?.let {
+            answerList.put(0, it)
+        }
         answerViewModel.getBudgetResult()?.let {
             answerList.put(1, it)
         }

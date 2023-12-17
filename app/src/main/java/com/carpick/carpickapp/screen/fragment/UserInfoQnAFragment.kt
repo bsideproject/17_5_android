@@ -52,7 +52,9 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: Choice) {
                 age = item.content
-                
+
+                answerViewModel.saveUserInfo(item)
+
                 if(sex != "" && age != "") {
                     changeFragment()
                 }
