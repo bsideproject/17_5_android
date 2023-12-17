@@ -17,6 +17,7 @@ import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModelItem
 import com.carpick.carpickapp.screen.ComposeTestActivity
+import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -119,11 +120,8 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                             answerLessAdapter?.setUiState(answerList, nowPage)
                             answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                         }else {
-                            val newFragment = LoadingFragment()
-                            val transaction = parentFragmentManager.beginTransaction()
-                            transaction.replace(R.id.nav_host, newFragment)
-                            transaction.addToBackStack(null)
-                            transaction.commit()
+                            val intent = Intent(binding.root.context, LoadingActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                 }
