@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickStartBinding
+import com.carpick.carpickapp.screen.WishListActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
 
 
@@ -34,6 +36,11 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
                 val fragmentManager = requireActivity().supportFragmentManager
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 activity?.finish()
+            }
+
+            titleLayout.clWish.setOnSingleClickListener {
+                val intent = Intent(binding.root.context, WishListActivity::class.java)
+                startActivity(intent)
             }
         }
     }

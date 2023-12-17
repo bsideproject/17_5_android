@@ -1,27 +1,19 @@
 package com.carpick.carpickapp.screen.fragment
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentUserInfoQnaBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.QnAListResponseModelItem
-import com.carpick.carpickapp.model.TestModel
-import com.carpick.carpickapp.screen.ComposeTestActivity
-import com.carpick.carpickapp.screen.TestActivity
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -43,6 +35,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         testModel()
 
         binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
+        binding.titleLayout.clWish.isVisible = false
 
         if(answerViewModel.lastPage <= 1) {
             answerViewModel.saveLastPage(1)
@@ -76,10 +69,6 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         binding.run {
             val sexTextviewGroup = arrayListOf(tvMan, tvGirl)
 
-            titleLayout.icWish.setOnSingleClickListener {
-                startComposeActivityForResult()
-            }
-
             // 연봉부터 누르고 성별 누른 경우 이동하기 위해 체크
             tvMan.setOnSingleClickListener {
                 setClickStatus(sexTextviewGroup,tvMan)
@@ -110,33 +99,11 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     }
 
     private fun changeFragment() {
-        val newFragment = CarpickBudgetQnaFragment()
+        val newFragment = CarPickBudgetQnaFragment()
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.nav_host, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()
-    }
-
-    private val myActivityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val resultValue = data?.getIntExtra("page",1) ?: 1
-
-                val newFragment = CarpickDetailQnaFragment.getInstance(resultValue)
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
-            }
-        }
-
-    private fun startComposeActivityForResult() {
-        val intent = Intent(requireContext(), ComposeTestActivity::class.java)
-
-        intent.putExtra("page", answerViewModel.lastPage)
-
-        myActivityResultLauncher.launch(intent)
     }
 
     private fun setClickStatus(textviewGroup: ArrayList<AppCompatTextView>, clickTexView : AppCompatTextView) {
