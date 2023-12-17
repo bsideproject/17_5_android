@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
@@ -91,6 +92,8 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     tvNowQnaPos.text = "$nowPage "
 
+                    binding.clNoAnswer.isVisible = false
+
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
@@ -145,9 +148,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
             btnNext.setOnSingleClickListener {
                 if(answerList[nowPage] == null) {
-                    CommonDialog
-                        .getInstance("테스트", "테스트1", "확인")
-                        .show(childFragmentManager, null)
+                    clNoAnswer.isVisible = true
                 }else {
                     if (nowPage < totalPage) {
                         nowPage++
@@ -180,6 +181,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 }else {
                     moveCarPickBudgetFragment()
                 }
+            }
+
+            ivClose.setOnSingleClickListener {
+                clNoAnswer.isVisible = false
             }
 
             titleLayout.icWish.setOnSingleClickListener {

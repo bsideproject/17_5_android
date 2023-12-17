@@ -27,9 +27,9 @@ class NoResultFragment : BaseFragment<FragmentNotResultBinding>() {
     private fun initView() {
         Glide.with(this)
             .asGif()
-            .load(R.drawable.noresult_motion) // 여기에 자신의 GIF 리소스 ID를 넣어주세요
-            .apply(RequestOptions().disallowHardwareConfig()) // 이 부분이 핵심입니다
-            .listener(object : RequestListener<GifDrawable> { // DataSource를 GifDrawable로 변경
+            .load(R.drawable.noresult_motion)
+            .apply(RequestOptions().disallowHardwareConfig())
+            .listener(object : RequestListener<GifDrawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,

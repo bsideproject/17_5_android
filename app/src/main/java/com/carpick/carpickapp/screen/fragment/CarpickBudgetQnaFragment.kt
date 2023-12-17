@@ -9,23 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
-import com.carpick.carpickapp.databinding.FragmentCarpickQnaBinding
+import com.carpick.carpickapp.databinding.FragmentCarpickBudgetQnaBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.ComposeTestActivity
 import com.carpick.carpickapp.ui.CommonDialog
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
-import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
+class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>() {
     private var nowPage = 1
     private var totalPage = 10 // api 나오면 수정
     private var answerAdapter : AnswerAdapter? = null
@@ -60,6 +58,8 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
             override fun click(item: Choice) {
                 selectAnswer = item.content
 
+                binding.clNoAnswer.isVisible = false
+
                 answerViewModel.saveBudgetResult(item)
 
                 val newFragment = CarpickDetailQnaFragment()
@@ -74,7 +74,6 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
     private fun initListener() {
         binding.run {
             btnNext.setOnSingleClickListener {
-                // 답변 선택안하고 클릭시 토스트 띄워야되는거로 앎, 기획서 봐야됨
                 if(selectAnswer != "") {
                     val newFragment = CarpickDetailQnaFragment()
                     val transaction = parentFragmentManager.beginTransaction()
@@ -82,12 +81,13 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }else {
-                    CommonDialog
-                        .getInstance("테스트", "테스트1", "확인")
-                        .show(childFragmentManager, null)
+                    clNoAnswer.isVisible = true
                 }
             }
 
+            ivClose.setOnSingleClickListener {
+                clNoAnswer.isVisible = false
+            }
             titleLayout.icWish.setOnSingleClickListener {
                 startComposeActivityForResult()
             }
@@ -125,7 +125,7 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickQnaBinding>() {
     }
 
 
-    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCarpickQnaBinding {
-        return FragmentCarpickQnaBinding.inflate(layoutInflater)
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCarpickBudgetQnaBinding {
+        return FragmentCarpickBudgetQnaBinding.inflate(layoutInflater)
     }
 }

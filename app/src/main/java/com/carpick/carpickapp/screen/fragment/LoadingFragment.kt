@@ -50,8 +50,8 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
                 .asGif()
                 .load(R.drawable.loading_motion)
                 .apply(requestOptions)
-                .apply(RequestOptions().disallowHardwareConfig()) // 이 부분이 핵심입니다
-                .listener(object : RequestListener<GifDrawable> { // DataSource를 GifDrawable로 변경
+                .apply(RequestOptions().disallowHardwareConfig())
+                .listener(object : RequestListener<GifDrawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,
@@ -74,7 +74,6 @@ class LoadingFragment : BaseFragment<FragmentLoadingBinding>() {
                 })
                 .into(imageView)
 
-            // 1초 대기
             delay(1000)
         }
 
