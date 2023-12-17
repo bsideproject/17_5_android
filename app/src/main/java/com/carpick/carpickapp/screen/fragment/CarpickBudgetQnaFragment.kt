@@ -37,6 +37,8 @@ class CarpickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
         initListener()
     }
     private fun initView() {
+        binding.tvQnaTitle.text = answerViewModel.apiResponse[1].questionName
+
         if(answerViewModel.lastPage <= 2) {
             answerViewModel.saveLastPage(2)
         }

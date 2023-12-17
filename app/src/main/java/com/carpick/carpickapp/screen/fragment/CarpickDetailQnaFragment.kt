@@ -49,6 +49,8 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
         apiResponse = answerViewModel.apiResponse
 
+        binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
+
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
 
@@ -111,6 +113,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         * */
 
                         if (nowPage - 2 < apiResponse.size - 2) {
+                            binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
                             answerLessAdapter?.setUiState(answerList, nowPage)
                             answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                         }else {

@@ -42,6 +42,8 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     private fun initView() {
         testModel()
 
+        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
+
         if(answerViewModel.lastPage <= 1) {
             answerViewModel.saveLastPage(1)
         }
