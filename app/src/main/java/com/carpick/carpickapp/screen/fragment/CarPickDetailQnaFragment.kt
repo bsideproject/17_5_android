@@ -53,12 +53,19 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
 
+        Log.e("leejy", "비교 ${answerViewModel.lastPage} $nowPage")
+
         if(answerViewModel.lastPage < nowPage) {
             answerViewModel.saveLastPage(nowPage)
         }
 
+
+        // page == -1은 스텝 건너뛰고 온게 아닌, 정상 플로우로 들어온 경우
         if(page == -1) {
             binding.run {
+                Log.e("leejy", "page $nowPage")
+                answerViewModel.saveLastPage(nowPage)
+
                 apiResponse?.let { apiResponse ->
                     answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                 }
@@ -68,6 +75,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
         }else {
             nowPage = page
+            Log.e("leejy", "else page $nowPage")
             answerViewModel.saveLastPage(nowPage)
 
             apiResponse?.let { apiResponse ->

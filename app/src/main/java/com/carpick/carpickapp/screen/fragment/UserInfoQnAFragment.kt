@@ -37,8 +37,8 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
         binding.titleLayout.clWish.isVisible = false
 
-        if(answerViewModel.lastPage <= 1) {
-            answerViewModel.saveLastPage(1)
+        if(answerViewModel.lastPage < 1) {
+            answerViewModel.saveLastPage(0)
         }
 
         answerAdapter = AnswerAdapter()

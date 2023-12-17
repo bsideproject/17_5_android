@@ -34,8 +34,8 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
         binding.tvQnaTitle.text = answerViewModel.apiResponse[1].questionName
         binding.titleLayout.clWish.isVisible = false
 
-        if(answerViewModel.lastPage <= 2) {
-            answerViewModel.saveLastPage(2)
+        if(answerViewModel.lastPage <= 1) {
+            answerViewModel.saveLastPage(1)
         }
 
         binding.run {
