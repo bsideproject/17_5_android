@@ -141,21 +141,25 @@ fun SimpleSpecRow(
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Top
     ) {
-        rowData.forEach { it ->
-            SimpleSpecRowItem(it)
+        for(i in 0 until rowData.size) {
+            SimpleSpecRowItem(
+                rowData[i],
+                i%2 == 1
+            )
         }
     }
 }
 
 @Composable
 fun SimpleSpecRowItem(
-    itemData: CarDetailSpecTest
+    itemData: CarDetailSpecTest,
+    isLastIdx: Boolean
 ) {
     Column(
         modifier = Modifier
-            .width(132.dp)
+            .fillMaxWidth(if(isLastIdx) 1f else .5f)
             .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
         SimpleSpecRowItemTitle(itemData)
