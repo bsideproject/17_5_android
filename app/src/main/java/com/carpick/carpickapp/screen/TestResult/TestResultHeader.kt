@@ -70,7 +70,7 @@ fun TestResultHeader(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.ic_favorite),
+                painter = painterResource(id = R.drawable.ic_test_result_header_favorite),
                 contentDescription = "위시리스트",
                 modifier = Modifier
                     .size(30.dp)
