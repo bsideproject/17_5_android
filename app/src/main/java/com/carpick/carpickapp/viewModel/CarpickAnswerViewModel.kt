@@ -1,8 +1,10 @@
 package com.carpick.carpickapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModel
+import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.repository.QnaListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -57,6 +59,11 @@ class CarpickAnswerViewModel @Inject constructor(
 
     fun getQnaList(): Flow<List<QnAListResponseModel>> {
         return qnaListRepository.getQnaList()
+            .catch { it.printStackTrace() }
+    }
+
+    fun getRecommendCars(answer : List<String>) : Flow<RecommendCars>{
+        return qnaListRepository.getRecommendCars(answer)
             .catch { it.printStackTrace() }
     }
 }
