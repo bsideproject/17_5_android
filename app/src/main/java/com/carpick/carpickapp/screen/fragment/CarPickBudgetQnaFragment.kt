@@ -31,7 +31,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
         initListener()
     }
     private fun initView() {
-        binding.tvQnaTitle.text = answerViewModel.apiResponse[1].questionName
+//        binding.tvQnaTitle.text = answerViewModel.apiResponse[1].questionName
         binding.titleLayout.clWish.isVisible = false
 
         if(answerViewModel.lastPage <= 1) {
@@ -44,7 +44,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
             roundProgressBar.progress = totalPage/nowPage
         }
 
-        answerAdapter?.submitList(answerViewModel.apiResponse[1].choices)
+//        answerAdapter?.submitList(answerViewModel.apiResponse[1].choices)
 
         answerViewModel.getBudgetResult()?.let {
             selectAnswer = it.content

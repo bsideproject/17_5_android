@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,16 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentUserInfoQnaBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.model.QnAListResponseModelItem
+import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import kotlinx.coroutines.launch
 
 class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     private var sex = ""
@@ -29,12 +32,13 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        initViewModel()
         initListener()
     }
     private fun initView() {
         testModel()
 
-        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
+//        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
         binding.titleLayout.clWish.isVisible = false
 
         if(answerViewModel.lastPage < 1) {
@@ -56,7 +60,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         })
         binding.rvAge.adapter = answerAdapter
 
-        answerAdapter?.submitList(answerViewModel.apiResponse[0].choices)
+//        answerAdapter?.submitList(answerViewModel.apiResponse[0].questions[])
     }
 
     override fun onResume() {
@@ -119,12 +123,20 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         return FragmentUserInfoQnaBinding.inflate(layoutInflater)
     }
 
+    private fun initViewModel() {
+        lifecycleScope.launch {
+            answerViewModel.getQnaList().collect {
+                Log.e("ljy", "$it")
+                answerViewModel.setApiResponse(it)
+            }
+        }
+    }
     private fun testModel() {
-        val qnaListResponseModel = ArrayList<QnAListResponseModelItem>()
+        val qnaListResponseModel = ArrayList<QnAListResponseModel>()
         qnaListResponseModel.clear()
 
         qnaListResponseModel.add(
-            QnAListResponseModelItem(
+            QnAListResponseModel(
                 questionName = "성별과 연령대를 선택해주세요!",
                 choices = listOf(
                     Choice(choiceCode = "20S_MEN", content = "20대 남성"),
@@ -137,7 +149,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
             )
         )
         qnaListResponseModel.add(
-            QnAListResponseModelItem(
+            QnAListResponseModel(
                 questionName = "가능한 예산은 얼마인가요?",
                 choices = listOf(
                     Choice(choiceCode = "PRICE_10000_BELOW", content = "1억원 이하"),
@@ -151,7 +163,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         )
 
         qnaListResponseModel.add(
-            QnAListResponseModelItem(
+            QnAListResponseModel(
                 questionName = "차량을 주로 어떤 용도로 많이 사용하실 건가요?",
                 choices = listOf(
                     Choice(choiceCode = "ANYTHING_USAGE", content = "시내 장거리 모두 좋아요!"),
@@ -162,7 +174,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         )
 
         qnaListResponseModel.add(
-            QnAListResponseModelItem(
+            QnAListResponseModel(
                 questionName = "차량에 주로 누구를 태우실 건가요?",
                 choices = listOf(
                     Choice(choiceCode = "DRIVING_WITH_CHILD", content = "아이"),
@@ -217,6 +229,6 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
 //        testApiResponse.add(responseModel4)
 //        testApiResponse.add(responseModel5)
 
-        answerViewModel.setApiResponse(qnaListResponseModel)
+//        answerViewModel.setApiResponse(qnaListResponseModel)
     }
 }

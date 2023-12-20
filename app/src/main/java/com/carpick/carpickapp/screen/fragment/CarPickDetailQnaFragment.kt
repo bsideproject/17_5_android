@@ -15,7 +15,7 @@ import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.model.QnAListResponseModelItem
+import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.screen.ComposeTestActivity
 import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
@@ -33,7 +33,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var answerList = HashMap<Int, Choice>() // request용
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
-    private var apiResponse : ArrayList<QnAListResponseModelItem>?= null
+    private var apiResponse : ArrayList<QnAListResponseModel>?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +45,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private fun initView() {
         val page = arguments?.getInt("page") ?: -1
 
-        apiResponse = answerViewModel.apiResponse
+//        apiResponse = answerViewModel.apiResponse
 
         binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
         binding.titleLayout.clWish.isVisible = false
