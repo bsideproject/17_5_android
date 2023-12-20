@@ -10,23 +10,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ItemAnswerBinding
-import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.model.Choice
 
-class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
-    object: DiffUtil.ItemCallback<TestModel>() {
-        override fun areItemsTheSame(oldItem: TestModel, newItem: TestModel): Boolean {
+class AnswerAdapter : ListAdapter<Choice, AnswerAdapter.AnswerViewHolder>(
+    object: DiffUtil.ItemCallback<Choice>() {
+        override fun areItemsTheSame(oldItem: Choice, newItem: Choice): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: TestModel, newItem: TestModel): Boolean {
+        override fun areContentsTheSame(oldItem: Choice, newItem: Choice): Boolean {
             return oldItem == newItem
         }
     }
 ) {
 
     private var listener : ClickListener?= null
-    private var selectedItem : TestModel?= null
+    private var selectedItem : Choice?= null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnswerViewHolder {
         return AnswerViewHolder(
@@ -37,7 +37,7 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
     override fun onBindViewHolder(holder: AnswerViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-    fun setSelectedItem(selected : TestModel) {
+    fun setSelectedItem(selected : Choice) {
         selectedItem = selected
     }
     fun setClickListener(listener: ClickListener) {
@@ -48,7 +48,7 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
     inner class AnswerViewHolder(
         private val binding : ItemAnswerBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        private var item : TestModel? = null
+        private var item : Choice? = null
 
 
         init {
@@ -70,10 +70,10 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
         }
 
 
-        fun bind(item : TestModel) {
+        fun bind(item : Choice) {
             this.item = item
 
-            binding.tvAnswer.text = item.testData
+            binding.tvAnswer.text = item.content
 
             binding.tvAnswer.setBackgroundColor(0)
             binding.tvAnswer.setTextColor(
@@ -84,7 +84,7 @@ class AnswerAdapter : ListAdapter<TestModel, AnswerAdapter.AnswerViewHolder>(
             )
 
             selectedItem?.let { selectedItem ->
-                if(item.id == selectedItem.id) {
+                if(item.choiceCode == selectedItem.choiceCode) {
                     binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_3872ff)
                     binding.tvAnswer.setTextColor(
                         ContextCompat.getColor(

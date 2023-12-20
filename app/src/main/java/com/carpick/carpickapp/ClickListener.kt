@@ -1,7 +1,7 @@
 package com.carpick.carpickapp
 
-import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.model.Choice
 
 interface ClickListener {
-    fun click(item : TestModel)
+    fun click(item : Choice)
 }

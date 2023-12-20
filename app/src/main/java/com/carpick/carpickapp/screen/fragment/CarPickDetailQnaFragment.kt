@@ -9,14 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
-import com.carpick.carpickapp.model.TestModel
+import com.carpick.carpickapp.model.Choice
+import com.carpick.carpickapp.model.QnAListResponseModelItem
 import com.carpick.carpickapp.screen.ComposeTestActivity
-import com.carpick.carpickapp.ui.CommonDialog
+import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -24,15 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>() {
+class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>() {
     private var nowPage = 2
     private var totalPage = 10 // api 나오면 수정
     private var answerLessAdapter: AnswerLessAdapter? = null
 
-    private var answerList = HashMap<Int, TestModel>() // request용
+    private var answerList = HashMap<Int, Choice>() // request용
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
-    private var apiResponse : ArrayList<ArrayList<TestModel>>?= null
+    private var apiResponse : ArrayList<QnAListResponseModelItem>?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,17 +47,27 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
         apiResponse = answerViewModel.apiResponse
 
+        binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
+        binding.titleLayout.clWish.isVisible = false
+
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
+
+        Log.e("leejy", "비교 ${answerViewModel.lastPage} $nowPage")
 
         if(answerViewModel.lastPage < nowPage) {
             answerViewModel.saveLastPage(nowPage)
         }
 
+
+        // page == -1은 스텝 건너뛰고 온게 아닌, 정상 플로우로 들어온 경우
         if(page == -1) {
             binding.run {
+                Log.e("leejy", "page $nowPage")
+                answerViewModel.saveLastPage(nowPage)
+
                 apiResponse?.let { apiResponse ->
-                    answerLessAdapter?.submitList(apiResponse[nowPage])
+                    answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                 }
                 roundProgressBar.progress = nowPage * 100 / totalPage
                 tvNowQnaPos.text = "$nowPage "
@@ -64,10 +75,11 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
         }else {
             nowPage = page
+            Log.e("leejy", "else page $nowPage")
             answerViewModel.saveLastPage(nowPage)
 
             apiResponse?.let { apiResponse ->
-                answerLessAdapter?.submitList(apiResponse[nowPage])
+                answerLessAdapter?.submitList(apiResponse[nowPage].choices)
             }
             binding.roundProgressBar.progress = nowPage * 100 / totalPage
             binding.tvNowQnaPos.text = "$nowPage "
@@ -75,6 +87,10 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
         answerViewModel.answerResult.map {
             answerList.put(it.key, it.value)
+        }
+
+        answerViewModel.getUserInfo()?.let {
+            answerList.put(0, it)
         }
         answerViewModel.getBudgetResult()?.let {
             answerList.put(1, it)
@@ -84,10 +100,12 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         
         binding.run {
             answerLessAdapter?.setClickListener(object : ClickListener {
-                override fun click(item: TestModel) {
+                override fun click(item: Choice) {
                     nowPage++
 
                     tvNowQnaPos.text = "$nowPage "
+
+                    binding.clNoAnswer.isVisible = false
 
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
@@ -106,14 +124,12 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         * */
 
                         if (nowPage - 2 < apiResponse.size - 2) {
+                            binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
                             answerLessAdapter?.setUiState(answerList, nowPage)
-                            answerLessAdapter?.submitList(apiResponse[nowPage])
+                            answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                         }else {
-                            val newFragment = LoadingFragment()
-                            val transaction = parentFragmentManager.beginTransaction()
-                            transaction.replace(R.id.nav_host, newFragment)
-                            transaction.addToBackStack(null)
-                            transaction.commit()
+                            val intent = Intent(binding.root.context, LoadingActivity::class.java)
+                            startActivity(intent)
                         }
                     }
                 }
@@ -133,7 +149,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     apiResponse?.let { apiResponse ->
-                        answerLessAdapter?.submitList(apiResponse[nowPage])
+                        answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                     }
                 }else {
                     moveCarPickBudgetFragment()
@@ -143,9 +159,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
             btnNext.setOnSingleClickListener {
                 if(answerList[nowPage] == null) {
-                    CommonDialog
-                        .getInstance("테스트", "테스트1", "확인")
-                        .show(childFragmentManager, null)
+                    clNoAnswer.isVisible = true
                 }else {
                     if (nowPage < totalPage) {
                         nowPage++
@@ -160,7 +174,7 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         roundProgressBar.progress = progressBarValue
 
                         answerLessAdapter?.setUiState(answerList, nowPage)
-                        answerLessAdapter?.submitList(apiResponse?.get(nowPage))
+                        answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                     }
                 }
             }
@@ -174,50 +188,29 @@ class CarpickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
-                    answerLessAdapter?.submitList(apiResponse?.get(nowPage))
+                    answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                 }else {
                     moveCarPickBudgetFragment()
                 }
             }
 
-            titleLayout.icWish.setOnSingleClickListener {
-                startComposeActivityForResult()
+            ivClose.setOnSingleClickListener {
+                clNoAnswer.isVisible = false
             }
         }
     }
 
     private fun moveCarPickBudgetFragment() {
-        val newFragment = CarpickBudgetQnaFragment()
+        val newFragment = CarPickBudgetQnaFragment()
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.nav_host, newFragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    private val myActivityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val resultValue = data?.getIntExtra("page",1) ?: 1
-
-                val newFragment = CarpickDetailQnaFragment.getInstance(resultValue)
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
-            }
-        }
-
-    private fun startComposeActivityForResult() {
-        val intent = Intent(requireContext(), ComposeTestActivity::class.java)
-
-        intent.putExtra("page", answerViewModel.lastPage)
-
-        myActivityResultLauncher.launch(intent)
-    }
     companion object {
-        fun getInstance(page : Int) : CarpickDetailQnaFragment {
-            return CarpickDetailQnaFragment().apply {
+        fun getInstance(page : Int) : CarPickDetailQnaFragment {
+            return CarPickDetailQnaFragment().apply {
                 arguments = Bundle().apply {
                     putInt("page", page)
                 }
