@@ -12,13 +12,10 @@ class QnaListRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     fun getQnaList(): Flow<List<QnAListResponseModel>> {
-        val result = mutableListOf<QnAListResponseModel>()
 
         return flow {
             val response = apiService.getQnAList()
-            Log.e("ljy", "response $response")
-            result.addAll(apiService.getQnAList())
-            emit(result)
+            emit(response)
         }
     }
 }

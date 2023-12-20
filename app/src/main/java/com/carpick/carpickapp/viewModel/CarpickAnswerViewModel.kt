@@ -3,7 +3,6 @@ package com.carpick.carpickapp.viewModel
 import androidx.lifecycle.ViewModel
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModel
-import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.repository.QnaListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -32,21 +31,23 @@ class CarpickAnswerViewModel @Inject constructor(
     fun setApiResponse(response: List<QnAListResponseModel>) {
         _apiResponse = response as ArrayList<QnAListResponseModel>
     }
-    fun saveAnswerResult(answer : HashMap<Int,Choice>) {
-        _answerResult = answer
+    fun saveAnswerResult(answer: HashMap<Int, Choice>?) {
+        answer?.let {
+            _answerResult = it
+        }
     }
 
     fun getBudgetResult() : Choice? {
         return answerBudgetResult
     }
-    fun saveBudgetResult(answer : Choice) {
+    fun saveBudgetResult(answer : Choice?) {
         answerBudgetResult = answer
     }
 
     fun getUserInfo() : Choice?{
         return answerUserInfoResult
     }
-    fun saveUserInfo(answer : Choice) {
+    fun saveUserInfo(answer : Choice?) {
         answerUserInfoResult = answer
     }
 

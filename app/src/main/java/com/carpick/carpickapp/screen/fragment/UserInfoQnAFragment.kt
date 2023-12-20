@@ -31,14 +31,15 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
+
         initViewModel()
+
         initListener()
     }
     private fun initView() {
-        testModel()
+//        testModel()
 
-//        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
+        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
         binding.titleLayout.clWish.isVisible = false
 
         if(answerViewModel.lastPage < 1) {
@@ -60,7 +61,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         })
         binding.rvAge.adapter = answerAdapter
 
-//        answerAdapter?.submitList(answerViewModel.apiResponse[0].questions[])
+        answerAdapter?.submitList(answerViewModel.apiResponse[0].choices)
     }
 
     override fun onResume() {
@@ -126,8 +127,8 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
     private fun initViewModel() {
         lifecycleScope.launch {
             answerViewModel.getQnaList().collect {
-                Log.e("ljy", "$it")
                 answerViewModel.setApiResponse(it)
+                initView()
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.carpick.carpickapp.screen.fragment
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.carpick.carpickapp.ClickListener
@@ -16,7 +14,6 @@ import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModel
-import com.carpick.carpickapp.screen.ComposeTestActivity
 import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
@@ -45,7 +42,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private fun initView() {
         val page = arguments?.getInt("page") ?: -1
 
-//        apiResponse = answerViewModel.apiResponse
+        apiResponse = answerViewModel.apiResponse
 
         binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
         binding.titleLayout.clWish.isVisible = false
