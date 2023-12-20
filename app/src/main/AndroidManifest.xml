@@ -16,6 +16,11 @@
         android:theme="@style/Theme.CarpickApp"
         tools:targetApi="31">
         <activity
+            android:name=".screen.CarDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_car_detail"
+            android:theme="@style/Theme.CarpickApp" />
+        <activity
             android:name=".screen.DetailSpecActivity"
             android:exported="false"
             android:label="@string/title_activity_detail_spec"
@@ -41,14 +46,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.activity.LoadingActivity"
+        <activity
+            android:name=".screen.activity.LoadingActivity"
             android:exported="true"
-            android:theme="@style/Theme.Activity.CarpickApp"/>
+            android:theme="@style/Theme.Activity.CarpickApp" />
         <activity
             android:name=".screen.ComposeTestActivity"
             android:exported="true"
-            android:theme="@style/Theme.Activity.CarpickApp"/>
-
+            android:theme="@style/Theme.Activity.CarpickApp" />
     </application>
 
 </manifest>

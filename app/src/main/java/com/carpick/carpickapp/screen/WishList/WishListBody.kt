@@ -2,7 +2,7 @@ package com.carpick.carpickapp.screen.WishList
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -31,13 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.CarDetailTestModel
-import com.carpick.carpickapp.screen.CarListItem
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import java.text.DecimalFormat
 
 @Composable
 fun WishListBody(
-    carList: List<CarDetailTestModel>
+    carList: List<CarDetailTestModel>,
+    onPressCarItem: (idx: Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -46,7 +45,10 @@ fun WishListBody(
 
     ) {
         if(carList.size > 0) {
-            WishListBodyListView(carList)
+            WishListBodyListView(
+                carList,
+                onPressCarItem
+            )
         }
         else {
             WishListEmptyBody()
@@ -120,7 +122,8 @@ fun WishListBodyTestBtn() {
 
 @Composable
 fun WishListBodyListView(
-    carList: List<CarDetailTestModel>
+    carList: List<CarDetailTestModel>,
+    onPressCarItem: (idx: Int) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -137,7 +140,8 @@ fun WishListBodyListView(
             itemsIndexed(carList) {index, item ->
                 WishListCarItem(
                     item,
-                    index === carList.size-1
+                    index === carList.size-1,
+                    onPressCarItem
                 )
             }
         }
@@ -147,7 +151,8 @@ fun WishListBodyListView(
 @Composable
 fun WishListCarItem(
     itemData: CarDetailTestModel,
-    isLastIdx: Boolean
+    isLastIdx: Boolean,
+    onPressCarItem: (idx: Int) -> Unit
 ) {
     val convertPrice = itemData.price/10000
     val dec = DecimalFormat("#,###만원")
@@ -156,6 +161,9 @@ fun WishListCarItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(24.dp, 16.dp, 24.dp, paddingBottom.dp)
+            .clickable {
+                onPressCarItem(244)
+            }
     ) {
         Column(
             modifier = Modifier

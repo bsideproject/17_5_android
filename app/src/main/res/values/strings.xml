@@ -12,4 +12,5 @@
     <string name="start_test">테스트 시작하기</string>
     <string name="sex_info">성별을 알려주세요.</string>
     <string name="user_info_main_title">테스트 시작 전\n가볍게 질문에 답해 주세요.</string>
+    <string name="title_activity_car_detail">CarDetailActivity</string>
 </resources>
