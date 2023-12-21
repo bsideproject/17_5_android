@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.di
 
 import com.carpick.carpickapp.api.ApiService
+import com.google.gson.GsonBuilder
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ class ModuleApiManager {
     @Provides
     fun provideApiManager() : Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("https://carpick.store/")
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(HttpLoggingInterceptor().apply {
@@ -28,6 +29,11 @@ class ModuleApiManager {
                     .build()
             )
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().setLenient().create()
+                )
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

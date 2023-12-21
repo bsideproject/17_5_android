@@ -23,6 +23,10 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
 
         answerViewModel.saveLastPage(-1)
 
+        answerViewModel.saveUserInfo(null)
+        answerViewModel.saveBudgetResult(null)
+        answerViewModel.saveAnswerResult(null)
+
         binding.run {
             Glide.with(this@CarPickStartFragment)
                 .asGif()

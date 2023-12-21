@@ -1,6 +1,5 @@
 package com.carpick.carpickapp.screen.fragment
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.model.QnAListResponseModelItem
-import com.carpick.carpickapp.screen.ComposeTestActivity
+import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -33,7 +32,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private var answerList = HashMap<Int, Choice>() // request용
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
-    private var apiResponse : ArrayList<QnAListResponseModelItem>?= null
+    private var apiResponse : ArrayList<QnAListResponseModel>?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,8 +52,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
 
-        Log.e("leejy", "비교 ${answerViewModel.lastPage} $nowPage")
-
         if(answerViewModel.lastPage < nowPage) {
             answerViewModel.saveLastPage(nowPage)
         }
@@ -63,7 +60,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         // page == -1은 스텝 건너뛰고 온게 아닌, 정상 플로우로 들어온 경우
         if(page == -1) {
             binding.run {
-                Log.e("leejy", "page $nowPage")
                 answerViewModel.saveLastPage(nowPage)
 
                 apiResponse?.let { apiResponse ->
@@ -75,7 +71,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
         }else {
             nowPage = page
-            Log.e("leejy", "else page $nowPage")
             answerViewModel.saveLastPage(nowPage)
 
             apiResponse?.let { apiResponse ->
@@ -97,7 +92,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         }
 
         answerViewModel.saveAnswerResult(answerList)
-        
+
         binding.run {
             answerLessAdapter?.setClickListener(object : ClickListener {
                 override fun click(item: Choice) {
@@ -124,12 +119,23 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         * */
 
                         if (nowPage - 2 < apiResponse.size - 2) {
-                            binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
+                            binding.tvQnaTitle.text = apiResponse[nowPage].questionName
                             answerLessAdapter?.setUiState(answerList, nowPage)
                             answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                         }else {
-                            val intent = Intent(binding.root.context, LoadingActivity::class.java)
-                            startActivity(intent)
+                            val answerList = ArrayList<String>()
+                            answerViewModel.answerResult.map {
+                                answerList.add(it.value.choiceCode)
+                            }
+
+                            lifecycleScope.launch {
+                                answerViewModel.getRecommendCars(answerList.toList()).collect {
+                                    Log.e("lee","collect $it")
+                                    val intent = Intent(binding.root.context, LoadingActivity::class.java)
+                                    intent.putExtra("response", it)
+                                    startActivity(intent)
+                                }
+                            }
                         }
                     }
                 }
@@ -168,7 +174,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         if(answerViewModel.lastPage < nowPage) {
                             answerViewModel.saveLastPage(nowPage)
                         }
-//                        answerViewModel.saveLastPage(nowPage)
 
                         val progressBarValue = nowPage * 100 / totalPage
                         roundProgressBar.progress = progressBarValue

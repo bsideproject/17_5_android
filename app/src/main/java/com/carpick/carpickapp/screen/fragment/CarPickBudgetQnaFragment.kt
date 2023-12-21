@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>() {
     private var nowPage = 1
-    private var totalPage = 10 // api 나오면 수정
+    private var totalPage = 10 
     private var answerAdapter : AnswerAdapter? = null
     private var selectAnswer = ""
 
@@ -31,6 +32,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
         initListener()
     }
     private fun initView() {
+        totalPage = answerViewModel.apiResponse.size
         binding.tvQnaTitle.text = answerViewModel.apiResponse[1].questionName
         binding.titleLayout.clWish.isVisible = false
 
