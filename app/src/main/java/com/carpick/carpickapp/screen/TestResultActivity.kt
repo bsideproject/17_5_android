@@ -1,10 +1,12 @@
 package com.carpick.carpickapp.screen
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
@@ -24,6 +26,8 @@ import com.carpick.carpickapp.MainActivity
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.CarDetailSpecTest
 import com.carpick.carpickapp.model.CarDetailTestModel
+import com.carpick.carpickapp.model.RecommendCars
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
@@ -38,13 +42,16 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TestResultActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val intent = getIntent()
+        val data = intent.getSerializableExtra("response", RecommendCars::class.java)
         setContent {
             CarpickAppTheme {
                 // A surface container using the 'background' color from the theme
                 Page(
-                    networkTestViewModel = hiltViewModel(),
+                    data,
                     onPressBack = {
                         Log.d("TestResult", "onPressBack")
                         finish()
@@ -75,7 +82,7 @@ class TestResultActivity : ComponentActivity() {
 
 @Composable
 fun Page(
-    networkTestViewModel: NetworkTestViewModel,
+    response: RecommendCars?,
     onPressBack: () -> Unit,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: () -> Unit,
@@ -84,7 +91,7 @@ fun Page(
     onPressAddWishListBtn: () -> Unit
 ) {
     val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
+
     val testCarList = testCars
     var selectedIdx by remember {
         mutableStateOf(0)
@@ -93,6 +100,13 @@ fun Page(
         mutableStateOf<CarDetailTestModel>(testCarList[0])
     }
 
+    var recommendCars by remember {
+        mutableStateOf<List<RecommendedCar>>(response?.recommendCars ?: listOf())
+    }
+
+    var selectedCar by remember {
+        mutableStateOf<RecommendedCar>(recommendCars[0])
+    }
 
     Surface(
         modifier = Modifier
@@ -130,7 +144,7 @@ fun Page(
 fun GreetingPreview2() {
     CarpickAppTheme {
         Page(
-            networkTestViewModel = hiltViewModel(),
+            null,
             onPressBack = {
                 Log.d("TestResult", "onPressBack")
             },

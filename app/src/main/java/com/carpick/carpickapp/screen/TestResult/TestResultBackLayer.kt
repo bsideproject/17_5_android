@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailTestModel
+import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.screen.CarListItem
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
