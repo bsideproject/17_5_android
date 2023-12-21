@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.TestResult
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,12 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.model.RecommendCars
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.CarListItem
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun TestResultBackLayer(
     testCarList: List<CarDetailTestModel>,
+    recommendCars: List<RecommendedCar>,
+    selectedCar: RecommendedCar,
     selectedItem: CarDetailTestModel,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit
@@ -48,7 +53,7 @@ fun TestResultBackLayer(
             fontWeight = FontWeight(700)
         )
         Text(
-            text = selectedItem.name,
+            text = selectedCar.modelName,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, 8.dp, 0.dp, 0.dp),
@@ -57,10 +62,19 @@ fun TestResultBackLayer(
             fontWeight = FontWeight(700)
         )
         Text(
-            text = selectedItem.simpleInfo,
+            text = selectedCar.detailModelName,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp, 8.dp, 0.dp, 8.dp),
+                .padding(24.dp, 8.dp, 0.dp, 0.dp),
+            fontSize = 14.sp,
+            color = popupBackground,
+            fontWeight = FontWeight(400)
+        )
+        Text(
+            text = selectedCar.trimName,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp, 0.dp, 0.dp, 8.dp),
             fontSize = 14.sp,
             color = popupBackground,
             fontWeight = FontWeight(400)
@@ -72,15 +86,19 @@ fun TestResultBackLayer(
             ,
             horizontalArrangement = Arrangement.End
         ) {
-            Image(
-                painter = painterResource(id = selectedItem.carImg),
-                contentDescription = "테스트용 자동차 이미지",
-                modifier = Modifier
-                    .width(360.dp)
-                    .height(170.dp),
+//            Image(
+//                painter = painterResource(id = selectedItem.carImg),
+//                contentDescription = "테스트용 자동차 이미지",
+//                modifier = Modifier
+//                    .width(360.dp)
+//                    .height(170.dp),
+//            )
+            GlideImage(
+                imageModel = selectedCar.carImageUrl,
+                modifier = Modifier.width(360.dp).height(170.dp)
             )
         }
-        CarRankListView(testCarList, selectedIdx, onPressCarRankListItem)
+        CarRankListView(testCarList, recommendCars, selectedIdx, onPressCarRankListItem)
 
     }
 }
@@ -88,6 +106,7 @@ fun TestResultBackLayer(
 @Composable
 fun CarRankListView(
     testCarList: List<CarDetailTestModel>,
+    recommendCars: List<RecommendedCar>,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit
 ) {
@@ -98,10 +117,11 @@ fun CarRankListView(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        for (i in 0 until testCarList.size) {
+        for (i in 0 until recommendCars.size) {
             CarRankListItem(
-                testCarList[i],
-                i == testCarList.size-1,
+                recommendCars[i],
+                i,
+                i == recommendCars.size-1,
                 onPressCarRankListItem,
                 selectedIdx
             )
@@ -111,13 +131,16 @@ fun CarRankListView(
 
 @Composable
 fun CarRankListItem(
-    item: CarDetailTestModel,
+    item: RecommendedCar,
+    idx: Int,
     isLastIdx: Boolean,
     onPressCarRankListItem: (idx: Int) -> Unit,
     selectedIdx: Int,
 ) {
+
+    Log.d("TestResultBackLayer", "$idx : ${item.toString()}")
     val width = if(isLastIdx) 50 else 60
-    val color = if(selectedIdx == item.idx) popupBackground else Color(0xFFD4D4E1)
+    val color = if(selectedIdx == item.id) popupBackground else Color(0xFFD4D4E1)
 
     Row(
         modifier = Modifier.width(width = width.dp),
@@ -127,7 +150,7 @@ fun CarRankListItem(
             modifier = Modifier
                 .width(50.dp)
                 .clickable {
-                    onPressCarRankListItem(item.idx)
+                    onPressCarRankListItem(idx)
                 },
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -139,15 +162,14 @@ fun CarRankListItem(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = item.carImg),
-                    contentDescription = "차 아이템",
-                    modifier = Modifier.size(50.dp)
+                GlideImage(
+                    imageModel = item.carImageUrl,
+                    modifier = Modifier.width(40.dp).height(20.dp)
                 )
             }
 
             Text(
-                text = "${item.rank}순위",
+                text = "${idx+1}순위",
                 fontSize = 12.sp,
                 fontWeight = FontWeight(600),
                 color = color

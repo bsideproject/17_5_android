@@ -93,9 +93,7 @@ fun Page(
     val scrollState = rememberScrollState()
 
     val testCarList = testCars
-    var selectedIdx by remember {
-        mutableStateOf(0)
-    }
+
     var selectedItem by remember {
         mutableStateOf<CarDetailTestModel>(testCarList[0])
     }
@@ -106,6 +104,10 @@ fun Page(
 
     var selectedCar by remember {
         mutableStateOf<RecommendedCar>(recommendCars[0])
+    }
+
+    var selectedIdx by remember {
+        mutableStateOf(selectedCar.id)
     }
 
     Surface(
@@ -124,11 +126,14 @@ fun Page(
             )
             TestResultBackLayer(
                 testCarList,
+                recommendCars,
+                selectedCar,
                 selectedItem,
                 selectedIdx,
                 onPressCarRankListItem = {idx ->
-                    selectedIdx = idx
-                    selectedItem = testCarList[idx]
+                    val newItem = recommendCars[idx]
+                    selectedIdx = newItem.id
+                    selectedCar = newItem
                 }
             )
             TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem)
