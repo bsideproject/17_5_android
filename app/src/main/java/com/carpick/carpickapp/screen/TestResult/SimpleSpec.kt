@@ -25,21 +25,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailSpecTest
+import com.carpick.carpickapp.model.RecommendedCar
+import java.text.DecimalFormat
 
 @Composable
 fun SimpleSpec(
     onPressMoreAtSimpleSpec: () -> Unit,
-    specs: List<CarDetailSpecTest>
+    specs: List<CarDetailSpecTest>,
+    selectedCar: RecommendedCar
 ) {
 
-    var chunkedSpecs = specs.chunked(2)
+    val priceDec = DecimalFormat("#,###만원")
+    val displacementDec = DecimalFormat("#,###cc")
+
+    var rowTotalDatas = listOf<RowDataTypes>(
+        RowDataTypes("가격", "${priceDec.format(selectedCar.price/10000)}"),
+        RowDataTypes("차종", selectedCar.carBodyTypeName),
+        RowDataTypes("연료", fuelTypeName[selectedCar.fuelTypeName] ?: ""),
+        RowDataTypes("연비", "${selectedCar.fuelEconomy}km/l"),
+        RowDataTypes("배기량", "${displacementDec.format(selectedCar.displacement)}"),
+        RowDataTypes("최대출력", "${selectedCar.maximumPowerDescription}ps/rpm"),
+    )
+
+    var chunkedTotalDatas = rowTotalDatas.chunked(2)
 
     Column(
         modifier = Modifier.padding(0.dp, 28.dp, 0.dp, 0.dp)
     ) {
 
         SimpleSpecTitle()
-        SimpleSpecBody(chunkedSpecs)
+        SimpleSpecBody(chunkedTotalDatas)
         ShowMoreButton(onPressMoreAtSimpleSpec)
 
     }
@@ -58,10 +73,9 @@ fun SimpleSpecTitle() {
 
 @Composable
 fun SimpleSpecBody(
-    chunkedSpecs: List<List<CarDetailSpecTest>>,
+    chunkedTotalDatas: List<List<RowDataTypes>>,
     paddingTop: Int = 16
 ) {
-    val dataRowSize = chunkedSpecs.size
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,10 +86,13 @@ fun SimpleSpecBody(
                 .fillMaxWidth()
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            for (i in 0 until dataRowSize) {
-                Log.d("testData $i", (i == dataRowSize-1).toString())
-                SimpleSpecRow(chunkedSpecs[i], i == 0, i == dataRowSize-1)
+            for (i in 0 until chunkedTotalDatas.size) {
+                SimpleSpecRow(chunkedTotalDatas[i], i == 0, i == chunkedTotalDatas.size-1)
             }
+//            for (i in 0 until dataRowSize) {
+//                Log.d("testData $i", (i == dataRowSize-1).toString())
+//                SimpleSpecRow(chunkedSpecs[i], i == 0, i == dataRowSize-1)
+//            }
         }
 
     }
@@ -112,7 +129,7 @@ fun ShowMoreButton(
 
 @Composable
 fun SimpleSpecRow(
-    rowData: List<CarDetailSpecTest>,
+    rowData: List<RowDataTypes>,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
@@ -149,12 +166,18 @@ fun SimpleSpecRow(
                 i%2 == 1
             )
         }
+//        for(i in 0 until rowData.size) {
+//            SimpleSpecRowItem(
+//                rowData[i],
+//                i%2 == 1
+//            )
+//        }
     }
 }
 
 @Composable
 fun SimpleSpecRowItem(
-    itemData: CarDetailSpecTest,
+    itemData: RowDataTypes,
     isLastIdx: Boolean
 ) {
     Column(
@@ -176,12 +199,12 @@ fun SimpleSpecRowItem(
 
 @Composable
 fun SimpleSpecRowItemTitle(
-    itemData: CarDetailSpecTest
+    itemData: RowDataTypes
 ) {
 
     TestResultCommonTooltip(
         arrowPosition = 0.8f,
-        toolTipContent = itemData.tooltipContent
+        toolTipContent = "test"
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -217,3 +240,8 @@ fun SimpleSpecRowItemTitle(
     }
 
 }
+
+data class RowDataTypes(
+    val title: String,
+    val value: String,
+)

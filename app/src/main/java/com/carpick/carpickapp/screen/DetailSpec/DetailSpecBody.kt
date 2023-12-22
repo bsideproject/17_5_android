@@ -21,6 +21,6 @@ fun DetailSpecBody(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        SimpleSpecBody(chunkedSpecs, 24)
+        //SimpleSpecBody(chunkedSpecs, 24)
     }
 }

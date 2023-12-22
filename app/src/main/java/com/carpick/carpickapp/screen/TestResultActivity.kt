@@ -106,6 +106,8 @@ fun Page(
         mutableStateOf<RecommendedCar>(recommendCars[0])
     }
 
+    Log.d("TestResultActivity", "selectedCar: $selectedCar")
+
     var selectedIdx by remember {
         mutableStateOf(selectedCar.id)
     }
@@ -136,7 +138,7 @@ fun Page(
                     selectedCar = newItem
                 }
             )
-            TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem)
+            TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem, selectedCar)
             TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
         }
 

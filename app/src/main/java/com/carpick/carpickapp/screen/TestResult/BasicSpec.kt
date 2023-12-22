@@ -21,17 +21,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailHashTagTest
+import com.carpick.carpickapp.model.Tag
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun BasicSpec(
-    hashtags: List<CarDetailHashTagTest>
+    hashtags: List<CarDetailHashTagTest>,
+    tags: List<Tag>
 ) {
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         BasicSpecTitle()
-        BasicSpecTags(hashtags)
+        BasicSpecTags(hashtags, tags)
     }
 }
 
@@ -49,7 +51,8 @@ fun BasicSpecTitle() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BasicSpecTags(
-    hashtags: List<CarDetailHashTagTest>
+    hashtags: List<CarDetailHashTagTest>,
+    tags: List<Tag>
 ) {
 
     FlowRow(
@@ -57,7 +60,7 @@ fun BasicSpecTags(
         horizontalArrangement = Arrangement.Start,
         maxItemsInEachRow = 4,
     ) {
-        hashtags.forEach { hashTag ->
+        tags.forEach { hashTag ->
             run {
                 HashTag(value = hashTag)
             }
@@ -67,16 +70,16 @@ fun BasicSpecTags(
 
 @Composable
 fun HashTag(
-    value: CarDetailHashTagTest
+    value: Tag
 ) {
 
     TestResultCommonTooltip(
         arrowPosition = 0.7f,
-        toolTipContent = value.tooltipContent,
-        backgroundColor = value.backgroundColor,
+        toolTipContent = value.tagDescription,
+        backgroundColor = Color(value.tagRgbColorCode.hashCode()).copy(alpha = 1.0f),
         modifier = Modifier
             .padding(4.dp)
-            .background(value.backgroundColor, shape = RoundedCornerShape(99.dp)),
+            .background(Color(value.tagRgbColorCode.hashCode()), shape = RoundedCornerShape(99.dp)),
     ) {balloonWindow ->
         Box(
             modifier = Modifier.clickable {
@@ -86,13 +89,13 @@ fun HashTag(
 
             Row(
                 modifier = Modifier
-                    .background(value.backgroundColor, shape = RoundedCornerShape(99.dp))
+                    .background(Color(value.tagRgbColorCode.hashCode()), shape = RoundedCornerShape(99.dp))
                     .padding(15.dp, 8.dp),
                 verticalAlignment = Alignment.CenterVertically
 
             ) {
                 Text(
-                    text = value.content,
+                    text = value.tagName,
                     fontSize = 14.sp,
                     fontWeight = FontWeight(500),
                     color = Color(0xFF21212F),

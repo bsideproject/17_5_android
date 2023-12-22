@@ -12,13 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.carpick.carpickapp.model.CarDetailTestModel
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultDetail(
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
-    selectedItem: CarDetailTestModel
+    selectedItem: CarDetailTestModel,
+    selectedCar: RecommendedCar,
 ) {
     Column(
         modifier = Modifier
@@ -27,11 +29,13 @@ fun TestResultDetail(
 
     ) {
         BasicSpec(
-            selectedItem.hashTags
+            selectedItem.hashTags,
+            selectedCar.tags
         )
         SimpleSpec(
             onPressMoreAtSimpleSpec,
-            selectedItem.specs
+            selectedItem.specs,
+            selectedCar
         )
         ResultDetailOption(
             selectedItem.options
