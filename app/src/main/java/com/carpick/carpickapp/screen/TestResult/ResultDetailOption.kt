@@ -22,17 +22,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailOptionTest
+import com.carpick.carpickapp.model.RecommendedCar
 
 @Composable
 fun ResultDetailOption(
-    options: List<CarDetailOptionTest>
+    options: List<CarDetailOptionTest>,
+    selectedCar: RecommendedCar
 ) {
-
+    var rowTotalDatas = listOf<ResultDetailOptionRowData>(
+        ResultDetailOptionRowData("안전", selectedCar.securityOptionDescription),
+        ResultDetailOptionRowData("외장", selectedCar.externalOptionDescription),
+        ResultDetailOptionRowData("내장", selectedCar.internalOptionDescription),
+        ResultDetailOptionRowData("편의", selectedCar.convenienceOptionDescription),
+    )
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
-        ResultDetailOptionBody(options)
+        ResultDetailOptionBody(options, rowTotalDatas)
     }
 }
 
@@ -49,7 +56,8 @@ fun ResultDetailOptionTitle() {
 
 @Composable
 fun ResultDetailOptionBody(
-    options: List<CarDetailOptionTest>
+    options: List<CarDetailOptionTest>,
+    rowTotalDatas: List<ResultDetailOptionRowData>
 ) {
     Box(
         modifier = Modifier
@@ -61,8 +69,8 @@ fun ResultDetailOptionBody(
                 .fillMaxWidth()
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
-            for(i in 0 until options.size) {
-                ResultDetailRow( options[i], i == 0, i == options.size-1)
+            for(i in 0 until rowTotalDatas.size) {
+                ResultDetailRow( rowTotalDatas[i], i == 0, i == options.size-1)
             }
         }
     }
@@ -70,7 +78,7 @@ fun ResultDetailOptionBody(
 
 @Composable
 fun ResultDetailRow(
-    itemData: CarDetailOptionTest,
+    itemData: ResultDetailOptionRowData,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
 ) {
@@ -119,12 +127,12 @@ fun ResultDetailRow(
 
 @Composable
 fun ResultDetailRowTitle(
-    itemData: CarDetailOptionTest,
+    itemData: ResultDetailOptionRowData,
     topPadding: Int
 ) {
     TestResultCommonTooltip(
         arrowPosition = 0.8f,
-        toolTipContent = itemData.tooltipContent
+        toolTipContent = "test"
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -161,3 +169,8 @@ fun ResultDetailRowTitle(
     }
 
 }
+
+data class ResultDetailOptionRowData(
+    val title: String,
+    val content: String,
+)

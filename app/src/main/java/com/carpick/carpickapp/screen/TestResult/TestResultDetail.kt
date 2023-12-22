@@ -38,7 +38,8 @@ fun TestResultDetail(
             selectedCar
         )
         ResultDetailOption(
-            selectedItem.options
+            selectedItem.options,
+            selectedCar
         )
         DetailRetestButton(onPressRetest)
     }
