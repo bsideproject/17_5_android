@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,8 +27,8 @@ import com.carpick.carpickapp.R
 
 @Composable
 fun TestResultHeader(
-    onPressBack: () -> Unit,
-    onPressWishList: () -> Unit
+    onPressShare: () -> Unit,
+    onPressAddWishListBtn: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -49,33 +50,30 @@ fun TestResultHeader(
                 .fillMaxHeight()
                 .background(Color.White)
                 .padding(16.dp, 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ){
+
             Image(
-                painter = painterResource(id = R.drawable.ic_back),
-                contentDescription = "뒤로가기",
+                painter = painterResource(id = R.drawable.ic_share),
+                contentDescription = "공유하기",
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        onPressBack()
-                    },
+                        onPressShare()
+                    }
             )
-
-            Text(
-                text = "추천결과",
-                fontSize = 16.sp,
-                color = Color(0xFF21212F),
-                fontWeight = FontWeight(600)
+            Box(
+                modifier = Modifier
+                    .width(10.dp)
             )
-
             Image(
                 painter = painterResource(id = R.drawable.ic_test_result_header_favorite),
                 contentDescription = "위시리스트",
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        onPressWishList()
+                        onPressAddWishListBtn()
                     }
             )
         }

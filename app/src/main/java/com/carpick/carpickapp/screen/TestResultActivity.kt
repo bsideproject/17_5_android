@@ -52,10 +52,6 @@ class TestResultActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Page(
                     data,
-                    onPressBack = {
-                        Log.d("TestResult", "onPressBack")
-                        finish()
-                    },
                     onPressWishList = {
                         val intent = Intent(this, WishListActivity::class.java)
                         startActivity(intent)
@@ -83,7 +79,6 @@ class TestResultActivity : ComponentActivity() {
 @Composable
 fun Page(
     response: RecommendCars?,
-    onPressBack: () -> Unit,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
@@ -123,8 +118,10 @@ fun Page(
                 .verticalScroll(scrollState)
         ) {
             TestResultHeader(
-                onPressBack,
-                onPressWishList
+                onPressShare = {
+                    Log.d("TestResultActivity", "onPressShare")
+                },
+                onPressAddWishListBtn
             )
             TestResultBackLayer(
                 testCarList,
@@ -139,7 +136,7 @@ fun Page(
                 }
             )
             TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem, selectedCar)
-            TestResultFooter(onPressShareBtn, onPressAddWishListBtn)
+            TestResultFooter(onPressWishList)
         }
 
     }
@@ -152,9 +149,6 @@ fun GreetingPreview2() {
     CarpickAppTheme {
         Page(
             null,
-            onPressBack = {
-                Log.d("TestResult", "onPressBack")
-            },
             onPressWishList = {
                 Log.d("TestResult", "onPressWishList")
             },

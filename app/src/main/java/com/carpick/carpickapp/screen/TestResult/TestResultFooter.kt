@@ -22,8 +22,7 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultFooter(
-    onPressShareBtn: () -> Unit,
-    onPressAddWishListBtn: () -> Unit
+    onPressWishlist: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -33,57 +32,33 @@ fun TestResultFooter(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(24.dp, 16.dp, 16.dp, 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ShareBtn(onPressShareBtn)
-            AddWishListBtn(onPressAddWishListBtn)
+            WishListBtn(onPressWishlist)
         }
     }
 }
 
 @Composable
-fun ShareBtn(
-    onPressShareBtn: () -> Unit
+fun WishListBtn(
+    onPressWishlist: () -> Unit
 ) {
     Button(
-        onClick = { /*TODO*/ },
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .height(44.dp)
-            .padding(0.dp, 0.dp, 4.dp, 0.dp),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(0xFFD4D4E1)
-        ),
-        shape = RoundedCornerShape(99.dp)
-    ) {
-        Text(
-            text = "공유하기",
-            fontSize = 14.sp,
-            color = popupBackground,
-            fontWeight = FontWeight(700)
-        )
-    }
-}
-
-@Composable
-fun AddWishListBtn(
-    onPressAddWishListBtn: () -> Unit
-) {
-    Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            onPressWishlist()
+        },
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp)
-            .padding(4.dp, 0.dp, 0.dp, 0.dp),
+            .height(44.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color(0xFF3872FF)
         ),
         shape = RoundedCornerShape(99.dp)
     ) {
         Text(
-            text = "위시리스트 담기",
+            text = "위시리스트 바로가기",
             fontSize = 14.sp,
             color = Color.White,
             fontWeight = FontWeight(700)
