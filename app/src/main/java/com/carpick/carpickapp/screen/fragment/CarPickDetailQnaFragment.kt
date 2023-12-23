@@ -60,7 +60,9 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         // page == -1은 스텝 건너뛰고 온게 아닌, 정상 플로우로 들어온 경우
         if(page == -1) {
             binding.run {
-                answerViewModel.saveLastPage(nowPage)
+                if(answerViewModel.lastPage < nowPage) {
+                    answerViewModel.saveLastPage(nowPage)
+                }
 
                 apiResponse?.let { apiResponse ->
                     answerLessAdapter?.submitList(apiResponse[nowPage].choices)
@@ -71,7 +73,9 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
         }else {
             nowPage = page
-            answerViewModel.saveLastPage(nowPage)
+            if(answerViewModel.lastPage < nowPage) {
+                answerViewModel.saveLastPage(nowPage)
+            }
 
             apiResponse?.let { apiResponse ->
                 answerLessAdapter?.submitList(apiResponse[nowPage].choices)
@@ -130,7 +134,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                             lifecycleScope.launch {
                                 answerViewModel.getRecommendCars(answerList.toList()).collect {
-                                    Log.e("lee","collect $it")
                                     val intent = Intent(binding.root.context, LoadingActivity::class.java)
                                     intent.putExtra("response", it)
                                     startActivity(intent)
