@@ -60,6 +60,7 @@ class TestResultActivity : ComponentActivity() {
                     onPressMoreAtSimpleSpec = {
                         Log.d("TestResult", "onPressMoreAtSimpleSpec")
                         val intent = Intent(this, DetailSpecActivity::class.java)
+                        intent.putExtra("carDetail", it)
                         startActivity(intent)
                     },
                     onPressRetest = {
@@ -75,7 +76,7 @@ class TestResultActivity : ComponentActivity() {
 fun Page(
     response: RecommendCars?,
     onPressWishList: () -> Unit,
-    onPressMoreAtSimpleSpec: () -> Unit,
+    onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
     onPressRetest: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
@@ -147,7 +148,14 @@ fun Page(
                     selectedCar = newItem
                 }
             )
-            TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem, selectedCar)
+            TestResultDetail(
+                onPressMoreAtSimpleSpec = {
+                    onPressMoreAtSimpleSpec(selectedCar)
+                },
+                onPressRetest,
+                selectedItem,
+                selectedCar
+            )
             TestResultFooter(onPressWishList)
         }
     }

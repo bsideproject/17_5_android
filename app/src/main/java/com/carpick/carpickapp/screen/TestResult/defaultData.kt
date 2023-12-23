@@ -6,6 +6,7 @@ import com.carpick.carpickapp.model.CarDetailHashTagTest
 import com.carpick.carpickapp.model.CarDetailOptionTest
 import com.carpick.carpickapp.model.CarDetailSpecTest
 import com.carpick.carpickapp.model.CarDetailTestModel
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.CarListItem
 
 val testCars: List<CarDetailTestModel> = listOf(
