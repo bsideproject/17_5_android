@@ -7,24 +7,27 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.carpick.carpickapp.MainActivity
-import com.carpick.carpickapp.R
-import com.carpick.carpickapp.model.CarDetailSpecTest
 import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
@@ -32,12 +35,10 @@ import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
+import com.carpick.carpickapp.screen.TestResult.WishListAddToast
 import com.carpick.carpickapp.screen.TestResult.testCars
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
-import com.carpick.carpickapp.viewModel.NetworkTestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -61,15 +62,9 @@ class TestResultActivity : ComponentActivity() {
                         val intent = Intent(this, DetailSpecActivity::class.java)
                         startActivity(intent)
                     },
-                    onPressShareBtn = {
-                        Log.d("TestResult", "onPressShareBtn")
-                    },
                     onPressRetest = {
                         Log.d("TestResult", "onPressRetest")
                     },
-                    onPressAddWishListBtn = {
-                        Log.d("TestResult", "onPressAddWishListBtn")
-                    }
                 )
             }
         }
@@ -82,10 +77,11 @@ fun Page(
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
-    onPressShareBtn: () -> Unit,
-    onPressAddWishListBtn: () -> Unit
 ) {
     val scrollState = rememberScrollState()
+    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = SnackbarHostState()
+    val scope = rememberCoroutineScope()
 
     val testCarList = testCars
 
@@ -107,21 +103,37 @@ fun Page(
         mutableStateOf(selectedCar.id)
     }
 
-    Surface(
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize(),
-        color = Color.White
-    ) {
+            .fillMaxSize()
+            .background(Color.White),
+        scaffoldState = scaffoldState,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.fillMaxSize(),
+                snackbar = { WishListAddToast(snackbarData = it) }
+            )
+        }
+    ) {paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
+                .padding(paddingValues)
         ) {
             TestResultHeader(
                 onPressShare = {
                     Log.d("TestResultActivity", "onPressShare")
                 },
-                onPressAddWishListBtn
+                onPressAddWishListBtn = {
+                    scope.launch {
+                        val result = snackbarHostState.showSnackbar(
+                            message = "wishlist",
+                            duration = SnackbarDuration.Short,
+                        )
+                    }
+                }
             )
             TestResultBackLayer(
                 testCarList,
@@ -138,7 +150,6 @@ fun Page(
             TestResultDetail(onPressMoreAtSimpleSpec, onPressRetest, selectedItem, selectedCar)
             TestResultFooter(onPressWishList)
         }
-
     }
 
 }
@@ -155,15 +166,9 @@ fun GreetingPreview2() {
             onPressMoreAtSimpleSpec = {
                 Log.d("TestResult", "onPressMoreAtSimpleSpec")
             },
-            onPressShareBtn = {
-                Log.d("TestResult", "onPressShareBtn")
-            },
             onPressRetest = {
                 Log.d("TestResult", "onPressRetest")
             },
-            onPressAddWishListBtn = {
-                Log.d("TestResult", "onPressAddWishListBtn")
-            }
         )
     }
 }
