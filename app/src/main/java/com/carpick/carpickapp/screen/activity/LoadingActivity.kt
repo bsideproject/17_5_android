@@ -81,7 +81,6 @@ class LoadingActivity : BaseActivity<ActivityLoadingBinding>() {
             delay(1000)
         }
 
-        Log.e("ljy", "response $response")
         val intent = Intent(binding.root.context, TestResultActivity::class.java)
         intent.putExtra("response", response)
         startActivity(intent)
