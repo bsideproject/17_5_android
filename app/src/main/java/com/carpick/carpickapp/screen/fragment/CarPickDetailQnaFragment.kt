@@ -130,7 +130,6 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                             lifecycleScope.launch {
                                 answerViewModel.getRecommendCars(answerList.toList()).collect {
-                                    Log.e("lee","collect $it")
                                     val intent = Intent(binding.root.context, LoadingActivity::class.java)
                                     intent.putExtra("response", it)
                                     startActivity(intent)

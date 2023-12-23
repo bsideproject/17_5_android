@@ -36,6 +36,8 @@ class CarpickAnswerViewModel @Inject constructor(
     fun saveAnswerResult(answer: HashMap<Int, Choice>?) {
         answer?.let {
             _answerResult = it
+        } ?: run {
+            _answerResult.clear()
         }
     }
 
