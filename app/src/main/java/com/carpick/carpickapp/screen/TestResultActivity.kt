@@ -83,12 +83,6 @@ fun Page(
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
 
-    val testCarList = testCars
-
-    var selectedItem by remember {
-        mutableStateOf<CarDetailTestModel>(testCarList[0])
-    }
-
     var recommendCars by remember {
         mutableStateOf<List<RecommendedCar>>(response?.recommendCars ?: listOf())
     }
@@ -134,10 +128,8 @@ fun Page(
                 }
             )
             TestResultBackLayer(
-                testCarList,
                 recommendCars,
                 selectedCar,
-                selectedItem,
                 selectedIdx,
                 onPressCarRankListItem = {idx ->
                     val newItem = recommendCars[idx]
@@ -150,7 +142,6 @@ fun Page(
                     onPressMoreAtSimpleSpec(selectedCar)
                 },
                 onPressRetest,
-                selectedItem,
                 selectedCar
             )
             TestResultFooter(onPressWishList)

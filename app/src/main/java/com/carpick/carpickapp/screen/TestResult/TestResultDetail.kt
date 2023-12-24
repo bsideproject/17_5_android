@@ -19,7 +19,6 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 fun TestResultDetail(
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
-    selectedItem: CarDetailTestModel,
     selectedCar: RecommendedCar,
 ) {
     Column(
@@ -29,16 +28,13 @@ fun TestResultDetail(
 
     ) {
         BasicSpec(
-            selectedItem.hashTags,
             selectedCar.tags
         )
         SimpleSpec(
             onPressMoreAtSimpleSpec,
-            selectedItem.specs,
             selectedCar
         )
         ResultDetailOption(
-            selectedItem.options,
             selectedCar
         )
         DetailRetestButton(onPressRetest)

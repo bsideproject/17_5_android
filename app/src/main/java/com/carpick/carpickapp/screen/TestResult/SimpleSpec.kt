@@ -31,7 +31,6 @@ import java.text.DecimalFormat
 @Composable
 fun SimpleSpec(
     onPressMoreAtSimpleSpec: () -> Unit,
-    specs: List<CarDetailSpecTest>,
     selectedCar: RecommendedCar
 ) {
 

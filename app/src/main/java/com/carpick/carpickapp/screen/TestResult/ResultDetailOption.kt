@@ -26,23 +26,50 @@ import com.carpick.carpickapp.model.RecommendedCar
 
 @Composable
 fun ResultDetailOption(
-    options: List<CarDetailOptionTest>,
     selectedCar: RecommendedCar
 ) {
     var rowTotalDatas = listOf<ResultDetailOptionRowData>(
-        ResultDetailOptionRowData("안전", selectedCar.securityOptionDescription),
-        ResultDetailOptionRowData("외장", selectedCar.externalOptionDescription),
-        ResultDetailOptionRowData("내장", selectedCar.internalOptionDescription),
-        ResultDetailOptionRowData("편의", selectedCar.convenienceOptionDescription),
-        ResultDetailOptionRowData("공조", selectedCar.airConditioningOptionDescription),
-        ResultDetailOptionRowData("A/V", selectedCar.audioAndVisualOptionDescription),
-        ResultDetailOptionRowData("시트", selectedCar.sheetOptionDescription)
+        ResultDetailOptionRowData(
+            "안전",
+            selectedCar.securityOptionDescription,
+            "차량의 기본 안전 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "외장",
+            selectedCar.externalOptionDescription,
+            "차량의 기본 외장 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "내장",
+            selectedCar.internalOptionDescription,
+            "차량의 기본 내장 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "편의",
+            selectedCar.convenienceOptionDescription,
+            "차량의 기본 편의 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "공조",
+            selectedCar.airConditioningOptionDescription,
+            "차량의 기본 공조 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "A/V",
+            selectedCar.audioAndVisualOptionDescription,
+            "차량의 기본 A/V 옵션"
+        ),
+        ResultDetailOptionRowData(
+            "시트",
+            selectedCar.sheetOptionDescription,
+            "차량의 기본 시트 옵션"
+        )
     )
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
-        ResultDetailOptionBody(options, rowTotalDatas)
+        ResultDetailOptionBody(rowTotalDatas)
     }
 }
 
@@ -59,7 +86,6 @@ fun ResultDetailOptionTitle() {
 
 @Composable
 fun ResultDetailOptionBody(
-    options: List<CarDetailOptionTest>,
     rowTotalDatas: List<ResultDetailOptionRowData>
 ) {
     Box(
@@ -73,7 +99,7 @@ fun ResultDetailOptionBody(
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
             for(i in 0 until rowTotalDatas.size) {
-                ResultDetailRow( rowTotalDatas[i], i == 0, i == options.size-1)
+                ResultDetailRow( rowTotalDatas[i], i == 0, i == rowTotalDatas.size-1)
             }
         }
     }
@@ -114,7 +140,8 @@ fun ResultDetailRow(
     ) {
         ResultDetailRowTitle(
             itemData,
-            topPadding
+            topPadding,
+            itemData.tooltipContent
         )
 
         Text(
@@ -131,11 +158,12 @@ fun ResultDetailRow(
 @Composable
 fun ResultDetailRowTitle(
     itemData: ResultDetailOptionRowData,
-    topPadding: Int
+    topPadding: Int,
+    tooltipContent: String
 ) {
     TestResultCommonTooltip(
         arrowPosition = 0.8f,
-        toolTipContent = "test"
+        toolTipContent = tooltipContent
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -176,4 +204,5 @@ fun ResultDetailRowTitle(
 data class ResultDetailOptionRowData(
     val title: String,
     val content: String,
+    val tooltipContent: String
 )

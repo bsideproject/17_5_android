@@ -31,10 +31,8 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun TestResultBackLayer(
-    testCarList: List<CarDetailTestModel>,
     recommendCars: List<RecommendedCar>,
     selectedCar: RecommendedCar,
-    selectedItem: CarDetailTestModel,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit
 ) {
@@ -86,26 +84,18 @@ fun TestResultBackLayer(
             ,
             horizontalArrangement = Arrangement.End
         ) {
-//            Image(
-//                painter = painterResource(id = selectedItem.carImg),
-//                contentDescription = "테스트용 자동차 이미지",
-//                modifier = Modifier
-//                    .width(360.dp)
-//                    .height(170.dp),
-//            )
             GlideImage(
                 imageModel = selectedCar.carImageUrl,
                 modifier = Modifier.width(360.dp).height(170.dp)
             )
         }
-        CarRankListView(testCarList, recommendCars, selectedIdx, onPressCarRankListItem)
+        CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem)
 
     }
 }
 
 @Composable
 fun CarRankListView(
-    testCarList: List<CarDetailTestModel>,
     recommendCars: List<RecommendedCar>,
     selectedIdx: Int,
     onPressCarRankListItem: (idx: Int) -> Unit

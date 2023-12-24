@@ -26,14 +26,13 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun BasicSpec(
-    hashtags: List<CarDetailHashTagTest>,
     tags: List<Tag>
 ) {
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         BasicSpecTitle()
-        BasicSpecTags(hashtags, tags)
+        BasicSpecTags(tags)
     }
 }
 
@@ -51,7 +50,6 @@ fun BasicSpecTitle() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BasicSpecTags(
-    hashtags: List<CarDetailHashTagTest>,
     tags: List<Tag>
 ) {
 
