@@ -52,17 +52,12 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
 
-        if(answerViewModel.lastPage < nowPage) {
-            answerViewModel.saveLastPage(nowPage)
-        }
-
+        saveLastPage(nowPage)
 
         // page == -1은 스텝 건너뛰고 온게 아닌, 정상 플로우로 들어온 경우
         if(page == -1) {
             binding.run {
-                if(answerViewModel.lastPage < nowPage) {
-                    answerViewModel.saveLastPage(nowPage)
-                }
+                saveLastPage(nowPage)
 
                 apiResponse?.let { apiResponse ->
                     answerLessAdapter?.submitList(apiResponse[nowPage].choices)
@@ -73,9 +68,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
         }else {
             nowPage = page
-            if(answerViewModel.lastPage < nowPage) {
-                answerViewModel.saveLastPage(nowPage)
-            }
+            saveLastPage(nowPage)
 
             apiResponse?.let { apiResponse ->
                 answerLessAdapter?.submitList(apiResponse[nowPage].choices)
@@ -111,9 +104,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerList[nowPage-1] = item
 
-                    if(answerViewModel.lastPage < nowPage) {
-                        answerViewModel.saveLastPage(nowPage)
-                    }
+                    saveLastPage(nowPage)
 
                     answerViewModel.saveAnswerResult(answerList)
                     Log.e("ljy", "answer list $answerList")
@@ -146,6 +137,11 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         }
     }
 
+    private fun saveLastPage(nowPage: Int) {
+        if(answerViewModel.lastPage < nowPage) {
+            answerViewModel.saveLastPage(nowPage)
+        }
+    }
     private fun initListener() {
         binding.run {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -174,9 +170,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         nowPage++
                         tvNowQnaPos.text = "$nowPage "
 
-                        if(answerViewModel.lastPage < nowPage) {
-                            answerViewModel.saveLastPage(nowPage)
-                        }
+                        saveLastPage(nowPage)
 
                         val progressBarValue = nowPage * 100 / totalPage
                         roundProgressBar.progress = progressBarValue
