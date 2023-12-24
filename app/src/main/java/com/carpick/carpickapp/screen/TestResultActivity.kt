@@ -127,26 +127,22 @@ fun Page(
 
     _getWishListData()
 
-
-
     fun _addWishList(selectedId: Int) {
         val wishlistSize = wishlistIds.size
         scope.launch {
+            var message = ""
             if(wishlistSize < 15) {
                 wishListViewModel.insertWishlistData(TestModel(selectedId))
                 _getWishListData()
-                val result = snackbarHostState.showSnackbar(
-                    message = "wishlist",
-                    duration = SnackbarDuration.Short,
-                )
+                message = "wishlist"
             }
             else {
-                val result = snackbarHostState.showSnackbar(
-                    message = "wishlistFull",
-                    duration = SnackbarDuration.Short,
-                )
-
+                message = "wishlistFull"
             }
+            val result = snackbarHostState.showSnackbar(
+                message = message,
+                duration = SnackbarDuration.Short,
+            )
         }
     }
 
