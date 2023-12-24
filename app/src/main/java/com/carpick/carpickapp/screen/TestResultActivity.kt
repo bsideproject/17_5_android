@@ -120,7 +120,6 @@ fun Page(
 
                 }
                 isIncludedInWishlist = ids.contains(selectedIdx)
-                Log.d("TestResultActivity", "wishlistIds result: $ids")
                 wishlistIds = ids.distinct().toMutableList()
             }
         }
@@ -159,7 +158,6 @@ fun Page(
     }
 
     fun _onPressWishListBtn() {
-        Log.d("TestResultActivity", "wishlistIds: $wishlistIds")
         val isWishlistIncluded = wishlistIds.contains(selectedIdx)
 
         if(isWishlistIncluded) {
