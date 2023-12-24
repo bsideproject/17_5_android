@@ -35,7 +35,7 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         initListener()
     }
     private fun initView() {
-        binding.tvMainTitle.text = answerViewModel.apiResponse[0].questionName
+        binding.tvAgeTitle.text = answerViewModel.apiResponse[0].questionName
         binding.titleLayout.clWish.isVisible = false
 
         if(answerViewModel.lastPage < 1) {
