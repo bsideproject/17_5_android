@@ -46,6 +46,9 @@ fun WishListAddToast(
     else if(snackbarData.message === "feedback") {
         title = "소중한 의견 감사합니다!"
     }
+    else if(snackbarData.message === "wishlistFull") {
+        title = "위시리스트가 꽉 찼어요!"
+    }
 
     Surface(
         shape = RoundedCornerShape(10.dp),

@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -28,9 +29,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
@@ -38,7 +41,9 @@ import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.TestResult.WishListAddToast
 import com.carpick.carpickapp.screen.TestResult.testCars
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
+import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -50,8 +55,8 @@ class TestResultActivity : ComponentActivity() {
         val data = intent.getSerializableExtra("response", RecommendCars::class.java)
         setContent {
             CarpickAppTheme {
-                // A surface container using the 'background' color from the theme
                 Page(
+                    wishListViewModel = hiltViewModel(),
                     data,
                     onPressWishList = {
                         val intent = Intent(this, WishListActivity::class.java)
@@ -71,8 +76,10 @@ class TestResultActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Page(
+    wishListViewModel: CarPickWishListViewModel,
     response: RecommendCars?,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
@@ -82,6 +89,14 @@ fun Page(
     val scaffoldState = rememberScaffoldState()
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
+
+    val wishlistIds by remember {
+        mutableStateOf(mutableListOf<Int>())
+    }
+
+    var isIncludedInWishlist by remember {
+        mutableStateOf(false)
+    }
 
     var recommendCars by remember {
         mutableStateOf<List<RecommendedCar>>(response?.recommendCars ?: listOf())
@@ -93,6 +108,75 @@ fun Page(
 
     var selectedIdx by remember {
         mutableStateOf(selectedCar.id)
+    }
+
+    scope.launch {
+        wishListViewModel.getWishlistData().collect {
+            it.forEach { item ->
+                if(selectedIdx === item.id) {
+                    isIncludedInWishlist = true
+                }
+                wishlistIds.add(item.id)
+            }
+        }
+    }
+
+
+
+    fun _addWishList(selectedId: Int) {
+        val wishlistSize = wishlistIds.size
+        scope.launch {
+            if(wishlistSize < 15) {
+                wishListViewModel.insertWishlistData(TestModel(selectedId))
+                wishlistIds.clear()
+                wishListViewModel.getWishlistData().collect {
+                    it.forEach { item ->
+                        wishlistIds.add(item.id)
+                    }
+                }
+                val result = snackbarHostState.showSnackbar(
+                    message = "wishlist",
+                    duration = SnackbarDuration.Short,
+                )
+            }
+            else {
+                val result = snackbarHostState.showSnackbar(
+                    message = "wishlistFull",
+                    duration = SnackbarDuration.Short,
+                )
+
+            }
+        }
+    }
+
+    fun _deleteWishList(selectedId: Int) {
+        scope.launch {
+            wishListViewModel.deleteWishlistById(selectedId)
+            wishlistIds.clear()
+            wishListViewModel.getWishlistData().collect {
+                it.forEach { item ->
+                    wishlistIds.add(item.id)
+                }
+            }
+        }
+    }
+
+    fun _onPressWishListBtn() {
+        val isWishlistIncluded = wishlistIds.contains(selectedIdx)
+
+        if(isWishlistIncluded) {
+            _deleteWishList(selectedIdx)
+        } else {
+            _addWishList(selectedIdx)
+        }
+    }
+
+    fun _onPressCarRankListItem(idx: Int) {
+        val newItem = recommendCars[idx]
+        selectedIdx = newItem.id
+        selectedCar = newItem
+
+        isIncludedInWishlist = wishlistIds.contains(newItem.id)
     }
 
     Scaffold(
@@ -119,12 +203,7 @@ fun Page(
                     Log.d("TestResultActivity", "onPressShare")
                 },
                 onPressAddWishListBtn = {
-                    scope.launch {
-                        val result = snackbarHostState.showSnackbar(
-                            message = "wishlist",
-                            duration = SnackbarDuration.Short,
-                        )
-                    }
+                    _onPressWishListBtn()
                 }
             )
             TestResultBackLayer(
@@ -132,9 +211,7 @@ fun Page(
                 selectedCar,
                 selectedIdx,
                 onPressCarRankListItem = {idx ->
-                    val newItem = recommendCars[idx]
-                    selectedIdx = newItem.id
-                    selectedCar = newItem
+                    _onPressCarRankListItem(idx)
                 }
             )
             TestResultDetail(
@@ -155,6 +232,7 @@ fun Page(
 fun GreetingPreview2() {
     CarpickAppTheme {
         Page(
+            wishListViewModel = hiltViewModel(),
             null,
             onPressWishList = {
                 Log.d("TestResult", "onPressWishList")
