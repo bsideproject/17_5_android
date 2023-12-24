@@ -111,3 +111,4 @@ val testCars: List<CarDetailTestModel> = listOf(
 )
 
 var fuelTypeName = mapOf<String, String>("GASOLINE" to "가솔린", "DIESEL" to "디젤", "EV" to "전기", "HYBRID" to "하이브리드")
+val transmissionName = mapOf<String, String>("AUTO" to "오토", "MANUAL" to "수동", "CVT" to "CVT", "DCT" to "DCT")

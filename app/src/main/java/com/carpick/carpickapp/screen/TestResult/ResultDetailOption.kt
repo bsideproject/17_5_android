@@ -34,6 +34,9 @@ fun ResultDetailOption(
         ResultDetailOptionRowData("외장", selectedCar.externalOptionDescription),
         ResultDetailOptionRowData("내장", selectedCar.internalOptionDescription),
         ResultDetailOptionRowData("편의", selectedCar.convenienceOptionDescription),
+        ResultDetailOptionRowData("공조", selectedCar.airConditioningOptionDescription),
+        ResultDetailOptionRowData("A/V", selectedCar.audioAndVisualOptionDescription),
+        ResultDetailOptionRowData("시트", selectedCar.sheetOptionDescription)
     )
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)

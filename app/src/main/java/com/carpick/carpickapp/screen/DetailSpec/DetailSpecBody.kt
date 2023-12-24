@@ -11,6 +11,7 @@ import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.SimpleSpecBody
 import com.carpick.carpickapp.screen.TestResult.fuelTypeName
 import com.carpick.carpickapp.screen.TestResult.testCars
+import com.carpick.carpickapp.screen.TestResult.transmissionName
 import java.text.DecimalFormat
 
 @Composable
@@ -22,6 +23,7 @@ fun DetailSpecBody(
     val priceDec = DecimalFormat("#,###만원")
     val displacementDec = DecimalFormat("#,###cc")
     val lengthDec = DecimalFormat("#,###mm")
+    val weelbaseDec = DecimalFormat("#,###mm")
     var rowTotalDatas = listOf<RowDataTypes>(
         RowDataTypes("가격", "${priceDec.format(selectedCar.price/10000)}"),
         RowDataTypes("차종", selectedCar.carBodyTypeName),
@@ -34,6 +36,10 @@ fun DetailSpecBody(
         RowDataTypes("전폭", "${lengthDec.format(selectedCar.width)}"),
         RowDataTypes("전고", "${lengthDec.format(selectedCar.height)}"),
         RowDataTypes("엔진", "${selectedCar.engineTypeName} ${selectedCar.engineCylinderCount}기통"),
+        RowDataTypes("최대출력", "${selectedCar.maximumPowerDescription}ps/rpm"),
+        RowDataTypes("최고토크", "${selectedCar.maximumTorqueDescription}kg·m/rpm"),
+        RowDataTypes("축간거리", "${weelbaseDec.format(selectedCar.wheelbase)}"),
+        RowDataTypes("변속기", "${transmissionName[selectedCar.transmissionTypeName] ?: ""} ${selectedCar.numberOfGears}단"),
     )
     var chunkedTotalDatas = rowTotalDatas.chunked(2)
 
