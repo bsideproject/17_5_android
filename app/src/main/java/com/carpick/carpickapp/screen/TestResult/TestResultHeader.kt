@@ -27,9 +27,16 @@ import com.carpick.carpickapp.R
 
 @Composable
 fun TestResultHeader(
+    isIncludedInWishlist: Boolean,
     onPressShare: () -> Unit,
     onPressAddWishListBtn: () -> Unit
 ) {
+
+    var wishlistIconImg = if(isIncludedInWishlist) {
+        R.drawable.ic_test_result_header_favorite_on
+    } else {
+        R.drawable.ic_test_result_header_favorite
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +75,7 @@ fun TestResultHeader(
                     .width(10.dp)
             )
             Image(
-                painter = painterResource(id = R.drawable.ic_test_result_header_favorite),
+                painter = painterResource(id = wishlistIconImg),
                 contentDescription = "위시리스트",
                 modifier = Modifier
                     .size(30.dp)

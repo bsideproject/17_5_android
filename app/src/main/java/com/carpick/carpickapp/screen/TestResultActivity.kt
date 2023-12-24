@@ -90,7 +90,7 @@ fun Page(
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
 
-    val wishlistIds by remember {
+    var wishlistIds by remember {
         mutableStateOf(mutableListOf<Int>())
     }
 
@@ -110,16 +110,23 @@ fun Page(
         mutableStateOf(selectedCar.id)
     }
 
-    scope.launch {
-        wishListViewModel.getWishlistData().collect {
-            it.forEach { item ->
-                if(selectedIdx === item.id) {
-                    isIncludedInWishlist = true
+    fun _getWishListData() {
+        scope.launch {
+            wishlistIds.clear()
+            wishListViewModel.getWishlistData().collect {
+                var ids = mutableListOf<Int>()
+                it.forEach { item ->
+                    ids.add(item.id)
+
                 }
-                wishlistIds.add(item.id)
+                isIncludedInWishlist = ids.contains(selectedIdx)
+                Log.d("TestResultActivity", "wishlistIds result: $ids")
+                wishlistIds = ids.distinct().toMutableList()
             }
         }
     }
+
+    _getWishListData()
 
 
 
@@ -128,12 +135,7 @@ fun Page(
         scope.launch {
             if(wishlistSize < 15) {
                 wishListViewModel.insertWishlistData(TestModel(selectedId))
-                wishlistIds.clear()
-                wishListViewModel.getWishlistData().collect {
-                    it.forEach { item ->
-                        wishlistIds.add(item.id)
-                    }
-                }
+                _getWishListData()
                 val result = snackbarHostState.showSnackbar(
                     message = "wishlist",
                     duration = SnackbarDuration.Short,
@@ -152,16 +154,12 @@ fun Page(
     fun _deleteWishList(selectedId: Int) {
         scope.launch {
             wishListViewModel.deleteWishlistById(selectedId)
-            wishlistIds.clear()
-            wishListViewModel.getWishlistData().collect {
-                it.forEach { item ->
-                    wishlistIds.add(item.id)
-                }
-            }
+            _getWishListData()
         }
     }
 
     fun _onPressWishListBtn() {
+        Log.d("TestResultActivity", "wishlistIds: $wishlistIds")
         val isWishlistIncluded = wishlistIds.contains(selectedIdx)
 
         if(isWishlistIncluded) {
@@ -199,6 +197,7 @@ fun Page(
                 .padding(paddingValues)
         ) {
             TestResultHeader(
+                isIncludedInWishlist,
                 onPressShare = {
                     Log.d("TestResultActivity", "onPressShare")
                 },
