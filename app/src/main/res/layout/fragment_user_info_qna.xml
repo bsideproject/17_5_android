@@ -32,7 +32,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="48dp"
                 android:fontFamily="@font/pretendard_bold"
-                tools:text="@string/user_info_main_title"
+                android:text="@string/user_info_main_title"
                 android:textColor="@color/black"
                 android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="parent"
