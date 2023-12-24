@@ -58,7 +58,6 @@ class TestResultActivity : ComponentActivity() {
                         startActivity(intent)
                     },
                     onPressMoreAtSimpleSpec = {
-                        Log.d("TestResult", "onPressMoreAtSimpleSpec")
                         val intent = Intent(this, DetailSpecActivity::class.java)
                         intent.putExtra("carDetail", it)
                         startActivity(intent)
@@ -97,8 +96,6 @@ fun Page(
     var selectedCar by remember {
         mutableStateOf<RecommendedCar>(recommendCars[0])
     }
-
-    Log.d("TestResultActivity", "selectedCar: $selectedCar")
 
     var selectedIdx by remember {
         mutableStateOf(selectedCar.id)
