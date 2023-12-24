@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CarPickWishListViewModel @Inject constructor(
     private val wishListRepository : WishListRepository
 ) : ViewModel(){
-    fun getTestData(): Flow<TestModel> {
+    fun getTestData(): Flow<List<TestModel>> {
         return wishListRepository.getTestData()
     }
     fun insertTestData(testModel : TestModel) {
@@ -26,6 +26,21 @@ class CarPickWishListViewModel @Inject constructor(
     fun deleteTestData(testModel : TestModel) {
         viewModelScope.launch(Dispatchers.IO) {
             wishListRepository.delete(testModel)
+        }
+    }
+
+    fun getWishlistData(): Flow<List<TestModel>> {
+        return wishListRepository.getWishlistData()
+    }
+    fun insertWishlistData(testModel : TestModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            wishListRepository.insert(testModel)
+        }
+    }
+
+    fun deleteWishlistById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            wishListRepository.deleteWishlistById(id)
         }
     }
 }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class WishListRepository(
     private val dao : CarPickDao
 ) {
-    fun getTestData() : Flow<TestModel> {
+    fun getTestData() : Flow<List<TestModel>> {
         return dao.selectWishList()
     }
 
@@ -17,5 +17,13 @@ class WishListRepository(
 
     suspend fun delete(testData: TestModel) {
         return dao.deleteWishList(testData)
+    }
+
+    fun getWishlistData() : Flow<List<TestModel>> {
+        return dao.selectWishList()
+    }
+
+    suspend fun deleteWishlistById(id : Int) {
+        return dao.deleteWishListById(id)
     }
 }

@@ -17,5 +17,9 @@ interface CarPickDao {
     suspend fun deleteWishList(car : TestModel)
 
     @Query("SELECT * FROM wish_list_car")
-    fun selectWishList() : Flow<TestModel>
+    fun selectWishList() : Flow<List<TestModel>>
+
+    @Query("Delete FROM wish_list_car where id = :id")
+    suspend fun deleteWishListById(id : Int)
+
 }
