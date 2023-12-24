@@ -20,9 +20,6 @@ import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import kotlinx.coroutines.launch
 
 class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
-    private var sex = ""
-    private var age = ""
-
     private var answerAdapter : AnswerAdapter? = null
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
 
@@ -35,6 +32,8 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         initListener()
     }
     private fun initView() {
+        val genderTextviewGroup = arrayListOf(binding.tvMan, binding.tvGirl)
+
         binding.tvAgeTitle.text = answerViewModel.apiResponse[0].questionName
         binding.titleLayout.clWish.isVisible = false
 
@@ -45,11 +44,10 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         answerAdapter = AnswerAdapter()
         answerAdapter?.setClickListener(object : ClickListener {
             override fun click(item: Choice) {
-                age = item.content
-
+                answerViewModel.saveAgeInfo(item)
                 answerViewModel.saveUserInfo(item)
 
-                if(sex != "" && age != "") {
+                if(answerViewModel.getGenderInfo() != "") {
                     changeFragment()
                 }
             }
@@ -57,34 +55,42 @@ class UserInfoQnAFragment : BaseFragment<FragmentUserInfoQnaBinding>(){
         })
         binding.rvAge.adapter = answerAdapter
 
+        answerViewModel.getGenderInfo()?.let {
+            if(it == "남자"){
+                setClickStatus(genderTextviewGroup,binding.tvMan)
+            }else {
+                setClickStatus(genderTextviewGroup,binding.tvGirl)
+            }
+        }
+
+        answerViewModel.getAgeInfo()?.let {
+            answerAdapter?.setSelectedItem(it)
+        }
+
         answerAdapter?.submitList(answerViewModel.apiResponse[0].choices)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        age = ""
-        sex = ""
-    }
     private fun initListener() {
         binding.run {
-            val sexTextviewGroup = arrayListOf(tvMan, tvGirl)
+            val genderTextviewGroup = arrayListOf(tvMan, tvGirl)
 
             // 연봉부터 누르고 성별 누른 경우 이동하기 위해 체크
             tvMan.setOnSingleClickListener {
-                setClickStatus(sexTextviewGroup,tvMan)
-                sex = "남자"
+                setClickStatus(genderTextviewGroup,tvMan)
+//                answerViewModel.saveUserInfo(Choice("choie code",""))
+                answerViewModel.saveGenderInfo("남자")
 
-                if(age != "") {
+                if(!answerViewModel.getAgeInfo()?.choiceCode.isNullOrEmpty()) {
                     changeFragment()
                 }
 
             }
             tvGirl.setOnSingleClickListener {
-                setClickStatus(sexTextviewGroup,tvGirl)
-                sex = "여자"
+                setClickStatus(genderTextviewGroup,tvGirl)
+//                answerViewModel.saveUserInfo(Choice("choie code",""))
+                answerViewModel.saveGenderInfo("여자")
 
-                if(age != "") {
+                if(!answerViewModel.getAgeInfo()?.choiceCode.isNullOrEmpty()) {
                     changeFragment()
                 }
             }

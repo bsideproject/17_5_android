@@ -16,15 +16,18 @@ class CarpickAnswerViewModel @Inject constructor(
     private val qnaListRepository: QnaListRepository
 ) : ViewModel() {
     private var _answerResult = HashMap<Int,Choice>()
-    val answerResult : HashMap<Int,Choice>
+    val answerResult: HashMap<Int,Choice>
         get() = _answerResult
 
     private var _lastPage = 1
     val lastPage : Int
         get() = _lastPage
 
-    private var answerBudgetResult : Choice?= null
-    private var answerUserInfoResult : Choice?= null
+
+    private var gender : String? = null
+    private var age : Choice? = null
+    private var answerBudgetResult: Choice?= null
+    private var answerUserInfoResult: Choice?= null
 
     private var _apiResponse = ArrayList<QnAListResponseModel>()
     val apiResponse : ArrayList<QnAListResponseModel>
@@ -46,6 +49,21 @@ class CarpickAnswerViewModel @Inject constructor(
     }
     fun saveBudgetResult(answer : Choice?) {
         answerBudgetResult = answer
+    }
+
+    fun getGenderInfo(): String? {
+        return gender
+    }
+    fun saveGenderInfo(gender: String?) {
+        this.gender = gender
+    }
+
+    fun getAgeInfo(): Choice? {
+        return age
+    }
+
+    fun saveAgeInfo(age: Choice?) {
+        this.age = age
     }
 
     fun getUserInfo() : Choice?{

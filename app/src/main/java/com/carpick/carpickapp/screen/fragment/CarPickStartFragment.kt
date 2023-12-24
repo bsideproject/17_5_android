@@ -23,6 +23,8 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
 
         answerViewModel.saveLastPage(-1)
 
+        answerViewModel.saveGenderInfo(null)
+        answerViewModel.saveAgeInfo(null)
         answerViewModel.saveUserInfo(null)
         answerViewModel.saveBudgetResult(null)
         answerViewModel.saveAnswerResult(null)
