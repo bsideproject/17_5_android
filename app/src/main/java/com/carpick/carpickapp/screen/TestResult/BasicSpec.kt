@@ -24,6 +24,11 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailHashTagTest
 import com.carpick.carpickapp.model.Tag
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun BasicSpec(
@@ -71,14 +76,27 @@ fun BasicSpecTags(
 fun HashTag(
     value: Tag
 ) {
-    Log.d("TestResultActivity", "HashTag: ${value.toString()}")
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.7f)
+        setBackgroundColor(Color(value.tagRgbColorCode.hashCode()).copy(alpha = 1.0f).hashCode())
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPaddingHorizontal(21)
+        setPaddingVertical(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+        setArrowOrientation(ArrowOrientation.TOP)
+    }
+
     TestResultCommonTooltip(
-        arrowPosition = 0.7f,
         toolTipContent = value.tagDescription,
-        backgroundColor = Color(value.tagRgbColorCode.hashCode()).copy(alpha = 1.0f),
         modifier = Modifier
             .padding(4.dp)
             .background(Color(value.tagRgbColorCode.hashCode()), shape = RoundedCornerShape(99.dp)),
+        builder = builder
     ) {balloonWindow ->
         Box(
             modifier = Modifier.clickable {

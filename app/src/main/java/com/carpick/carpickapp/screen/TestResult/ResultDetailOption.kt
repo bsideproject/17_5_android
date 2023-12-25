@@ -23,6 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.CarDetailOptionTest
 import com.carpick.carpickapp.model.RecommendedCar
+import com.skydoves.balloon.ArrowOrientation
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun ResultDetailOption(
@@ -161,9 +166,24 @@ fun ResultDetailRowTitle(
     topPadding: Int,
     tooltipContent: String
 ) {
+    val builder = rememberBalloonBuilder {
+        setArrowSize(10)
+        setArrowPosition(0.8f)
+        setBackgroundColor(Color.White.hashCode())
+        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+        setWidth(BalloonSizeSpec.WRAP)
+        setHeight(BalloonSizeSpec.WRAP)
+        setPaddingHorizontal(21)
+        setPaddingVertical(12)
+        setMarginHorizontal(12)
+        setCornerRadius(8f)
+        setBalloonAnimation(BalloonAnimation.ELASTIC)
+        setArrowOrientation(ArrowOrientation.TOP)
+    }
+
     TestResultCommonTooltip(
-        arrowPosition = 0.8f,
-        toolTipContent = tooltipContent
+        toolTipContent = tooltipContent,
+        builder = builder,
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,

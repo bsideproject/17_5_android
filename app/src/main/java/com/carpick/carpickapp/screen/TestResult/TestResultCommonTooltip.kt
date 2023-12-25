@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.compose.Balloon
@@ -17,26 +18,11 @@ import com.skydoves.balloon.compose.rememberBalloonBuilder
 
 @Composable
 fun TestResultCommonTooltip(
-    arrowPosition: Float,
     toolTipContent: String,
-    backgroundColor: Color = Color.White,
+    builder: Balloon.Builder,
     modifier: Modifier = Modifier,
     content: @Composable (balloonWindow: BalloonWindow) -> Unit,
 ) {
-    val builder = rememberBalloonBuilder {
-        setArrowSize(10)
-        setArrowPosition(arrowPosition)
-        setBackgroundColor(backgroundColor.hashCode())
-        setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-        setWidth(BalloonSizeSpec.WRAP)
-        setHeight(BalloonSizeSpec.WRAP)
-        setPaddingHorizontal(21)
-        setPaddingVertical(12)
-        setMarginHorizontal(12)
-        setCornerRadius(8f)
-        setBalloonAnimation(BalloonAnimation.ELASTIC)
-        setArrowOrientation(ArrowOrientation.TOP)
-    }
 
     Balloon(
         builder = builder,
