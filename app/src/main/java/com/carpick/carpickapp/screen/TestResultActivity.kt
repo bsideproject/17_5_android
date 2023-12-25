@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
@@ -63,9 +64,6 @@ class TestResultActivity : ComponentActivity() {
                         intent.putExtra("carDetail", it)
                         startActivity(intent)
                     },
-                    onPressRetest = {
-                        Log.d("TestResult", "onPressRetest")
-                    },
                 )
             }
         }
@@ -79,7 +77,6 @@ fun Page(
     response: RecommendCars?,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
-    onPressRetest: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
@@ -112,6 +109,10 @@ fun Page(
 
     var tags by remember {
         mutableStateOf(selectedCar.tags)
+    }
+
+    var feedbackPopupVisible by remember {
+        mutableStateOf(false)
     }
 
     fun _getWishListData() {
@@ -217,13 +218,22 @@ fun Page(
                 onPressMoreAtSimpleSpec = {
                     onPressMoreAtSimpleSpec(selectedCar)
                 },
-                onPressRetest,
+                onPressRetest = {
+                    feedbackPopupVisible = true
+                },
                 selectedCar,
                 specRowDatas,
                 tags
             )
             TestResultFooter(onPressWishList)
         }
+
+        FeedbackPopup(
+            visible = feedbackPopupVisible,
+            onDismissRequest = {
+                feedbackPopupVisible = false
+            }
+        )
     }
 
 }
@@ -240,9 +250,6 @@ fun GreetingPreview2() {
             },
             onPressMoreAtSimpleSpec = {
                 Log.d("TestResult", "onPressMoreAtSimpleSpec")
-            },
-            onPressRetest = {
-                Log.d("TestResult", "onPressRetest")
             },
         )
     }
