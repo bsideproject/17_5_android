@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
@@ -105,6 +106,14 @@ fun Page(
         mutableStateOf(selectedCar.id)
     }
 
+    var specRowDatas by remember {
+        mutableStateOf<List<List<RowDataTypes>>>(testResultViewModel.setSpecRowDatas(selectedCar))
+    }
+
+    var tags by remember {
+        mutableStateOf(selectedCar.tags)
+    }
+
     fun _getWishListData() {
         scope.launch {
             wishlistIds.clear()
@@ -164,6 +173,8 @@ fun Page(
         selectedCar = newItem
 
         isIncludedInWishlist = wishlistIds.contains(newItem.id)
+        specRowDatas = testResultViewModel.setSpecRowDatas(newItem)
+        tags = newItem.tags
     }
 
     Scaffold(
@@ -207,7 +218,9 @@ fun Page(
                     onPressMoreAtSimpleSpec(selectedCar)
                 },
                 onPressRetest,
-                selectedCar
+                selectedCar,
+                specRowDatas,
+                tags
             )
             TestResultFooter(onPressWishList)
         }

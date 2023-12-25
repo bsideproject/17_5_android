@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.TestResult
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -70,7 +71,7 @@ fun BasicSpecTags(
 fun HashTag(
     value: Tag
 ) {
-
+    Log.d("TestResultActivity", "HashTag: ${value.toString()}")
     TestResultCommonTooltip(
         arrowPosition = 0.7f,
         toolTipContent = value.tagDescription,

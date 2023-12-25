@@ -31,7 +31,8 @@ import java.text.DecimalFormat
 @Composable
 fun SimpleSpec(
     onPressMoreAtSimpleSpec: () -> Unit,
-    selectedCar: RecommendedCar
+    selectedCar: RecommendedCar,
+    specRowDatas: List<List<RowDataTypes>>
 ) {
 
     val priceDec = DecimalFormat("#,###만원")
@@ -53,7 +54,7 @@ fun SimpleSpec(
     ) {
 
         SimpleSpecTitle()
-        SimpleSpecBody(chunkedTotalDatas)
+        SimpleSpecBody(specRowDatas)
         ShowMoreButton(onPressMoreAtSimpleSpec)
 
     }
