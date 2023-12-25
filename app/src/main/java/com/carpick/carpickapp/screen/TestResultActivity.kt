@@ -25,25 +25,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.carpick.carpickapp.model.CarDetailTestModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
-import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.TestResult.WishListAddToast
-import com.carpick.carpickapp.screen.TestResult.testCars
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
-import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
+import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -56,7 +51,7 @@ class TestResultActivity : ComponentActivity() {
         setContent {
             CarpickAppTheme {
                 Page(
-                    wishListViewModel = hiltViewModel(),
+                    testResultViewModel = hiltViewModel(),
                     data,
                     onPressWishList = {
                         val intent = Intent(this, WishListActivity::class.java)
@@ -79,7 +74,7 @@ class TestResultActivity : ComponentActivity() {
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun Page(
-    wishListViewModel: CarPickWishListViewModel,
+    testResultViewModel: CarPickTestResultViewModel,
     response: RecommendCars?,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
@@ -113,7 +108,7 @@ fun Page(
     fun _getWishListData() {
         scope.launch {
             wishlistIds.clear()
-            wishListViewModel.getWishlistData().collect {
+            testResultViewModel.getWishlistData().collect {
                 var ids = mutableListOf<Int>()
                 it.forEach { item ->
                     ids.add(item.id)
@@ -132,7 +127,7 @@ fun Page(
         scope.launch {
             var message = ""
             if(wishlistSize < 15) {
-                wishListViewModel.insertWishlistData(TestModel(selectedId))
+                testResultViewModel.addWishList(selectedId)
                 _getWishListData()
                 message = "wishlist"
             }
@@ -148,7 +143,7 @@ fun Page(
 
     fun _deleteWishList(selectedId: Int) {
         scope.launch {
-            wishListViewModel.deleteWishlistById(selectedId)
+            testResultViewModel.deleteWishList(selectedId)
             _getWishListData()
         }
     }
@@ -225,7 +220,7 @@ fun Page(
 fun GreetingPreview2() {
     CarpickAppTheme {
         Page(
-            wishListViewModel = hiltViewModel(),
+            testResultViewModel = hiltViewModel(),
             null,
             onPressWishList = {
                 Log.d("TestResult", "onPressWishList")

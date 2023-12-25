@@ -3,6 +3,7 @@ package com.carpick.carpickapp.api
 import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RequestRecommend
+import com.carpick.carpickapp.model.SendFeedbackBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -18,4 +19,11 @@ interface ApiService {
     suspend fun getRecommendCars(
         @Body choices: RequestRecommend
     ) : RecommendCars
+
+    @POST("api/v1/feedback")
+    @Headers("content-type: application/json")
+    suspend fun sendFeedback(
+        @Body feedback: SendFeedbackBody
+    )
+
 }
