@@ -57,13 +57,18 @@ fun FeedbackPopup(
     var neverShowForGood by remember {
         mutableStateOf(false)
     }
+    var selectedValue by remember {
+        mutableStateOf("")
+    }
 
     fun onPressGood() {
         Log.d("FeedbackPopup", "onPressGood")
+        selectedValue = "good"
     }
 
     fun onPressBad() {
         Log.d("FeedbackPopup", "onPressBad")
+        selectedValue = "bad"
     }
 
     fun onPressSubmit() {
@@ -100,7 +105,8 @@ fun FeedbackPopup(
                     },
                     onPressBad = {
                         onPressBad()
-                    }
+                    },
+                    selectedValue
                 )
                 FeedbackInputGrid(
                     inputValue,
@@ -162,7 +168,8 @@ fun FeedbackPopupTitle() {
 @Composable
 fun FeedbackPopupButtonView(
     onPressGood: () -> Unit,
-    onPressBad: () -> Unit
+    onPressBad: () -> Unit,
+    selectedValue: String
 ) {
     Row(
         modifier = Modifier
@@ -173,12 +180,14 @@ fun FeedbackPopupButtonView(
     ) {
         FeedbackSelectBtn(
             type = "good",
-            onPress = onPressGood
+            onPress = onPressGood,
+            selectedValue == "good"
         )
         Spacer(modifier = Modifier.width(36.dp))
         FeedbackSelectBtn(
             type = "bad",
-            onPress = onPressBad
+            onPress = onPressBad,
+            selectedValue == "bad"
         )
     }
 }
@@ -186,10 +195,18 @@ fun FeedbackPopupButtonView(
 @Composable
 fun FeedbackSelectBtn(
     type: String,
-    onPress: () -> Unit
+    onPress: () -> Unit,
+    isSelected: Boolean
 ) {
-    val btnImg = if(type === "good") R.drawable.feedback_good_on else R.drawable.feedback_bad_on
+    val btnImg = if(type === "good") {
+        if(!isSelected) R.drawable.feedback_good_on
+        else R.drawable.feedback_good_off
+    } else {
+        if(!isSelected) R.drawable.feedback_bad_on
+        else R.drawable.feedback_bad_off
+    }
     val btnTxt = if(type === "good") "만족해요" else "아쉬워요"
+    val btnBgColor = if(isSelected) Color(0xFFEAF0FF) else Color(0xFFD1DEFF)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -200,7 +217,7 @@ fun FeedbackSelectBtn(
         Box(
             modifier = Modifier
                 .size(64.dp)
-                .background(Color(0xFFD1DEFF), shape = RoundedCornerShape(64.dp)),
+                .background(btnBgColor, shape = RoundedCornerShape(64.dp)),
             contentAlignment = Alignment.Center
         ) {
             Image(
