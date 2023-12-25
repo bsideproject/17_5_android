@@ -18,11 +18,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +53,9 @@ fun FeedbackPopup(
     var inputValue by remember {
         mutableStateOf("")
     }
+    var neverShowForGood by remember {
+        mutableStateOf(false)
+    }
 
     if(!visible) return
 
@@ -61,14 +68,13 @@ fun FeedbackPopup(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp)
                 .padding(24.dp, 0.dp),
             shape = RoundedCornerShape(10.dp),
             color = Color.White
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
@@ -76,10 +82,14 @@ fun FeedbackPopup(
                 FeedbackPopupHeader(onDismissRequest)
                 FeedbackPopupTitle()
                 FeedbackPopupButtonView()
-                FeedbackInput(
+                FeedbackInputGrid(
                     inputValue,
                     onValueChange = {
                         inputValue = it
+                    },
+                    neverShowForGood,
+                    onCheckedChange = {
+                        neverShowForGood = it
                     }
                 )
             }
@@ -131,7 +141,7 @@ fun FeedbackPopupButtonView(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 24.dp, 0.dp, 0.dp),
+            .padding(8.dp, 24.dp, 8.dp, 0.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -182,43 +192,92 @@ fun FeedbackSelectBtn(
 }
 
 @Composable
+fun FeedbackInputGrid(
+    value: String,
+    onValueChange: (String) -> Unit,
+    neverShowForGood: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(0.dp, 24.dp, 0.dp, 0.dp)
+            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
+    ) {
+        FeedbackInput(value, onValueChange)
+        FeedbackPopupNeverShowCheckBox(neverShowForGood, onCheckedChange)
+    }
+}
+
+@Composable
 fun FeedbackInput(
     value: String,
     onValueChange: (String) -> Unit
 ) {
-    Box(
+    TextField(
+        value,
+        onValueChange,
+        placeholder = {
+            Text(
+                text = "내용을 입력해 주세요. (선택)",
+                fontSize = 14.sp,
+                fontWeight = FontWeight(600),
+                color = Color(0xFFB6B6CC)
+            )
+        },
+        textStyle = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight(600),
+            color = Color(0xFF4B4B6B),
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .height(130.dp)
-            .padding(20.dp, 24.dp, 20.dp, 0.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+            .padding(8.dp, 0.dp, 8.dp, 0.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color(0xFFF2F2F6),
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent
+        ),
+    )
+}
+
+@Composable
+fun FeedbackPopupNeverShowCheckBox(
+    neverShowForGood: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        TextField(
-            value,
-            onValueChange,
-            placeholder = {
-                Text(
-                    text = "내용을 입력해 주세요. (선택)",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFFB6B6CC)
-                )
-            },
-            textStyle = TextStyle(
+        Checkbox(
+            checked = neverShowForGood,
+            onCheckedChange,
+            colors = CheckboxDefaults.colors(
+                uncheckedColor = Color(0xFFD4D4E1)
+            )
+        )
+
+        ClickableText(
+            text = AnnotatedString("다시 보지 않기"),
+            style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight(600),
-                color = Color(0xFF4B4B6B),
+                color = Color(0xFF7A7AA2),
             ),
-            modifier = Modifier
-                .fillMaxSize(),
-            shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color(0xFFF2F2F6),
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent
-            ),
+            onClick = {
+                onCheckedChange(!neverShowForGood)
+            },
+            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
         )
     }
 }
