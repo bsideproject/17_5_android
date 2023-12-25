@@ -18,14 +18,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +46,10 @@ fun FeedbackPopup(
     visible: Boolean,
     onDismissRequest: () -> Unit
 ) {
+    var inputValue by remember {
+        mutableStateOf("")
+    }
+
     if(!visible) return
 
     Dialog(
@@ -65,6 +76,12 @@ fun FeedbackPopup(
                 FeedbackPopupHeader(onDismissRequest)
                 FeedbackPopupTitle()
                 FeedbackPopupButtonView()
+                FeedbackInput(
+                    inputValue,
+                    onValueChange = {
+                        inputValue = it
+                    }
+                )
             }
         }
     }
@@ -160,6 +177,48 @@ fun FeedbackSelectBtn(
             fontWeight = FontWeight(700),
             color = Color(0xFF3872FF),
             modifier = Modifier.padding(0.dp, 15.dp, 0.dp, 0.dp)
+        )
+    }
+}
+
+@Composable
+fun FeedbackInput(
+    value: String,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(130.dp)
+            .padding(20.dp, 24.dp, 20.dp, 0.dp)
+            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+    ) {
+        TextField(
+            value,
+            onValueChange,
+            placeholder = {
+                Text(
+                    text = "내용을 입력해 주세요. (선택)",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFFB6B6CC)
+                )
+            },
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight(600),
+                color = Color(0xFF4B4B6B),
+            ),
+            modifier = Modifier
+                .fillMaxSize(),
+            shape = RoundedCornerShape(8.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color(0xFFF2F2F6),
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent
+            ),
         )
     }
 }
