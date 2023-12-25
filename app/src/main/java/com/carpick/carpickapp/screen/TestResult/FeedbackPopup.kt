@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +64,10 @@ fun FeedbackPopup(
 
     fun onPressBad() {
         Log.d("FeedbackPopup", "onPressBad")
+    }
+
+    fun onPressSubmit() {
+        Log.d("FeedbackPopup", "onPressSubmit")
     }
 
     if(!visible) return
@@ -105,6 +110,11 @@ fun FeedbackPopup(
                     neverShowForGood,
                     onCheckedChange = {
                         neverShowForGood = it
+                    }
+                )
+                FeedbackPopupSubmitButton(
+                    onPressSubmit = {
+                        onPressSubmit()
                     }
                 )
             }
@@ -299,5 +309,54 @@ fun FeedbackPopupNeverShowCheckBox(
             modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
         )
     }
+}
+
+@Composable
+fun FeedbackPopupSubmitButton(
+    onPressSubmit: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp, 24.dp, 8.dp, 12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp)
+                .background(Color(0xFF3872FF), shape = RoundedCornerShape(33.dp))
+                .clickable {
+                    onPressSubmit()
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "전송하기",
+                fontSize = 16.sp,
+                fontWeight = FontWeight(700),
+                color = Color.White
+            )
+        }
+
+//        Button(
+//            onClick = {
+//                onPressSubmit()
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(44.dp)
+//                .background(Color(0xFF3872FF)),
+//            shape = RoundedCornerShape(22.dp),
+//        ) {
+//            Text(
+//                text = "전송하기",
+//                fontSize = 16.sp,
+//                fontWeight = FontWeight(700),
+//                color = Color.White
+//            )
+//        }
+    }
+
 }
 
