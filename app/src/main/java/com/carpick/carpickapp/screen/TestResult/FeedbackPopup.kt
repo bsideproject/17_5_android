@@ -57,6 +57,14 @@ fun FeedbackPopup(
         mutableStateOf(false)
     }
 
+    fun onPressGood() {
+        Log.d("FeedbackPopup", "onPressGood")
+    }
+
+    fun onPressBad() {
+        Log.d("FeedbackPopup", "onPressBad")
+    }
+
     if(!visible) return
 
     Dialog(
@@ -81,7 +89,14 @@ fun FeedbackPopup(
             ) {
                 FeedbackPopupHeader(onDismissRequest)
                 FeedbackPopupTitle()
-                FeedbackPopupButtonView()
+                FeedbackPopupButtonView(
+                    onPressGood = {
+                        onPressGood()
+                    },
+                    onPressBad = {
+                        onPressBad()
+                    }
+                )
                 FeedbackInputGrid(
                     inputValue,
                     onValueChange = {
@@ -136,7 +151,8 @@ fun FeedbackPopupTitle() {
 
 @Composable
 fun FeedbackPopupButtonView(
-
+    onPressGood: () -> Unit,
+    onPressBad: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -146,18 +162,21 @@ fun FeedbackPopupButtonView(
         verticalAlignment = Alignment.CenterVertically
     ) {
         FeedbackSelectBtn(
-            type = "good"
+            type = "good",
+            onPress = onPressGood
         )
         Spacer(modifier = Modifier.width(36.dp))
         FeedbackSelectBtn(
-            type = "bad"
+            type = "bad",
+            onPress = onPressBad
         )
     }
 }
 
 @Composable
 fun FeedbackSelectBtn(
-    type: String
+    type: String,
+    onPress: () -> Unit
 ) {
     val btnImg = if(type === "good") R.drawable.feedback_good_on else R.drawable.feedback_bad_on
     val btnTxt = if(type === "good") "만족해요" else "아쉬워요"
@@ -165,7 +184,7 @@ fun FeedbackSelectBtn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.clickable {
-            Log.d("FeedbackSelectBtn", "type: $type")
+            onPress()
         }
     ) {
         Box(
