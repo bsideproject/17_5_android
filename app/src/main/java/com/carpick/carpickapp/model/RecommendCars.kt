@@ -28,17 +28,17 @@ data class RecommendedCar(
     val convenienceOptionDescription: String,
     @SerializedName("detail_model_name")
     val detailModelName: String,
-    val displacement: Int,
+    val displacement: Int?,
     @SerializedName("engine_cylinder_count")
-    val engineCylinderCount: Int,
+    val engineCylinderCount: Int?,
     @SerializedName("engine_type_name")
-    val engineTypeName: String,
+    val engineTypeName: String?,
     @SerializedName("external_option_description")
     val externalOptionDescription: String,
     @SerializedName("front_brake_type_name")
     val frontBrakeTypeName: String,
     @SerializedName("front_suspension_type_name")
-    val frontSuspensionTypeName: String,
+    val frontSuspensionTypeName: String?,
     @SerializedName("fuel_economy")
     val fuelEconomy: Double,
     @SerializedName("fuel_type_name")
@@ -51,9 +51,9 @@ data class RecommendedCar(
     val internalOptionDescription: String,
     val length: Int,
     @SerializedName("maximum_power_description")
-    val maximumPowerDescription: String,
+    val maximumPowerDescription: String?,
     @SerializedName("maximum_torque_description")
-    val maximumTorqueDescription: String,
+    val maximumTorqueDescription: String?,
     @SerializedName("model_name")
     val modelName: String,
     @SerializedName("number_of_gears")
@@ -62,7 +62,7 @@ data class RecommendedCar(
     @SerializedName("rear_brake_type_name")
     val rearBrakeTypeName: String,
     @SerializedName("rear_suspension_type_name")
-    val rearSuspensionTypeName: String,
+    val rearSuspensionTypeName: String?,
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("security_option_description")
@@ -75,10 +75,10 @@ data class RecommendedCar(
     @SerializedName("trim_name")
     val trimName: String,
     val weight: Int,
-    val wheelbase: Int,
+    val wheelbase: Int?,
     val width: Int,
     @SerializedName("zero_to_hundred")
-    val zeroToHundred: Double
+    val zeroToHundred: Double?
 ): Serializable
 
 data class Tag(
