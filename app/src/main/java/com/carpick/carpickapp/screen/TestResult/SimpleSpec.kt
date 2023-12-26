@@ -94,10 +94,6 @@ fun SimpleSpecBody(
             for (i in 0 until chunkedTotalDatas.size) {
                 SimpleSpecRow(chunkedTotalDatas[i], i == 0, i == chunkedTotalDatas.size-1)
             }
-//            for (i in 0 until dataRowSize) {
-//                Log.d("testData $i", (i == dataRowSize-1).toString())
-//                SimpleSpecRow(chunkedSpecs[i], i == 0, i == dataRowSize-1)
-//            }
         }
 
     }
@@ -171,12 +167,6 @@ fun SimpleSpecRow(
                 i%2 == 1
             )
         }
-//        for(i in 0 until rowData.size) {
-//            SimpleSpecRowItem(
-//                rowData[i],
-//                i%2 == 1
-//            )
-//        }
     }
 }
 
@@ -221,16 +211,10 @@ fun SimpleSpecRowItemTitle(
         setArrowOrientation(ArrowOrientation.TOP)
     }
 
-    TestResultCommonTooltip(
-        toolTipContent = "test",
-        builder = builder,
-    ) {balloonWindow ->
+    if(itemData.tooltipContent == null) {
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable {
-                balloonWindow.showAlignBottom()
-            }
         ) {
             Text(
                 text = itemData.title,
@@ -239,23 +223,45 @@ fun SimpleSpecRowItemTitle(
                 fontWeight = FontWeight(500),
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
             )
-
-            Box(
-                modifier = Modifier
-                    .width(15.dp)
-                    .height(15.dp)
-                    .background(Color(0xFF7A7AA2), shape = RoundedCornerShape(99.dp)),
-                contentAlignment = Alignment.Center
+        }
+    }
+    else {
+        TestResultCommonTooltip(
+            toolTipContent = itemData.tooltipContent,
+            builder = builder,
+        ) {balloonWindow ->
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable {
+                    balloonWindow.showAlignBottom()
+                }
             ) {
                 Text(
-                    text = "?",
-                    fontSize = 10.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight(500)
+                    text = itemData.title,
+                    fontSize = 14.sp,
+                    color = Color(0xFFD4D4E1),
+                    fontWeight = FontWeight(500),
+                    modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
-            }
-        }
 
+                Box(
+                    modifier = Modifier
+                        .width(15.dp)
+                        .height(15.dp)
+                        .background(Color(0xFF7A7AA2), shape = RoundedCornerShape(99.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "?",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight(500)
+                    )
+                }
+            }
+
+        }
     }
 
 }
@@ -263,4 +269,5 @@ fun SimpleSpecRowItemTitle(
 data class RowDataTypes(
     val title: String,
     val value: String,
+    val tooltipContent: String? = null
 )
