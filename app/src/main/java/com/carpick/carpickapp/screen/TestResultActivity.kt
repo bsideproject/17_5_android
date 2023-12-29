@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -29,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
+import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
@@ -38,6 +41,7 @@ import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.TestResult.WishListAddToast
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +68,11 @@ class TestResultActivity : ComponentActivity() {
                         intent.putExtra("carDetail", it)
                         startActivity(intent)
                     },
+                    onBackPress = {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                    }
                 )
             }
         }
@@ -77,11 +86,18 @@ fun Page(
     response: RecommendCars?,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
+    onBackPress: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
+
+    BackHandler(true, onBack = {
+        Log.d("TestResultActivity", "BackHandler onBackPress")
+        onBackPress()
+    })
 
     var wishlistIds by remember {
         mutableStateOf(mutableListOf<Int>())
@@ -251,6 +267,9 @@ fun GreetingPreview2() {
             onPressMoreAtSimpleSpec = {
                 Log.d("TestResult", "onPressMoreAtSimpleSpec")
             },
+            onBackPress = {
+                Log.d("TestResult", "onBackPress")
+            }
         )
     }
 }
