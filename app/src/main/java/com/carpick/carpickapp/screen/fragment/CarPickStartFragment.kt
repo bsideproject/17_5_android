@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickStartBinding
+import com.carpick.carpickapp.screen.TestActivity
 import com.carpick.carpickapp.screen.WishListActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -34,11 +35,13 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
                 .into(binding.videoView)
 
             tvStartTest.setOnSingleClickListener {
-                val newFragment = UserInfoQnAFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                val intent = Intent(context, TestActivity::class.java)
+                startActivity(intent)
+//                val newFragment = UserInfoQnAFragment()
+//                val transaction = parentFragmentManager.beginTransaction()
+//                transaction.replace(R.id.nav_host, newFragment)
+//                transaction.addToBackStack(null)
+//                transaction.commit()
             }
 
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

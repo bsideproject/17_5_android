@@ -23,6 +23,9 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
+            carPickWishListViewModel.getTest().collect {
+                Log.e("ljy", "test response $it")
+            }
             networkTestViewModel.getSearchResult().collect {
                 Log.e("ljy", "$it")
             }

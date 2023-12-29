@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
+import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun RecommandMyCar() {
