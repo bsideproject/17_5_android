@@ -52,7 +52,13 @@ class TestResultActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = getIntent()
-        val data = intent.getSerializableExtra("response", RecommendCars::class.java)
+        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+             intent.getSerializableExtra("response",RecommendCars::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getSerializableExtra("response") as RecommendCars?
+        }
+
         setContent {
             CarpickAppTheme {
                 Page(
