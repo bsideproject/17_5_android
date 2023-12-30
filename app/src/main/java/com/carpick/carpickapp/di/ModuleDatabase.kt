@@ -2,6 +2,7 @@ package com.carpick.carpickapp.di
 
 import android.app.Application
 import androidx.room.Room
+import com.carpick.carpickapp.api.ApiService
 import com.carpick.carpickapp.db.CarPickDao
 import com.carpick.carpickapp.db.CarPickDatabase
 import com.carpick.carpickapp.repository.WishListRepository
@@ -29,7 +30,7 @@ class ModuleDatabase {
 
     @Singleton
     @Provides
-    fun provideWishListRepository(carPickDao: CarPickDao) : WishListRepository {
-        return WishListRepository(carPickDao)
+    fun provideWishListRepository(apiService: ApiService, carPickDao: CarPickDao) : WishListRepository {
+        return WishListRepository(apiService, carPickDao)
     }
 }

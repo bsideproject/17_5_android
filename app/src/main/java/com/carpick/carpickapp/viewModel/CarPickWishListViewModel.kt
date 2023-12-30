@@ -2,11 +2,13 @@ package com.carpick.carpickapp.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.repository.WishListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,5 +44,10 @@ class CarPickWishListViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             wishListRepository.deleteWishlistById(id)
         }
+    }
+
+    fun getCarDetailData(id: Int) : Flow<RecommendedCar> {
+        return wishListRepository.getCarDetailData(id)
+            .catch { it.printStackTrace() }
     }
 }

@@ -2,12 +2,14 @@ package com.carpick.carpickapp.api
 
 import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.RecommendCars
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.RequestRecommend
 import com.carpick.carpickapp.model.SendFeedbackBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("car-recommendation/questions")
@@ -25,5 +27,10 @@ interface ApiService {
     suspend fun sendFeedback(
         @Body feedback: SendFeedbackBody
     )
+
+    @GET("car/{id}")
+    suspend fun getCarDetail(
+        @Path("id") id: Int
+    ): RecommendedCar
 
 }
