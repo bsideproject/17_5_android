@@ -73,6 +73,7 @@ fun FeedbackPopup(
 
     fun onPressSubmit() {
         Log.d("FeedbackPopup", "onPressSubmit")
+        onDismissRequest()
     }
 
     if(!visible) return
