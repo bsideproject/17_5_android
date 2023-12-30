@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.Tag
+import com.carpick.carpickapp.screen.CarDetail.CarDetailFooter
 import com.carpick.carpickapp.screen.CarDetail.CarDetailHeader
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
@@ -57,6 +59,17 @@ class CarDetailActivity : ComponentActivity() {
                         val intent = Intent(this, DetailSpecActivity::class.java)
                         intent.putExtra("carDetail", it)
                         startActivity(intent)
+                    },
+                    onPressShare = {
+//                        val sendIntent: Intent = Intent().apply {
+//                            action = Intent.ACTION_SEND
+//                            putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+//                            type = "text/plain"
+//                        }
+//
+//                        val shareIntent = Intent.createChooser(sendIntent, null)
+//                        startActivity(shareIntent)
+                        Log.d("CarDetailActivity", "onPressShare")
                     }
                 )
             }
@@ -71,6 +84,7 @@ fun CarDetailPage(
     wishListViewModel: CarPickWishListViewModel,
     onPressBack: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
+    onPressShare: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
@@ -142,9 +156,8 @@ fun CarDetailPage(
                 tags,
                 false
             )
+            CarDetailFooter(onPressShare)
         }
-
-
     }
 }
 
@@ -157,7 +170,8 @@ fun GreetingPreview5() {
             testResultViewModel = hiltViewModel(),
             wishListViewModel = hiltViewModel(),
             onPressBack = {},
-            onPressMoreAtSimpleSpec = {}
+            onPressMoreAtSimpleSpec = {},
+            onPressShare = {}
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,7 +72,8 @@ fun ResultDetailOption(
         )
     )
     Column(
-        modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
+        modifier = Modifier
+            .padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
         ResultDetailOptionBody(rowTotalDatas)
