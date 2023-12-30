@@ -46,8 +46,8 @@ class CarPickWishListViewModel @Inject constructor(
         }
     }
 
-    fun getCarDetailData(id: Int) : Flow<RecommendedCar> {
-        return wishListRepository.getCarDetailData(id)
+    fun getCarDetailData(ids: String) : Flow<List<RecommendedCar>> {
+        return wishListRepository.getCarDetailData(ids)
             .catch { it.printStackTrace() }
     }
 }

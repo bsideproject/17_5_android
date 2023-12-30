@@ -31,9 +31,9 @@ class WishListRepository(
         return dao.deleteWishListById(id)
     }
 
-    fun getCarDetailData(id: Int) : Flow<RecommendedCar> {
+    fun getCarDetailData(ids: String) : Flow<List<RecommendedCar>> {
         return flow {
-            val response = apiService.getCarDetail(id)
+            val response = apiService.getCarDetail(ids)
             emit(response)
         }
     }

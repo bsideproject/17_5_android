@@ -29,9 +29,9 @@ interface ApiService {
         @Body feedback: SendFeedbackBody
     ): SendFeedbackResponse
 
-    @GET("car/{id}")
+    @GET("car/{ids}")
     suspend fun getCarDetail(
-        @Path("id") id: Int
-    ): RecommendedCar
+        @Path("ids") ids: String
+    ): List<RecommendedCar>
 
 }

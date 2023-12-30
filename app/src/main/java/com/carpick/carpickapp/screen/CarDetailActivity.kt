@@ -110,10 +110,10 @@ fun CarDetailPage(
     fun initData() {
         if(idx == -1) return
         scope.launch {
-            wishListViewModel.getCarDetailData(idx).collect {
-                selectedCar = it
-                specRowDatas = testResultViewModel.setSpecRowDatas(it)
-                tags = it.tags
+            wishListViewModel.getCarDetailData("$idx").collect {
+                selectedCar = it[0]
+                specRowDatas = testResultViewModel.setSpecRowDatas(it[0])
+                tags = it[0].tags
 
             }
         }
