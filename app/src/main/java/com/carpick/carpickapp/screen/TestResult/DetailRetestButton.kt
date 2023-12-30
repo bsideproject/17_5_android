@@ -21,8 +21,11 @@ import com.carpick.carpickapp.R
 
 @Composable
 fun DetailRetestButton(
-    onPressRetest: () -> Unit
+    onPressRetest: () -> Unit,
+    isTestResultPage: Boolean
 ) {
+    if(!isTestResultPage) return
+
     Row(
         modifier = Modifier.fillMaxWidth().padding(0.dp, 28.dp, 0.dp, 24.dp),
         horizontalArrangement = Arrangement.Center,

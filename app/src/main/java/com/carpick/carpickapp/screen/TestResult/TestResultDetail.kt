@@ -22,7 +22,8 @@ fun TestResultDetail(
     onPressRetest: () -> Unit,
     selectedCar: RecommendedCar,
     specRowDatas: List<List<RowDataTypes>>,
-    tags: List<Tag>
+    tags: List<Tag>,
+    isTestResultPage: Boolean = true
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +42,7 @@ fun TestResultDetail(
         ResultDetailOption(
             selectedCar
         )
-        DetailRetestButton(onPressRetest)
+        DetailRetestButton(onPressRetest, isTestResultPage)
     }
 
 }

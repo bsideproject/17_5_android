@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.TestResult
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,27 +35,34 @@ fun TestResultBackLayer(
     recommendCars: List<RecommendedCar>,
     selectedCar: RecommendedCar,
     selectedIdx: Int,
-    onPressCarRankListItem: (idx: Int) -> Unit
+    onPressCarRankListItem: (idx: Int) -> Unit,
+    isTestResultPage: Boolean = true
 ) {
+
+    val carNamePaddingTop = if(isTestResultPage) 8.dp else 32.dp
+    val imagePaddingTop = if(isTestResultPage) 16.dp else 32.dp
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
     ) {
-        Text(
-            text = "나에게\n가장 어울리는 차는",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp, 32.dp, 0.dp, 0.dp),
-            fontSize = 18.sp,
-            color = popupBackground,
-            fontWeight = FontWeight(700)
-        )
+        if(isTestResultPage) {
+            Text(
+                text = "나에게\n가장 어울리는 차는",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp, 8.dp, 0.dp, 0.dp),
+                fontSize = 18.sp,
+                color = popupBackground,
+                fontWeight = FontWeight(700)
+            )
+        }
+
         Text(
             text = selectedCar.modelName,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp, 8.dp, 0.dp, 0.dp),
+                .padding(24.dp, carNamePaddingTop, 0.dp, 0.dp),
             fontSize = 18.sp,
             color = popupBackground,
             fontWeight = FontWeight(700)
@@ -80,8 +88,7 @@ fun TestResultBackLayer(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp, 0.dp, 0.dp, 32.dp)
-            ,
+                .padding(0.dp, 0.dp, 0.dp, imagePaddingTop),
             horizontalArrangement = Arrangement.End
         ) {
             GlideImage(
@@ -89,7 +96,7 @@ fun TestResultBackLayer(
                 modifier = Modifier.width(360.dp).height(170.dp)
             )
         }
-        CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem)
+        CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem, isTestResultPage)
 
     }
 }
@@ -98,12 +105,15 @@ fun TestResultBackLayer(
 fun CarRankListView(
     recommendCars: List<RecommendedCar>,
     selectedIdx: Int,
-    onPressCarRankListItem: (idx: Int) -> Unit
+    onPressCarRankListItem: (idx: Int) -> Unit,
+    isTestResultPage: Boolean
 ) {
+    if(!isTestResultPage) return
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(0.dp, 16.dp, 0.dp, 24.dp),
+            .padding(0.dp, 0.dp, 0.dp, 24.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
