@@ -30,8 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
-import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.SendFeedbackBody
@@ -46,7 +44,6 @@ import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -96,7 +93,6 @@ fun Page(
     val scope = rememberCoroutineScope()
 
     BackHandler(true, onBack = {
-        Log.d("TestResultActivity", "BackHandler onBackPress")
         onBackPress()
     })
 

@@ -3,14 +3,12 @@ package com.carpick.carpickapp.screen.TestResult
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,13 +18,11 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,12 +59,10 @@ fun FeedbackPopup(
     }
 
     fun onPressGood() {
-        Log.d("FeedbackPopup", "onPressGood")
         selectedValue = "good"
     }
 
     fun onPressBad() {
-        Log.d("FeedbackPopup", "onPressBad")
         selectedValue = "bad"
     }
 
@@ -357,24 +351,6 @@ fun FeedbackPopupSubmitButton(
                 color = Color.White
             )
         }
-
-//        Button(
-//            onClick = {
-//                onPressSubmit()
-//            },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(44.dp)
-//                .background(Color(0xFF3872FF)),
-//            shape = RoundedCornerShape(22.dp),
-//        ) {
-//            Text(
-//                text = "전송하기",
-//                fontSize = 16.sp,
-//                fontWeight = FontWeight(700),
-//                color = Color.White
-//            )
-//        }
     }
 
 }
