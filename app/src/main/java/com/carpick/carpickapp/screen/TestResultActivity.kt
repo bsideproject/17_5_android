@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.model.SendFeedbackBody
 import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
@@ -45,6 +46,7 @@ import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -92,7 +94,6 @@ fun Page(
     val scaffoldState = rememberScaffoldState()
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     BackHandler(true, onBack = {
         Log.d("TestResultActivity", "BackHandler onBackPress")
@@ -194,6 +195,20 @@ fun Page(
         tags = newItem.tags
     }
 
+    fun _onPressSubmitAtFeedbackPopup(selectedValue: String, inputValue: String) {
+        scope.launch {
+            val isGood = selectedValue == "good"
+            testResultViewModel.sendFeedback(SendFeedbackBody(is_good = isGood, content = inputValue)).collect {
+                val result = snackbarHostState.showSnackbar(
+                    message = "feedback",
+                    duration = SnackbarDuration.Short,
+                )
+                onBackPress()
+            }
+
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -248,6 +263,9 @@ fun Page(
             visible = feedbackPopupVisible,
             onDismissRequest = {
                 feedbackPopupVisible = false
+            },
+            onPressSubmit = { selectedValue, inputValue ->
+                _onPressSubmitAtFeedbackPopup(selectedValue, inputValue)
             }
         )
     }

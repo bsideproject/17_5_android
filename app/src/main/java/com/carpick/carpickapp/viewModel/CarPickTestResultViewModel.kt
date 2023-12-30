@@ -3,6 +3,8 @@ package com.carpick.carpickapp.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.model.SendFeedbackBody
+import com.carpick.carpickapp.model.SendFeedbackResponse
 import com.carpick.carpickapp.model.TestModel
 import com.carpick.carpickapp.repository.TestResultRepository
 import com.carpick.carpickapp.screen.TestResult.ResultDetailOptionRowData
@@ -109,6 +111,10 @@ class CarPickTestResultViewModel @Inject constructor(
         }
 
         return rowTotalDatas.chunked(2)
+    }
+
+    fun sendFeedback(feedbackBody: SendFeedbackBody): Flow<SendFeedbackResponse> {
+        return testResultRepository.sendFeedback(feedbackBody)
     }
 
 

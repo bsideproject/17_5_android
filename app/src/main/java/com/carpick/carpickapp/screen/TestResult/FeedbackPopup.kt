@@ -49,7 +49,8 @@ import com.carpick.carpickapp.R
 @Composable
 fun FeedbackPopup(
     visible: Boolean,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    onPressSubmit: (selectedValue: String, inputValue: String) -> Unit
 ) {
     var inputValue by remember {
         mutableStateOf("")
@@ -72,8 +73,8 @@ fun FeedbackPopup(
     }
 
     fun onPressSubmit() {
-        Log.d("FeedbackPopup", "onPressSubmit")
         onDismissRequest()
+        onPressSubmit(selectedValue, inputValue)
     }
 
     if(!visible) return

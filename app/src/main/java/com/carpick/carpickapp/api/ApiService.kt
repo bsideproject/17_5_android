@@ -5,6 +5,7 @@ import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.RequestRecommend
 import com.carpick.carpickapp.model.SendFeedbackBody
+import com.carpick.carpickapp.model.SendFeedbackResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -26,7 +27,7 @@ interface ApiService {
     @Headers("content-type: application/json")
     suspend fun sendFeedback(
         @Body feedback: SendFeedbackBody
-    )
+    ): SendFeedbackResponse
 
     @GET("car/{id}")
     suspend fun getCarDetail(

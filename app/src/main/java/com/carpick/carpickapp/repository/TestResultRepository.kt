@@ -3,8 +3,10 @@ package com.carpick.carpickapp.repository
 import com.carpick.carpickapp.api.ApiService
 import com.carpick.carpickapp.db.CarPickDao
 import com.carpick.carpickapp.model.SendFeedbackBody
+import com.carpick.carpickapp.model.SendFeedbackResponse
 import com.carpick.carpickapp.model.TestModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TestResultRepository @Inject constructor(
@@ -23,7 +25,10 @@ class TestResultRepository @Inject constructor(
         return dao.insertWishList(testData)
     }
 
-    suspend fun sendFeedback(feedbackBody: SendFeedbackBody) {
-        return apiService.sendFeedback(feedbackBody)
+    fun sendFeedback(feedbackBody: SendFeedbackBody): Flow<SendFeedbackResponse> {
+        return flow {
+            val response = apiService.sendFeedback(feedbackBody)
+            emit(response)
+        }
     }
 }
