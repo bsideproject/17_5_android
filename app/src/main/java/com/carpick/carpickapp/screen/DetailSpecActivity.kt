@@ -37,7 +37,13 @@ class DetailSpecActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = getIntent()
-        val data = intent.getSerializableExtra("carDetail", RecommendedCar::class.java)
+
+        val data = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("carDetail", RecommendedCar::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getSerializableExtra("carDetail") as RecommendedCar?
+        }
         setContent {
             CarpickAppTheme {
                 // A surface container using the 'background' color from the theme
