@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>() {
-    private var nowPage = 2
-    private var totalPage = 10 // api 나오면 수정
+    private var nowPage = 3
+    private var totalPage = 12
     private var answerLessAdapter: AnswerLessAdapter? = null
 
     private var answerList = HashMap<Int, Choice>() // request용
@@ -102,7 +102,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 override fun click(item: Choice) {
                     nowPage++
 
-                    tvNowQnaPos.text = "$nowPage "
+                    tvNowQnaPos.text = "${nowPage+1} "
 
                     binding.clNoAnswer.isVisible = false
 

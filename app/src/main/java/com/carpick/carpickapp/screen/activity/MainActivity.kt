@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStoreOwner
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ActivityMainBinding
+import com.carpick.carpickapp.screen.fragment.AgeFragment
 import com.carpick.carpickapp.screen.fragment.CarPickBudgetQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickDetailQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
+import com.carpick.carpickapp.screen.fragment.GenderFragment
 import com.carpick.carpickapp.screen.fragment.UserInfoQnAFragment
 import com.carpick.carpickapp.screen.fragment.WorkingFragment
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -27,9 +29,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 R.id.car_recommend_fragment -> {
                     if(answerViewModel.lastPage == -1) {
                         changeFragment(CarPickStartFragment())
-                    }else if(answerViewModel.lastPage == 0){
-                        changeFragment(UserInfoQnAFragment())
-                    } else if(answerViewModel.lastPage == 1){
+                    } else if(answerViewModel.lastPage == 0){
+                        changeFragment(GenderFragment())
+                    } else if(answerViewModel.lastPage == 1) {
+                        changeFragment(AgeFragment())
+                    }else if(answerViewModel.lastPage == 2){
                         changeFragment(CarPickBudgetQnaFragment())
                     } else {
                         changeFragment(CarPickDetailQnaFragment.getInstance(answerViewModel.lastPage))

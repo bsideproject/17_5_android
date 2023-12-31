@@ -34,7 +34,7 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
                 .into(binding.videoView)
 
             tvStartTest.setOnSingleClickListener {
-                val newFragment = UserInfoQnAFragment()
+                val newFragment = GenderFragment()
                 val transaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.nav_host, newFragment)
                 transaction.addToBackStack(null)
