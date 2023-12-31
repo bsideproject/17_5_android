@@ -11,6 +11,9 @@ import com.carpick.carpickapp.screen.fragment.CarPickDetailQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
 import com.carpick.carpickapp.screen.fragment.UserInfoQnAFragment
 import com.carpick.carpickapp.screen.fragment.WorkingFragment
+import com.carpick.carpickapp.ui.dialog.EventDialog
+import com.carpick.carpickapp.util.AppPref
+import com.carpick.carpickapp.util.Util
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +22,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
     private val answerViewModel : CarpickAnswerViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(Util.getDate() > AppPref.today) {
+            AppPref.eventPopupCheck = true
+            AppPref.today = Util.getDate()
+        }
+
+        if(AppPref.eventPopupCheck) {
+            EventDialog.getInstance().show(supportFragmentManager, null)
+        }
 
         changeFragment(CarPickStartFragment())
 

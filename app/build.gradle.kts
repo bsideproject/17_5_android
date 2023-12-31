@@ -113,4 +113,6 @@ dependencies {
     implementation("com.github.skydoves:landscapist-glide:1.4.7")
 
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("com.chibatching.kotpref:kotpref:2.8.0")
 }
