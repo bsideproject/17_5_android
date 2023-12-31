@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
     private var selectAnswer = ""
 
     private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private var answerList = HashMap<Int, Choice>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +41,23 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
             titleLayout.clWish.isVisible = false
 
+            if(answerViewModel.answerResult.isNotEmpty()) {
+                val clGroup = arrayListOf(clMen, clWomen)
+                val textviewGroup = arrayListOf(tvMen, tvWomen)
+
+                binding.run {
+                    if (answerViewModel.answerResult[0]?.choiceCode == "MEN") {
+                        ivMen.setImageResource(R.drawable.select_icon_men)
+                        ivWomen.setImageResource(R.drawable.icon_women)
+                        setClickStatus(clGroup, textviewGroup, clMen, tvMen)
+                    } else {
+                        ivMen.setImageResource(R.drawable.icon_men)
+                        ivWomen.setImageResource(R.drawable.select_icon_women)
+
+                        setClickStatus(clGroup, textviewGroup, clWomen, tvWomen)
+                    }
+                }
+            }
             if (answerViewModel.lastPage < 1) {
                 answerViewModel.saveLastPage(nowPage)
             }
@@ -50,28 +69,33 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
     private fun initListener() {
         binding.run {
             val clGroup = arrayListOf(clMen, clWomen)
-            val iconGroup = arrayListOf(ivMen, ivWomen)
             val textviewGroup = arrayListOf(tvMen, tvWomen)
 
             clMen.setOnSingleClickListener {
-                selectAnswer = "man" // 변경예정 api 받은 content로
-//                changeFragment()
-                answerViewModel.saveBudgetResult(Choice("choice_code", "남성")) // 변경예정
+                selectAnswer = "남성"
+
+                answerList[0] = Choice(answerViewModel.apiResponse[0].choices[0].choiceCode, "남성")
+                answerViewModel.saveAnswerResult(answerList)
+
                 ivMen.setImageResource(R.drawable.select_icon_men)
                 ivWomen.setImageResource(R.drawable.icon_women)
                 setClickStatus(clGroup, textviewGroup, clMen, tvMen)
+
+                changeFragment()
             }
 
             clWomen.setOnSingleClickListener {
-                selectAnswer = "girl"
+                selectAnswer = "여성"
 
-                answerViewModel.saveBudgetResult(Choice("choice_code", "남성")) // 변경예정
-
+                answerList[0] = Choice(answerViewModel.apiResponse[0].choices[1].choiceCode, "여성")
+                answerViewModel.saveAnswerResult(answerList)
 
                 ivMen.setImageResource(R.drawable.icon_men)
                 ivWomen.setImageResource(R.drawable.select_icon_women)
 
                 setClickStatus(clGroup, textviewGroup, clWomen, tvWomen)
+
+                changeFragment()
             }
 
             btnNext.setOnSingleClickListener {
