@@ -33,6 +33,7 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 fun DeleteRequestPopup(
     visible: Boolean,
     onDismissRequest: () -> Unit,
+    deleteWishlistItem:() -> Unit
 ) {
 
     fun _onPressNo() {
@@ -42,7 +43,7 @@ fun DeleteRequestPopup(
 
     fun _onPressYes() {
         Log.d("DeleteRequestPopup", "onPressYes")
-        onDismissRequest()
+        deleteWishlistItem()
     }
 
     if(!visible) return

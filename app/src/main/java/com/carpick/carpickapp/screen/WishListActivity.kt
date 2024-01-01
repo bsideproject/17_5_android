@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendedCar
@@ -75,6 +77,7 @@ fun WishListPage(
         mutableStateOf(false)
     }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     fun getCars(ids: String) {
         scope.launch {
@@ -105,9 +108,21 @@ fun WishListPage(
     }
 
     fun _onPressHeartIcon(idx: Int) {
-        Log.d("WishListActivity", "idx: $idx")
         deleteSelectedId = idx
         deleteConfirmPopupVisible = true
+    }
+
+    fun _deleteWishlistItem() {
+        deleteConfirmPopupVisible = false
+        var newWishlistIds = wishlistIds.toMutableList()
+        var newWishlistCars = wishlistCars.toMutableList()
+        wishListViewModel.deleteWishlistById(deleteSelectedId)
+        newWishlistIds = newWishlistIds.filter { it != deleteSelectedId }.toMutableList()
+        newWishlistCars = newWishlistCars.filter { it.id != deleteSelectedId }.toMutableList()
+        wishlistIds = newWishlistIds
+        wishlistCars = newWishlistCars
+        deleteSelectedId = -1
+        Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     init()
@@ -139,6 +154,9 @@ fun WishListPage(
                 deleteConfirmPopupVisible = false
                 deleteSelectedId = -1
             },
+            deleteWishlistItem = {
+                _deleteWishlistItem()
+            }
         )
     }
 }
