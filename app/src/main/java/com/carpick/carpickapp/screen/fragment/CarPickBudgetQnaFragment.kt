@@ -84,6 +84,14 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
                 }
             }
 
+            btnPrev.setOnSingleClickListener {
+                val newFragment = AgeFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
             ivClose.setOnSingleClickListener {
                 clNoAnswer.isVisible = false
             }

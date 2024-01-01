@@ -45,9 +45,11 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         val page = arguments?.getInt("page") ?: -1
 
         apiResponse = answerViewModel.apiResponse
+        totalPage = answerViewModel.apiResponse.size
 
         binding.tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
         binding.titleLayout.clWish.isVisible = false
+        binding.tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
         answerLessAdapter = AnswerLessAdapter()
         binding.rvAnswer.adapter = answerLessAdapter
@@ -67,8 +69,8 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 apiResponse?.let { apiResponse ->
                     answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                 }
-                roundProgressBar.progress = nowPage * 100 / totalPage
-                tvNowQnaPos.text = "$nowPage "
+                roundProgressBar.progress = (nowPage+1) * 100 / totalPage
+                tvNowQnaPos.text = "${nowPage +1} "
                 answerLessAdapter?.setUiState(answerList, nowPage)
             }
         }else {
@@ -80,19 +82,22 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             apiResponse?.let { apiResponse ->
                 answerLessAdapter?.submitList(apiResponse[nowPage].choices)
             }
-            binding.roundProgressBar.progress = nowPage * 100 / totalPage
-            binding.tvNowQnaPos.text = "$nowPage "
+            binding.roundProgressBar.progress = (nowPage) * 100 / totalPage
+            binding.tvNowQnaPos.text = "${nowPage} "
         }
 
         answerViewModel.answerResult.map {
             answerList.put(it.key, it.value)
         }
 
-        answerViewModel.getUserInfo()?.let {
+        answerViewModel.getGenderResult()?.let {
             answerList.put(0, it)
         }
-        answerViewModel.getBudgetResult()?.let {
+        answerViewModel.getAgeResult()?.let {
             answerList.put(1, it)
+        }
+        answerViewModel.getBudgetResult()?.let {
+            answerList.put(2, it)
         }
 
         answerViewModel.saveAnswerResult(answerList)
@@ -100,43 +105,49 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
         binding.run {
             answerLessAdapter?.setClickListener(object : ClickListener {
                 override fun click(item: Choice) {
-                    nowPage++
+                    if (nowPage < totalPage) {
+                        nowPage++
+                        if(nowPage < 12) {
+                            tvNowQnaPos.text = "${nowPage + 1} "
+                        }
+                        binding.clNoAnswer.isVisible = false
 
-                    tvNowQnaPos.text = "${nowPage+1} "
+                        val progressBarValue = (nowPage + 1) * 100 / totalPage
+                        roundProgressBar.progress = progressBarValue
 
-                    binding.clNoAnswer.isVisible = false
+                        answerList[nowPage - 1] = item
 
-                    val progressBarValue = nowPage * 100 / totalPage
-                    roundProgressBar.progress = progressBarValue
+                        if (answerViewModel.lastPage < nowPage) {
+                            answerViewModel.saveLastPage(nowPage)
+                        }
 
-                    answerList[nowPage-1] = item
-
-                    if(answerViewModel.lastPage < nowPage) {
-                        answerViewModel.saveLastPage(nowPage)
-                    }
-
-                    answerViewModel.saveAnswerResult(answerList)
-                    Log.e("ljy", "answer list $answerList")
-                    apiResponse?.let { apiResponse ->
-                        /* nowPage - 2인이유는 어댑터가 여기부터 새로운걸 쓰고 있음
+                        answerViewModel.saveAnswerResult(answerList)
+//                        Log.e("ljy", "answer list $answerList")
+                        apiResponse?.let { apiResponse ->
+                            /* nowPage - 2인이유는 어댑터가 여기부터 새로운걸 쓰고 있음
                         *  hashmap을 사용중인데 hashmap을 이 페이지부터 저장하기에 앞에 성별, 연봉페이지를 빼야되서 -2
                         * */
 
-                        if (nowPage - 2 < apiResponse.size - 2) {
-                            binding.tvQnaTitle.text = apiResponse[nowPage].questionName
-                            answerLessAdapter?.setUiState(answerList, nowPage)
-                            answerLessAdapter?.submitList(apiResponse[nowPage].choices)
-                        }else {
-                            val answerList = ArrayList<String>()
-                            answerViewModel.answerResult.map {
-                                answerList.add(it.value.choiceCode)
-                            }
+                            Log.e("lee", "$nowPage ${apiResponse.size}")
+                            if (nowPage - 3 < apiResponse.size - 3) {
+                                binding.tvQnaTitle.text = apiResponse[nowPage].questionName
+                                answerLessAdapter?.setUiState(answerList, nowPage)
+                                answerLessAdapter?.submitList(apiResponse[nowPage].choices)
+                            } else {
+                                val answerList = ArrayList<String>()
+                                answerViewModel.answerResult.map {
+                                    answerList.add(it.value.choiceCode)
+                                }
 
-                            lifecycleScope.launch {
-                                answerViewModel.getRecommendCars(answerList.toList()).collect {
-                                    val intent = Intent(binding.root.context, LoadingActivity::class.java)
-                                    intent.putExtra("response", it)
-                                    startActivity(intent)
+                                lifecycleScope.launch {
+                                    answerViewModel.getRecommendCars(answerList.toList()).collect {
+                                        val intent = Intent(
+                                            binding.root.context,
+                                            LoadingActivity::class.java
+                                        )
+                                        intent.putExtra("response", it)
+                                        startActivity(intent)
+                                    }
                                 }
                             }
                         }
@@ -149,12 +160,12 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
     private fun initListener() {
         binding.run {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                if(nowPage > 2) {
+                if(nowPage > 3) {
                     nowPage--
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    tvNowQnaPos.text = "$nowPage "
+                    tvNowQnaPos.text = "${nowPage + 1}"
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     apiResponse?.let { apiResponse ->
@@ -172,7 +183,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 }else {
                     if (nowPage < totalPage) {
                         nowPage++
-                        tvNowQnaPos.text = "$nowPage "
+                        tvNowQnaPos.text = "${nowPage + 1}"
 
                         if(answerViewModel.lastPage < nowPage) {
                             answerViewModel.saveLastPage(nowPage)
@@ -188,7 +199,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             }
 
             btnPrev.setOnSingleClickListener {
-                if (nowPage > 2) {
+                if (nowPage > 3) {
                     nowPage--
                     tvNowQnaPos.text = "$nowPage "
 

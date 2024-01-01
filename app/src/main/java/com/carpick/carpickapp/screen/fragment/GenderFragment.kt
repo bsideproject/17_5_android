@@ -20,12 +20,12 @@ import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import kotlinx.coroutines.launch
 
 
-class GenderFragment : BaseFragment<FragmentGenderBinding>(){
+class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     private var nowPage = 0
     private var totalPage = 12
     private var selectAnswer = ""
 
-    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
     private var answerList = HashMap<Int, Choice>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,26 +36,35 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
 
         initListener()
     }
+
     private fun initView() {
         binding.run {
             tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
             titleLayout.clWish.isVisible = false
+            tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
-            if(answerViewModel.answerResult.isNotEmpty()) {
-                val clGroup = arrayListOf(clMen, clWomen)
-                val textviewGroup = arrayListOf(tvMen, tvWomen)
 
-                binding.run {
-                    if (answerViewModel.answerResult[0]?.choiceCode == "MEN") {
+            val clGroup = arrayListOf(clMen, clWomen)
+            val textviewGroup = arrayListOf(tvMen, tvWomen)
+
+            binding.run {
+                answerViewModel.getGenderResult()?.let {
+                    if (it.choiceCode == "MEN") {
+                        selectAnswer = "남성"
+
                         ivMen.setImageResource(R.drawable.select_icon_men)
                         ivWomen.setImageResource(R.drawable.icon_women)
                         setClickStatus(clGroup, textviewGroup, clMen, tvMen)
                     } else {
+                        selectAnswer = "여성"
+
                         ivMen.setImageResource(R.drawable.icon_men)
                         ivWomen.setImageResource(R.drawable.select_icon_women)
 
                         setClickStatus(clGroup, textviewGroup, clWomen, tvWomen)
                     }
+
+
                 }
             }
             if (answerViewModel.lastPage < 1) {
@@ -66,6 +75,7 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
         }
 
     }
+
     private fun initListener() {
         binding.run {
             val clGroup = arrayListOf(clMen, clWomen)
@@ -74,8 +84,9 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             clMen.setOnSingleClickListener {
                 selectAnswer = "남성"
 
-                answerList[0] = Choice(answerViewModel.apiResponse[0].choices[0].choiceCode, "남성")
-                answerViewModel.saveAnswerResult(answerList)
+                answerViewModel.saveGenderResult(
+                    Choice(answerViewModel.apiResponse[0].choices[0].choiceCode, "남성")
+                )
 
                 ivMen.setImageResource(R.drawable.select_icon_men)
                 ivWomen.setImageResource(R.drawable.icon_women)
@@ -87,8 +98,12 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             clWomen.setOnSingleClickListener {
                 selectAnswer = "여성"
 
-                answerList[0] = Choice(answerViewModel.apiResponse[0].choices[1].choiceCode, "여성")
-                answerViewModel.saveAnswerResult(answerList)
+                answerViewModel.saveGenderResult(
+                    Choice(
+                        answerViewModel.apiResponse[0].choices[1].choiceCode,
+                        "여성"
+                    )
+                )
 
                 ivMen.setImageResource(R.drawable.icon_men)
                 ivWomen.setImageResource(R.drawable.select_icon_women)
@@ -99,15 +114,23 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             }
 
             btnNext.setOnSingleClickListener {
-                if(selectAnswer != "") {
+                if (selectAnswer != "") {
                     val newFragment = AgeFragment()
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.nav_host, newFragment)
                     transaction.addToBackStack(null)
                     transaction.commit()
-                }else {
+                } else {
                     clNoAnswer.isVisible = true
                 }
+            }
+
+            btnPrev.setOnSingleClickListener {
+                val newFragment = CarPickStartFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
             ivClose.setOnSingleClickListener {
@@ -123,17 +146,18 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             }
         }
     }
+
     private fun setClickStatus(
         clGroup: ArrayList<ConstraintLayout>,
         textviewGroup: ArrayList<AppCompatTextView>,
         clickLayout: ConstraintLayout,
         clickTextView: AppCompatTextView
     ) {
-        for(view in clGroup) {
+        for (view in clGroup) {
             view.setBackgroundColor(0)
         }
 
-        for(view in textviewGroup) {
+        for (view in textviewGroup) {
             view.setTextColor(ContextCompat.getColor(binding.root.context, R.color.color_36364d))
         }
 
@@ -155,13 +179,15 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>(){
             answerViewModel.getQnaList().collect {
                 answerViewModel.setApiResponse(it)
 
-                totalPage = it.size
                 initView()
             }
         }
     }
 
-    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGenderBinding {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentGenderBinding {
         return FragmentGenderBinding.inflate(layoutInflater)
     }
 }

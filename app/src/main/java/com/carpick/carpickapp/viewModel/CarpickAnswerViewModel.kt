@@ -1,6 +1,5 @@
 package com.carpick.carpickapp.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModel
@@ -23,6 +22,8 @@ class CarpickAnswerViewModel @Inject constructor(
     val lastPage : Int
         get() = _lastPage
 
+    private var answerGenderResult : Choice?= null
+    private var answerAgeResult : Choice?= null
     private var answerBudgetResult : Choice?= null
     private var answerUserInfoResult : Choice?= null
 
@@ -39,6 +40,20 @@ class CarpickAnswerViewModel @Inject constructor(
         } ?: run {
             _answerResult.clear()
         }
+    }
+
+    fun getGenderResult() : Choice? {
+        return answerGenderResult
+    }
+    fun saveGenderResult(answer : Choice?) {
+        answerGenderResult = answer
+    }
+
+    fun getAgeResult() : Choice? {
+        return answerAgeResult
+    }
+    fun saveAgeResult(answer : Choice?) {
+        answerAgeResult = answer
     }
 
     fun getBudgetResult() : Choice? {

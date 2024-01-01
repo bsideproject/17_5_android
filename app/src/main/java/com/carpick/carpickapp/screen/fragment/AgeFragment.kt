@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentAgeBinding
@@ -16,17 +15,16 @@ import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 
-class AgeFragment : BaseFragment<FragmentAgeBinding>(){
+class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     private var nowPage = 1
     private var totalPage = 12
-    private var answerAdapter : AnswerAdapter? = null
+    private var answerAdapter: AnswerAdapter? = null
     private var selectAnswer = ""
 
-    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         initView()
         initListener()
@@ -36,8 +34,9 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>(){
         totalPage = answerViewModel.apiResponse.size
         binding.tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
         binding.titleLayout.clWish.isVisible = false
+        binding.tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
-        if(answerViewModel.lastPage <= 1) {
+        if (answerViewModel.lastPage <= 1) {
             answerViewModel.saveLastPage(1)
         }
 
@@ -49,7 +48,7 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>(){
 
         answerAdapter?.submitList(answerViewModel.apiResponse[nowPage].choices)
 
-        answerViewModel.getBudgetResult()?.let {
+        answerViewModel.getAgeResult()?.let {
             selectAnswer = it.content
             answerAdapter?.setSelectedItem(it)
         }
@@ -60,9 +59,10 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>(){
 
                 binding.clNoAnswer.isVisible = false
 
-                answerViewModel.saveBudgetResult(item)
+                answerViewModel.saveAgeResult(item)
 
-                val newFragment = CarPickDetailQnaFragment()
+
+                val newFragment = CarPickBudgetQnaFragment()
                 val transaction = parentFragmentManager.beginTransaction()
                 transaction.replace(R.id.nav_host, newFragment)
                 transaction.addToBackStack(null)
@@ -75,15 +75,23 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>(){
     private fun initListener() {
         binding.run {
             btnNext.setOnSingleClickListener {
-                if(selectAnswer != "") {
-                    val newFragment = CarPickDetailQnaFragment()
+                if (selectAnswer != "") {
+                    val newFragment = CarPickBudgetQnaFragment()
                     val transaction = parentFragmentManager.beginTransaction()
                     transaction.replace(R.id.nav_host, newFragment)
                     transaction.addToBackStack(null)
                     transaction.commit()
-                }else {
+                } else {
                     clNoAnswer.isVisible = true
                 }
+            }
+
+            btnPrev.setOnSingleClickListener {
+                val newFragment = GenderFragment()
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.nav_host, newFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
 
             ivClose.setOnSingleClickListener {
@@ -101,7 +109,10 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>(){
     }
 
 
-    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAgeBinding {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentAgeBinding {
         return FragmentAgeBinding.inflate(layoutInflater)
     }
 }

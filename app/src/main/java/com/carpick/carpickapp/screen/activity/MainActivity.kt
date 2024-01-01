@@ -11,7 +11,6 @@ import com.carpick.carpickapp.screen.fragment.CarPickBudgetQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickDetailQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
 import com.carpick.carpickapp.screen.fragment.GenderFragment
-import com.carpick.carpickapp.screen.fragment.UserInfoQnAFragment
 import com.carpick.carpickapp.screen.fragment.WorkingFragment
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
