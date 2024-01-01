@@ -255,6 +255,7 @@ fun Page(
             socialMetaTagParameters {
                 title = "카픽"
                 description = "어떤 차를 사야 할지 고민이라면? 일상에 핏한 맞춤형 차량 추천 서비스 - 카픽"
+                imageUrl = Uri.parse("https://kr.object.ncloudstorage.com/carpick/kakao-thumbnail.png")
             }
         }
             .addOnSuccessListener {
