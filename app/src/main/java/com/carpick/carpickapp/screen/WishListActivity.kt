@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.TestResult.testCars
+import com.carpick.carpickapp.screen.WishList.DeleteRequestPopup
 import com.carpick.carpickapp.screen.WishList.WishListBody
 import com.carpick.carpickapp.screen.WishList.WishListHeader
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
@@ -67,6 +68,12 @@ fun WishListPage(
     var dataReceived by remember {
         mutableStateOf(false)
     }
+    var deleteSelectedId by remember {
+        mutableStateOf(-1)
+    }
+    var deleteConfirmPopupVisible by remember {
+        mutableStateOf(false)
+    }
     val scope = rememberCoroutineScope()
 
     fun getCars(ids: String) {
@@ -99,6 +106,8 @@ fun WishListPage(
 
     fun _onPressHeartIcon(idx: Int) {
         Log.d("WishListActivity", "idx: $idx")
+        deleteSelectedId = idx
+        deleteConfirmPopupVisible = true
     }
 
     init()
@@ -124,7 +133,13 @@ fun WishListPage(
                 dataReceived
             )
         }
-
+        DeleteRequestPopup(
+            visible = deleteConfirmPopupVisible,
+            onDismissRequest = {
+                deleteConfirmPopupVisible = false
+                deleteSelectedId = -1
+            },
+        )
     }
 }
 
