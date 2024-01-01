@@ -41,6 +41,7 @@ fun WishListBody(
     wishlistCars: List<RecommendedCar>,
     carList: List<CarDetailTestModel>,
     onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
     dataReceived: Boolean
 ) {
     Column(
@@ -53,7 +54,8 @@ fun WishListBody(
             WishListBodyListView(
                 carList,
                 wishlistCars,
-                onPressCarItem
+                onPressCarItem,
+                onPressHeartIcon
             )
         }
         else if(dataReceived) {
@@ -130,7 +132,8 @@ fun WishListBodyTestBtn() {
 fun WishListBodyListView(
     carList: List<CarDetailTestModel>,
     wishlistCars: List<RecommendedCar>,
-    onPressCarItem: (idx: Int) -> Unit
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -154,7 +157,8 @@ fun WishListBodyListView(
                 WishListCarItem(
                     item,
                     index === wishlistCars.size-1,
-                    onPressCarItem
+                    onPressCarItem,
+                    onPressHeartIcon
                 )
             }
         }
@@ -165,7 +169,8 @@ fun WishListBodyListView(
 fun WishListCarItem(
     itemData: RecommendedCar,
     isLastIdx: Boolean,
-    onPressCarItem: (idx: Int) -> Unit
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
 ) {
     val convertPrice = itemData.price/10000
     val dec = DecimalFormat("#,###만원")
@@ -199,7 +204,11 @@ fun WishListCarItem(
                 Image(
                     painter = painterResource(id = R.drawable.ic_favorite_on),
                     contentDescription = "favorite",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable {
+                            onPressHeartIcon(itemData.id)
+                        }
                 )
             }
             Row(

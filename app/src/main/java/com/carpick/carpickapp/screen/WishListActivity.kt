@@ -33,7 +33,6 @@ class WishListActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CarpickAppTheme {
-                // A surface container using the 'background' color from the theme
                 WishListPage(
                     wishListViewModel = hiltViewModel(),
                     onPressBack = {
@@ -73,7 +72,6 @@ fun WishListPage(
     fun getCars(ids: String) {
         scope.launch {
             wishListViewModel.getCarDetailData(ids).collect { cars ->
-                Log.d("WishListActivity", "getCars: $cars")
                 wishlistCars = cars
                 dataReceived = true
             }
@@ -99,10 +97,11 @@ fun WishListPage(
         }
     }
 
+    fun _onPressHeartIcon(idx: Int) {
+        Log.d("WishListActivity", "idx: $idx")
+    }
+
     init()
-
-    Log.d("WishListActivity", "wishlistCars: $wishlistCars")
-
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -119,6 +118,9 @@ fun WishListPage(
                 wishlistCars,
                 testCarList,
                 onPressCarItem,
+                onPressHeartIcon = {
+                    _onPressHeartIcon(it)
+                },
                 dataReceived
             )
         }
