@@ -2,9 +2,11 @@ package com.carpick.carpickapp.screen
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -28,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
@@ -43,6 +46,10 @@ import com.carpick.carpickapp.screen.TestResult.WishListAddToast
 import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.dynamiclinks.androidParameters
+import com.google.firebase.dynamiclinks.dynamicLinks
+import com.google.firebase.dynamiclinks.shortLinkAsync
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -77,6 +84,16 @@ class TestResultActivity : ComponentActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
+                    },
+                    shareResultByLink = { link ->
+                        val sendIntent = Intent()
+                        sendIntent.action = Intent.ACTION_SEND
+                        sendIntent.putExtra(
+                            Intent.EXTRA_TEXT,
+                            "https://carpick.page.link/?link=$link"
+                        )
+                        sendIntent.type = "text/plain"
+                        startActivity(sendIntent)
                     }
                 )
             }
@@ -91,12 +108,14 @@ fun Page(
     response: RecommendCars?,
     onPressWishList: () -> Unit,
     onPressMoreAtSimpleSpec: (carData: RecommendedCar) -> Unit,
-    onBackPress: () -> Unit
+    onBackPress: () -> Unit,
+    shareResultByLink: (link: String) -> Unit
 ) {
     val scrollState = rememberScrollState()
     val scaffoldState = rememberScaffoldState()
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     BackHandler(true, onBack = {
         onBackPress()
@@ -211,6 +230,23 @@ fun Page(
         }
     }
 
+    fun _onPressShare() {
+        val dynamicLink = Firebase.dynamicLinks.shortLinkAsync {
+            link = Uri.parse("https://carpick.page.link")
+            domainUriPrefix = "https://carpick.page.link"
+            androidParameters("com.carpick.carpickapp") {
+                minimumVersion = 1
+                setFallbackUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.carpick.carpickapp"))
+            }
+        }
+            .addOnSuccessListener {
+                shareResultByLink(it.shortLink.toString())
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "공유 링크 생성에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -233,7 +269,7 @@ fun Page(
             TestResultHeader(
                 isIncludedInWishlist,
                 onPressShare = {
-                    Log.d("TestResultActivity", "onPressShare")
+                    _onPressShare()
                 },
                 onPressAddWishListBtn = {
                     _onPressWishListBtn()
@@ -289,6 +325,9 @@ fun GreetingPreview2() {
             },
             onBackPress = {
                 Log.d("TestResult", "onBackPress")
+            },
+            shareResultByLink = {
+                Log.d("TestResult", "shareResultByLink")
             }
         )
     }
