@@ -1,6 +1,5 @@
 package com.carpick.carpickapp.screen.WishList
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.carpick.carpickapp.R
-import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun DeleteRequestPopup(
@@ -37,12 +35,10 @@ fun DeleteRequestPopup(
 ) {
 
     fun _onPressNo() {
-        Log.d("DeleteRequestPopup", "onPressNo")
         onDismissRequest()
     }
 
     fun _onPressYes() {
-        Log.d("DeleteRequestPopup", "onPressYes")
         deleteWishlistItem()
     }
 

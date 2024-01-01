@@ -39,7 +39,6 @@ import java.text.DecimalFormat
 fun WishListBody(
     wishlistIds: List<Int>,
     wishlistCars: List<RecommendedCar>,
-    carList: List<CarDetailTestModel>,
     onPressCarItem: (idx: Int) -> Unit,
     onPressHeartIcon: (idx: Int) -> Unit,
     dataReceived: Boolean
@@ -52,7 +51,6 @@ fun WishListBody(
     ) {
         if(wishlistIds.size > 0) {
             WishListBodyListView(
-                carList,
                 wishlistCars,
                 onPressCarItem,
                 onPressHeartIcon
@@ -130,7 +128,6 @@ fun WishListBodyTestBtn() {
 
 @Composable
 fun WishListBodyListView(
-    carList: List<CarDetailTestModel>,
     wishlistCars: List<RecommendedCar>,
     onPressCarItem: (idx: Int) -> Unit,
     onPressHeartIcon: (idx: Int) -> Unit,
@@ -143,7 +140,7 @@ fun WishListBodyListView(
         LazyColumn {
             item {
                 Text(
-                    text = "${carList.size}개의 저장된 차가 있어요.",
+                    text = "${wishlistCars.size}개의 저장된 차가 있어요.",
                     fontSize = 12.sp,
                     color = Color(0xFF7A7AA2),
                     fontWeight = FontWeight(500),

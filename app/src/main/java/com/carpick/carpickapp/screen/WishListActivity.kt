@@ -59,8 +59,6 @@ fun WishListPage(
     onPressCarItem: (idx: Int) -> Unit
 ) {
 
-    val testCarList = testCars
-
     var wishlistIds by remember {
         mutableStateOf<List<Int>>(listOf())
     }
@@ -140,7 +138,6 @@ fun WishListPage(
             WishListBody(
                 wishlistIds,
                 wishlistCars,
-                testCarList,
                 onPressCarItem,
                 onPressHeartIcon = {
                     _onPressHeartIcon(it)
