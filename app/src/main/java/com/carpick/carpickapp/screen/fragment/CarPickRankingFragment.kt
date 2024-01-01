@@ -14,8 +14,8 @@ class CarPickRankingFragment : BaseFragment<FragmentWorkingBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.titleLayout.clWish.setOnSingleClickListener {
-            val intent = Intent(binding.root.context, WishListActivity::class.java)
+        binding?.titleLayout?.clWish?.setOnSingleClickListener {
+            val intent = Intent(binding?.root?.context, WishListActivity::class.java)
             startActivity(intent)
         }
 

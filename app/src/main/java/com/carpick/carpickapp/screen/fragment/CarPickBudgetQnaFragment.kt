@@ -33,15 +33,16 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
     }
     private fun initView() {
         totalPage = answerViewModel.apiResponse.size
-        binding.tvQnaTitle.text = answerViewModel.apiResponse[2].questionName
-        binding.titleLayout.clWish.isVisible = false
-        binding.tvTotalQnaPos.text = "/ $totalPage"
 
-        if(answerViewModel.lastPage <= nowPage) {
-            answerViewModel.saveLastPage(nowPage)
-        }
+        binding?.run {
+            tvQnaTitle.text = answerViewModel.apiResponse[2].questionName
+            titleLayout.clWish.isVisible = false
+            tvTotalQnaPos.text = "/ $totalPage"
 
-        binding.run {
+            if(answerViewModel.lastPage <= nowPage) {
+                answerViewModel.saveLastPage(nowPage)
+            }
+
             answerAdapter = AnswerAdapter()
             rvAnswer.adapter = answerAdapter
             roundProgressBar.progress = nowPage * 100 / totalPage
@@ -58,7 +59,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
             override fun click(item: Choice) {
                 selectAnswer = item.content
 
-                binding.clNoAnswer.isVisible = false
+                binding?.clNoAnswer?.isVisible = false
 
                 answerViewModel.saveBudgetResult(item)
 
@@ -72,7 +73,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
     }
 
     private fun initListener() {
-        binding.run {
+        binding?.run {
             btnNext.setOnSingleClickListener {
                 if(selectAnswer != "") {
                     val newFragment = CarPickDetailQnaFragment()

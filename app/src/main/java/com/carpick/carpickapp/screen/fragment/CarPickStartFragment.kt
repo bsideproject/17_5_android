@@ -28,11 +28,11 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
         answerViewModel.saveBudgetResult(null)
         answerViewModel.saveAnswerResult(null)
 
-        binding.run {
+        binding?.run {
             Glide.with(this@CarPickStartFragment)
                 .asGif()
                 .load(R.drawable.car_motion)
-                .into(binding.videoView)
+                .into(videoView)
 
             tvStartTest.setOnSingleClickListener {
                 val newFragment = GenderFragment()
@@ -49,7 +49,7 @@ class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
             }
 
             titleLayout.clWish.setOnSingleClickListener {
-                val intent = Intent(binding.root.context, WishListActivity::class.java)
+                val intent = Intent(root.context, WishListActivity::class.java)
                 startActivity(intent)
             }
         }

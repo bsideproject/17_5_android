@@ -63,13 +63,6 @@ class CarpickAnswerViewModel @Inject constructor(
         answerBudgetResult = answer
     }
 
-    fun getUserInfo() : Choice?{
-        return answerUserInfoResult
-    }
-    fun saveUserInfo(answer : Choice?) {
-        answerUserInfoResult = answer
-    }
-
     fun saveLastPage(page : Int) {
         _lastPage = page
     }

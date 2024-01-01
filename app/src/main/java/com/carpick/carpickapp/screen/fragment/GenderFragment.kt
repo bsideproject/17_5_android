@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentGenderBinding
 import com.carpick.carpickapp.model.Choice
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import kotlinx.coroutines.launch
@@ -26,7 +27,6 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     private var selectAnswer = ""
 
     private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
-    private var answerList = HashMap<Int, Choice>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,46 +38,43 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     }
 
     private fun initView() {
-        binding.run {
+        binding?.run {
             tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
             titleLayout.clWish.isVisible = false
             tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
-
             val clGroup = arrayListOf(clMen, clWomen)
             val textviewGroup = arrayListOf(tvMen, tvWomen)
 
-            binding.run {
-                answerViewModel.getGenderResult()?.let {
-                    if (it.choiceCode == "MEN") {
-                        selectAnswer = "남성"
+            answerViewModel.getGenderResult()?.let {
+                if (it.choiceCode == "MEN") {
+                    selectAnswer = "남성"
 
-                        ivMen.setImageResource(R.drawable.select_icon_men)
-                        ivWomen.setImageResource(R.drawable.icon_women)
-                        setClickStatus(clGroup, textviewGroup, clMen, tvMen)
-                    } else {
-                        selectAnswer = "여성"
+                    ivMen.setImageResource(R.drawable.select_icon_men)
+                    ivWomen.setImageResource(R.drawable.icon_women)
+                    setClickStatus(clGroup, textviewGroup, clMen, tvMen)
+                } else {
+                    selectAnswer = "여성"
 
-                        ivMen.setImageResource(R.drawable.icon_men)
-                        ivWomen.setImageResource(R.drawable.select_icon_women)
+                    ivMen.setImageResource(R.drawable.icon_men)
+                    ivWomen.setImageResource(R.drawable.select_icon_women)
 
-                        setClickStatus(clGroup, textviewGroup, clWomen, tvWomen)
-                    }
-
-
+                    setClickStatus(clGroup, textviewGroup, clWomen, tvWomen)
                 }
+
+
             }
+
             if (answerViewModel.lastPage < 1) {
                 answerViewModel.saveLastPage(nowPage)
             }
 
             roundProgressBar.progress = 1 * 100 / totalPage
         }
-
     }
 
     private fun initListener() {
-        binding.run {
+        binding?.run {
             val clGroup = arrayListOf(clMen, clWomen)
             val textviewGroup = arrayListOf(tvMen, tvWomen)
 
@@ -125,14 +122,6 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
                 }
             }
 
-            btnPrev.setOnSingleClickListener {
-                val newFragment = CarPickStartFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
-            }
-
             ivClose.setOnSingleClickListener {
                 clNoAnswer.isVisible = false
             }
@@ -158,11 +147,15 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
         }
 
         for (view in textviewGroup) {
-            view.setTextColor(ContextCompat.getColor(binding.root.context, R.color.color_36364d))
+            binding?.root?.context?.let {
+                view.setTextColor(ContextCompat.getColor(it, R.color.color_36364d))
+            }
         }
 
         clickLayout.setBackgroundResource(R.drawable.bg_round_3872ff_8dp)
-        clickTextView.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
+        binding?.root?.context?.let {
+            clickTextView.setTextColor(ContextCompat.getColor(it, R.color.white))
+        }
     }
 
     private fun changeFragment() {
@@ -172,7 +165,6 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
 
     private fun initViewModel() {
         lifecycleScope.launch {

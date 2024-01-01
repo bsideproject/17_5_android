@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentAgeBinding
 import com.carpick.carpickapp.model.Choice
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
@@ -31,49 +33,48 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     }
 
     private fun initView() {
-        totalPage = answerViewModel.apiResponse.size
-        binding.tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
-        binding.titleLayout.clWish.isVisible = false
-        binding.tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
+        binding?.run {
+            totalPage = answerViewModel.apiResponse.size
+            binding?.tvQnaTitle?.text = answerViewModel.apiResponse[nowPage].questionName
+            binding?.titleLayout?.clWish?.isVisible = false
+            binding?.tvTotalQnaPos?.text = "/ ${answerViewModel.apiResponse.size}"
 
-        if (answerViewModel.lastPage <= 1) {
-            answerViewModel.saveLastPage(1)
-        }
+            if (answerViewModel.lastPage <= 1) {
+                answerViewModel.saveLastPage(1)
+            }
 
-        binding.run {
             answerAdapter = AnswerAdapter()
             rvAnswer.adapter = answerAdapter
             roundProgressBar.progress = nowPage * 100 / totalPage
-        }
 
-        answerAdapter?.submitList(answerViewModel.apiResponse[nowPage].choices)
+            answerAdapter?.submitList(answerViewModel.apiResponse[nowPage].choices)
 
-        answerViewModel.getAgeResult()?.let {
-            selectAnswer = it.content
-            answerAdapter?.setSelectedItem(it)
-        }
-
-        answerAdapter?.setClickListener(object : ClickListener {
-            override fun click(item: Choice) {
-                selectAnswer = item.content
-
-                binding.clNoAnswer.isVisible = false
-
-                answerViewModel.saveAgeResult(item)
-
-
-                val newFragment = CarPickBudgetQnaFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.nav_host, newFragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+            answerViewModel.getAgeResult()?.let {
+                selectAnswer = it.content
+                answerAdapter?.setSelectedItem(it)
             }
-        })
+
+            answerAdapter?.setClickListener(object : ClickListener {
+                override fun click(item: Choice) {
+                    selectAnswer = item.content
+
+                    clNoAnswer.isVisible = false
+
+                    answerViewModel.saveAgeResult(item)
+
+
+                    val newFragment = CarPickBudgetQnaFragment()
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.nav_host, newFragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
+            })
+        }
     }
 
-
     private fun initListener() {
-        binding.run {
+        binding?.run {
             btnNext.setOnSingleClickListener {
                 if (selectAnswer != "") {
                     val newFragment = CarPickBudgetQnaFragment()
@@ -107,7 +108,6 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
             }
         }
     }
-
 
     override fun inflateBinding(
         inflater: LayoutInflater,

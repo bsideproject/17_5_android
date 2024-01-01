@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
     private val answerViewModel : CarpickAnswerViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,22 +49,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                     changeFragment(CarPoorFragment())
                 }
             }
-            true
+            false
+        }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
+            when (currentFragment) {
+                is CarPickStartFragment, is GenderFragment, is AgeFragment,
+                is CarPickBudgetQnaFragment, is CarPickDetailQnaFragment -> {
+                    binding.navBar.menu.findItem(R.id.car_recommend_fragment).isChecked = true
+                }
+                is CarPickRankingFragment -> binding.navBar.menu.findItem(R.id.car_ranking_fragment).isChecked = true
+                is CarPoorFragment -> binding.navBar.menu.findItem(R.id.car_poor_fragment).isChecked = true
+                // 다른 프래그먼트들에 대한 처리도 추가 가능
+            }
         }
     }
 
-    override fun onBackPressed() {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
-
-        when(currentFragment) {
-            is CarPickRankingFragment, is CarPoorFragment -> {
-                finish()
-            }
-            else ->{
-                super.onBackPressed()
-            }
-        }
-    }
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
