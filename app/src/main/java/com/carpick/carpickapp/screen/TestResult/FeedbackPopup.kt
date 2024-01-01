@@ -46,7 +46,7 @@ import com.carpick.carpickapp.R
 fun FeedbackPopup(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    onPressSubmit: (selectedValue: String, inputValue: String) -> Unit
+    onPressSubmit: (selectedValue: String, inputValue: String, neverShowForGood: Boolean) -> Unit
 ) {
     var inputValue by remember {
         mutableStateOf("")
@@ -68,7 +68,7 @@ fun FeedbackPopup(
 
     fun onPressSubmit() {
         onDismissRequest()
-        onPressSubmit(selectedValue, inputValue)
+        onPressSubmit(selectedValue, inputValue, neverShowForGood)
     }
 
     if(!visible) return

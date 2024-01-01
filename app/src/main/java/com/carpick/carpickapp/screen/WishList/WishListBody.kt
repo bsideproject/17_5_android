@@ -30,13 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.CarDetailTestModel
+import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.skydoves.landscapist.glide.GlideImage
 import java.text.DecimalFormat
 
 @Composable
 fun WishListBody(
-    carList: List<CarDetailTestModel>,
-    onPressCarItem: (idx: Int) -> Unit
+    wishlistIds: List<Int>,
+    wishlistCars: List<RecommendedCar>,
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
+    dataReceived: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -44,13 +49,14 @@ fun WishListBody(
             .background(Color(0xFFF2F2F6)),
 
     ) {
-        if(carList.size > 0) {
+        if(wishlistIds.size > 0) {
             WishListBodyListView(
-                carList,
-                onPressCarItem
+                wishlistCars,
+                onPressCarItem,
+                onPressHeartIcon
             )
         }
-        else {
+        else if(dataReceived) {
             WishListEmptyBody()
         }
 
@@ -122,26 +128,34 @@ fun WishListBodyTestBtn() {
 
 @Composable
 fun WishListBodyListView(
-    carList: List<CarDetailTestModel>,
-    onPressCarItem: (idx: Int) -> Unit
+    wishlistCars: List<RecommendedCar>,
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "${carList.size}개의 저장된 차가 있어요.",
-            fontSize = 12.sp,
-            color = Color(0xFF7A7AA2),
-            fontWeight = FontWeight(500),
-            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
-        )
+
         LazyColumn {
-            itemsIndexed(carList) {index, item ->
+            item {
+                Text(
+                    text = "${wishlistCars.size}개의 저장된 차가 있어요.",
+                    fontSize = 12.sp,
+                    color = Color(0xFF7A7AA2),
+                    fontWeight = FontWeight(500),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 24.dp, 0.dp, 0.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+            itemsIndexed(wishlistCars) {index, item ->
                 WishListCarItem(
                     item,
-                    index === carList.size-1,
-                    onPressCarItem
+                    index === wishlistCars.size-1,
+                    onPressCarItem,
+                    onPressHeartIcon
                 )
             }
         }
@@ -150,9 +164,10 @@ fun WishListBodyListView(
 
 @Composable
 fun WishListCarItem(
-    itemData: CarDetailTestModel,
+    itemData: RecommendedCar,
     isLastIdx: Boolean,
-    onPressCarItem: (idx: Int) -> Unit
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressHeartIcon: (idx: Int) -> Unit,
 ) {
     val convertPrice = itemData.price/10000
     val dec = DecimalFormat("#,###만원")
@@ -162,7 +177,7 @@ fun WishListCarItem(
             .fillMaxWidth()
             .padding(24.dp, 16.dp, 24.dp, paddingBottom.dp)
             .clickable {
-                onPressCarItem(244)
+                onPressCarItem(itemData.id)
             }
     ) {
         Column(
@@ -177,7 +192,7 @@ fun WishListCarItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = itemData.name,
+                    text = itemData.modelName,
                     fontSize = 16.sp,
                     color = popupBackground,
                     fontWeight = FontWeight(700)
@@ -186,7 +201,11 @@ fun WishListCarItem(
                 Image(
                     painter = painterResource(id = R.drawable.ic_favorite_on),
                     contentDescription = "favorite",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable {
+                            onPressHeartIcon(itemData.id)
+                        }
                 )
             }
             Row(
@@ -198,7 +217,7 @@ fun WishListCarItem(
                     modifier = Modifier.width(124.dp)
                 ) {
                     Text(
-                        text = itemData.simpleInfo,
+                        text = "${itemData.detailModelName}\n${itemData.trimName}",
                         fontSize = 14.sp,
                         color = Color(0xFF9898B7),
                         fontWeight = FontWeight(500)
@@ -213,12 +232,11 @@ fun WishListCarItem(
                     )
                 }
 
-                Image(
-                    painter = painterResource(id = itemData.carImg),
-                    contentDescription = "차 이미지",
+                GlideImage(
+                    imageModel = itemData.carImageUrl,
                     modifier = Modifier
                         .width(118.dp)
-                        .height(92.dp)
+                        .height(60.dp)
                 )
             }
         }
