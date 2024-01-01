@@ -136,18 +136,24 @@ fun WishListBodyListView(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "${carList.size}개의 저장된 차가 있어요.",
-            fontSize = 12.sp,
-            color = Color(0xFF7A7AA2),
-            fontWeight = FontWeight(500),
-            modifier = Modifier.padding(0.dp, 24.dp, 0.dp, 0.dp)
-        )
+
         LazyColumn {
+            item {
+                Text(
+                    text = "${carList.size}개의 저장된 차가 있어요.",
+                    fontSize = 12.sp,
+                    color = Color(0xFF7A7AA2),
+                    fontWeight = FontWeight(500),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 24.dp, 0.dp, 0.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
             itemsIndexed(wishlistCars) {index, item ->
                 WishListCarItem(
                     item,
-                    index === carList.size-1,
+                    index === wishlistCars.size-1,
                     onPressCarItem
                 )
             }
