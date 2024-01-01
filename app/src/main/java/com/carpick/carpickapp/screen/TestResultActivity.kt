@@ -50,6 +50,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.dynamiclinks.androidParameters
 import com.google.firebase.dynamiclinks.dynamicLinks
 import com.google.firebase.dynamiclinks.shortLinkAsync
+import com.google.firebase.dynamiclinks.socialMetaTagParameters
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -237,6 +238,10 @@ fun Page(
             androidParameters("com.carpick.carpickapp") {
                 minimumVersion = 1
                 setFallbackUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.carpick.carpickapp"))
+            }
+            socialMetaTagParameters {
+                title = "카픽"
+                description = "어떤 차를 사야 할지 고민이라면? 일상에 핏한 맞춤형 차량 추천 서비스 - 카픽"
             }
         }
             .addOnSuccessListener {
