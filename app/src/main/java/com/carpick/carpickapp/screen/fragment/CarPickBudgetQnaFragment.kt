@@ -35,6 +35,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
         totalPage = answerViewModel.apiResponse.size
         binding.tvQnaTitle.text = answerViewModel.apiResponse[2].questionName
         binding.titleLayout.clWish.isVisible = false
+        binding.tvTotalQnaPos.text = "/ $totalPage"
 
         if(answerViewModel.lastPage <= nowPage) {
             answerViewModel.saveLastPage(nowPage)

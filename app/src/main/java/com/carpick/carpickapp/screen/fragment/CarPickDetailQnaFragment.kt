@@ -83,7 +83,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 answerLessAdapter?.submitList(apiResponse[nowPage].choices)
             }
             binding.roundProgressBar.progress = (nowPage) * 100 / totalPage
-            binding.tvNowQnaPos.text = "${nowPage} "
+            binding.tvNowQnaPos.text = "${nowPage+1} "
         }
 
         answerViewModel.answerResult.map {
@@ -122,7 +122,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         }
 
                         answerViewModel.saveAnswerResult(answerList)
-//                        Log.e("ljy", "answer list $answerList")
+                        Log.e("ljy", "answer list $answerList")
                         apiResponse?.let { apiResponse ->
                             /* nowPage - 2인이유는 어댑터가 여기부터 새로운걸 쓰고 있음
                         *  hashmap을 사용중인데 hashmap을 이 페이지부터 저장하기에 앞에 성별, 연봉페이지를 빼야되서 -2
@@ -201,7 +201,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
             btnPrev.setOnSingleClickListener {
                 if (nowPage > 3) {
                     nowPage--
-                    tvNowQnaPos.text = "$nowPage "
+                    tvNowQnaPos.text = "${nowPage + 1} "
 
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
