@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelStoreOwner
@@ -9,9 +10,10 @@ import com.carpick.carpickapp.databinding.ActivityMainBinding
 import com.carpick.carpickapp.screen.fragment.AgeFragment
 import com.carpick.carpickapp.screen.fragment.CarPickBudgetQnaFragment
 import com.carpick.carpickapp.screen.fragment.CarPickDetailQnaFragment
+import com.carpick.carpickapp.screen.fragment.CarPickRankingFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
+import com.carpick.carpickapp.screen.fragment.CarPoorFragment
 import com.carpick.carpickapp.screen.fragment.GenderFragment
-import com.carpick.carpickapp.screen.fragment.WorkingFragment
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,20 +42,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 }
 
                 R.id.car_ranking_fragment -> {
-                    changeFragment(WorkingFragment())
+                    changeFragment(CarPickRankingFragment())
                 }
                 R.id.car_poor_fragment -> {
-                    changeFragment(WorkingFragment())
+                    changeFragment(CarPoorFragment())
                 }
             }
             true
         }
     }
 
+    override fun onBackPressed() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host)
+
+        when(currentFragment) {
+            is CarPickRankingFragment, is CarPoorFragment -> {
+                finish()
+            }
+            else ->{
+                super.onBackPressed()
+            }
+        }
+    }
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav_host, fragment)
+            .addToBackStack(null)
             .commit()
     }
 
