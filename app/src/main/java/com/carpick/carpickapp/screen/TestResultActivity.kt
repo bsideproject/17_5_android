@@ -28,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
@@ -97,10 +98,9 @@ fun Page(
     val scaffoldState = rememberScaffoldState()
     val snackbarHostState = SnackbarHostState()
     val scope = rememberCoroutineScope()
-
-    BackHandler(true, onBack = {
-        onBackPress()
-    })
+    val context = LocalContext.current
+    val pref = context.getSharedPreferences("TestResult", 0)
+    val editor = pref.edit()
 
     var wishlistIds by remember {
         mutableStateOf(mutableListOf<Int>())
@@ -134,6 +134,15 @@ fun Page(
         mutableStateOf(false)
     }
 
+    BackHandler(true, onBack = {
+        val popupNeverShow = pref.getBoolean("popupNeverShow", false)
+        if(!popupNeverShow) {
+            feedbackPopupVisible = true
+            return@BackHandler
+        }
+        onBackPress()
+    })
+
     fun _getWishListData() {
         scope.launch {
             wishlistIds.clear()
@@ -149,7 +158,11 @@ fun Page(
         }
     }
 
-    _getWishListData()
+    fun init() {
+        _getWishListData()
+    }
+
+    init()
 
     fun _addWishList(selectedId: Int) {
         val wishlistSize = wishlistIds.size
@@ -197,9 +210,11 @@ fun Page(
         tags = newItem.tags
     }
 
-    fun _onPressSubmitAtFeedbackPopup(selectedValue: String, inputValue: String) {
+    fun _onPressSubmitAtFeedbackPopup(selectedValue: String, inputValue: String, neverShowForGood: Boolean) {
         scope.launch {
             val isGood = selectedValue == "good"
+            editor.putBoolean("popupNeverShow", neverShowForGood)
+            editor.commit()
             testResultViewModel.sendFeedback(SendFeedbackBody(is_good = isGood, content = inputValue)).collect {
                 val result = snackbarHostState.showSnackbar(
                     message = "feedback",
@@ -209,6 +224,15 @@ fun Page(
             }
 
         }
+    }
+
+    fun _onPressRetest() {
+        val popupNeverShow = pref.getBoolean("popupNeverShow", false)
+        if(!popupNeverShow) {
+            feedbackPopupVisible = true
+            return
+        }
+        onBackPress()
     }
 
     Scaffold(
@@ -252,7 +276,7 @@ fun Page(
                     onPressMoreAtSimpleSpec(selectedCar)
                 },
                 onPressRetest = {
-                    feedbackPopupVisible = true
+                    _onPressRetest()
                 },
                 selectedCar,
                 specRowDatas,
@@ -266,8 +290,8 @@ fun Page(
             onDismissRequest = {
                 feedbackPopupVisible = false
             },
-            onPressSubmit = { selectedValue, inputValue ->
-                _onPressSubmitAtFeedbackPopup(selectedValue, inputValue)
+            onPressSubmit = { selectedValue, inputValue, neverShowForGood ->
+                _onPressSubmitAtFeedbackPopup(selectedValue, inputValue, neverShowForGood)
             }
         )
     }
