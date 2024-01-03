@@ -199,7 +199,7 @@ fun SimpleSpecRowItemTitle(
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
         setArrowPosition(0.8f)
-        setBackgroundColor(Color.White.hashCode())
+        setBackgroundColor(Color(0xFFF2F2F6).hashCode())
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
         setHeight(BalloonSizeSpec.WRAP)
@@ -209,6 +209,8 @@ fun SimpleSpecRowItemTitle(
         setCornerRadius(8f)
         setBalloonAnimation(BalloonAnimation.ELASTIC)
         setArrowOrientation(ArrowOrientation.TOP)
+        setElevation(15)
+        setArrowElevation(15)
     }
 
     if(itemData.tooltipContent == null) {

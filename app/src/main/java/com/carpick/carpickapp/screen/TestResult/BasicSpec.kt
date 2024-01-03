@@ -79,7 +79,7 @@ fun HashTag(
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
         setArrowPosition(0.7f)
-        setBackgroundColor(Color(value.tagRgbColorCode.hashCode()).copy(alpha = 1.0f).hashCode())
+        setBackgroundColor(Color(0xFFF2F2F6).hashCode())
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
         setHeight(BalloonSizeSpec.WRAP)
@@ -89,6 +89,8 @@ fun HashTag(
         setCornerRadius(8f)
         setBalloonAnimation(BalloonAnimation.ELASTIC)
         setArrowOrientation(ArrowOrientation.TOP)
+        setElevation(15)
+        setArrowElevation(15)
     }
 
     TestResultCommonTooltip(
