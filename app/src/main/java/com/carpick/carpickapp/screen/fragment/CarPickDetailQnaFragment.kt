@@ -134,6 +134,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                                     }
 
                                     lifecycleScope.launch {
+                                        Log.e("ljy", "request list ${answerList.toList()}")
                                         answerViewModel.getRecommendCars(answerList.toList())
                                             .collect {
                                                 val intent = Intent(
@@ -179,7 +180,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                 } else {
                     if (nowPage < totalPage) {
                         nowPage++
-                        tvNowQnaPos.text = "${nowPage + 1}"
+                        tvNowQnaPos.text = "${nowPage + 1} "
 
                         if (answerViewModel.lastPage < nowPage) {
                             answerViewModel.saveLastPage(nowPage)
