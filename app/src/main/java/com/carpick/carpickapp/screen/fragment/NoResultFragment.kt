@@ -25,36 +25,38 @@ class NoResultFragment : BaseFragment<FragmentNotResultBinding>() {
     }
 
     private fun initView() {
-        Glide.with(this)
-            .asGif()
-            .load(R.drawable.noresult_motion)
-            .apply(RequestOptions().disallowHardwareConfig())
-            .listener(object : RequestListener<GifDrawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<GifDrawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
+        binding?.ivNoResult?.let {
+            Glide.with(this)
+                .asGif()
+                .load(R.drawable.noresult_motion)
+                .apply(RequestOptions().disallowHardwareConfig())
+                .listener(object : RequestListener<GifDrawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<GifDrawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
 
-                override fun onResourceReady(
-                    resource: GifDrawable?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<GifDrawable>?,
-                    dataSource: com.bumptech.glide.load.DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    resource?.setLoopCount(1)
-                    return false
-                }
-            })
-            .into(binding.ivNoResult)
+                    override fun onResourceReady(
+                        resource: GifDrawable?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<GifDrawable>?,
+                        dataSource: com.bumptech.glide.load.DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        resource?.setLoopCount(1)
+                        return false
+                    }
+                })
+                .into(it)
+        }
     }
 
     private fun initListener() {
-        binding.tvRestartTest.setOnSingleClickListener {
+        binding?.tvRestartTest?.setOnSingleClickListener {
             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
 
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
