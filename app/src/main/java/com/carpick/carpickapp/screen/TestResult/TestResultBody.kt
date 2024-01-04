@@ -12,37 +12,17 @@ fun TestResultBody(
     onPressRetest: () -> Unit,
     selectedIdx: Int,
 ) {
-    TestResultDetail(
-        onPressMoreAtSimpleSpec = {
-            onPressMoreAtSimpleSpec(recommendCars[0])
-        },
-        onPressRetest,
-        selectedCar = recommendCars[0],
-        specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[0]),
-        tags = recommendCars[0].tags,
-        true,
-        selectedIdx == recommendCars[0].id
-    )
-    TestResultDetail(
-        onPressMoreAtSimpleSpec = {
-            onPressMoreAtSimpleSpec(recommendCars[1])
-        },
-        onPressRetest,
-        selectedCar = recommendCars[1],
-        specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[1]),
-        tags = recommendCars[1].tags,
-        true,
-        selectedIdx == recommendCars[1].id
-    )
-    TestResultDetail(
-        onPressMoreAtSimpleSpec = {
-            onPressMoreAtSimpleSpec(recommendCars[2])
-        },
-        onPressRetest,
-        selectedCar = recommendCars[2],
-        specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[2]),
-        tags = recommendCars[2].tags,
-        true,
-        selectedIdx == recommendCars[2].id
-    )
+    for(i in 0 until recommendCars.size) {
+        TestResultDetail(
+            onPressMoreAtSimpleSpec = {
+                onPressMoreAtSimpleSpec(recommendCars[i])
+            },
+            onPressRetest,
+            selectedCar = recommendCars[i],
+            specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[i]),
+            tags = recommendCars[i].tags,
+            true,
+            selectedIdx == recommendCars[i].id
+        )
+    }
 }
