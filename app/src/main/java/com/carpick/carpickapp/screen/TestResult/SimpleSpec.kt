@@ -40,20 +40,6 @@ fun SimpleSpec(
     specRowDatas: List<List<RowDataTypes>>
 ) {
 
-    val priceDec = DecimalFormat("#,###만원")
-    val displacementDec = DecimalFormat("#,###cc")
-
-    var rowTotalDatas = listOf<RowDataTypes>(
-        RowDataTypes("가격", "${priceDec.format(selectedCar.price/10000)}"),
-        RowDataTypes("차종", selectedCar.carBodyTypeName),
-        RowDataTypes("연료", fuelTypeName[selectedCar.fuelTypeName] ?: ""),
-        RowDataTypes("연비", "${selectedCar.fuelEconomy}km/l"),
-        RowDataTypes("배기량", "${displacementDec.format(selectedCar.displacement)}"),
-        RowDataTypes("최대출력", "${selectedCar.maximumPowerDescription}ps/rpm"),
-    )
-
-    var chunkedTotalDatas = rowTotalDatas.chunked(2)
-
     Column(
         modifier = Modifier.padding(0.dp, 28.dp, 0.dp, 0.dp)
     ) {
