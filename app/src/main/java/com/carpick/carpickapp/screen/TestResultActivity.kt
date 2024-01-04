@@ -322,45 +322,6 @@ fun Page(
                 },
                 selectedIdx
             )
-//            TestResultDetail(
-//                onPressMoreAtSimpleSpec = {
-//                    onPressMoreAtSimpleSpec(recommendCars[0])
-//                },
-//                onPressRetest = {
-//                    _onPressRetest()
-//                },
-//                selectedCar = recommendCars[0],
-//                specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[0]),
-//                tags = recommendCars[0].tags,
-//                true,
-//                selectedIdx == recommendCars[0].id
-//            )
-//            TestResultDetail(
-//                onPressMoreAtSimpleSpec = {
-//                    onPressMoreAtSimpleSpec(recommendCars[1])
-//                },
-//                onPressRetest = {
-//                    _onPressRetest()
-//                },
-//                selectedCar = recommendCars[1],
-//                specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[1]),
-//                tags = recommendCars[1].tags,
-//                true,
-//                selectedIdx == recommendCars[1].id
-//            )
-//            TestResultDetail(
-//                onPressMoreAtSimpleSpec = {
-//                    onPressMoreAtSimpleSpec(recommendCars[2])
-//                },
-//                onPressRetest = {
-//                    _onPressRetest()
-//                },
-//                selectedCar = recommendCars[2],
-//                specRowDatas = testResultViewModel.setSpecRowDatas(recommendCars[2]),
-//                tags = recommendCars[2].tags,
-//                true,
-//                selectedIdx == recommendCars[2].id
-//            )
             TestResultFooter(onPressWishList)
         }
 
