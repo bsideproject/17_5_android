@@ -14,6 +14,9 @@ import com.carpick.carpickapp.screen.fragment.CarPickRankingFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
 import com.carpick.carpickapp.screen.fragment.CarPoorFragment
 import com.carpick.carpickapp.screen.fragment.GenderFragment
+import com.carpick.carpickapp.ui.dialog.EventDialog
+import com.carpick.carpickapp.util.AppPref
+import com.carpick.carpickapp.util.Util
 import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +26,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(Util.getDate() > AppPref.today) {
+            AppPref.eventPopupCheck = true
+            AppPref.today = Util.getDate()
+        }
+
+        if(AppPref.eventPopupCheck) {
+            EventDialog.getInstance("", "https://www.naver.com").show(supportFragmentManager, null)
+        }
 
         changeFragment(CarPickStartFragment())
 

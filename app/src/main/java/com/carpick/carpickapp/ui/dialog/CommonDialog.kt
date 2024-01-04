@@ -1,7 +1,5 @@
-package com.carpick.carpickapp.ui
+package com.carpick.carpickapp.ui.dialog
 
-import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
