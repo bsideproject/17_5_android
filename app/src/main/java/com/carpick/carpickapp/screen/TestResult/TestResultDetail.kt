@@ -23,8 +23,10 @@ fun TestResultDetail(
     selectedCar: RecommendedCar,
     specRowDatas: List<List<RowDataTypes>>,
     tags: List<Tag>,
-    isTestResultPage: Boolean = true
+    isTestResultPage: Boolean = true,
+    visible: Boolean = true
 ) {
+    if (!visible) return
     Column(
         modifier = Modifier
             .fillMaxSize()
