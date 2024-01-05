@@ -47,7 +47,7 @@ class EventDialog : DialogFragment() {
             }
 
             tvClose.setOnSingleClickListener {
-                AppPref.eventPopupCheck = cbToday.isChecked
+                AppPref.eventPopupCheck = !cbToday.isChecked
                 dismiss()
             }
         }
