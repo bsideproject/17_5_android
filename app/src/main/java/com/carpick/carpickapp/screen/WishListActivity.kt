@@ -112,18 +112,18 @@ fun WishListPage(
 
     fun _deleteWishlistItem() {
         deleteConfirmPopupVisible = false
-        var newWishlistIds = wishlistIds.toMutableList()
-        var newWishlistCars = wishlistCars.toMutableList()
+        Log.d("WishListActivity", "deleteSelectedId: $deleteSelectedId")
         wishListViewModel.deleteWishlistById(deleteSelectedId)
-        newWishlistIds = newWishlistIds.filter { it != deleteSelectedId }.toMutableList()
-        newWishlistCars = newWishlistCars.filter { it.id != deleteSelectedId }.toMutableList()
-        wishlistIds = newWishlistIds
-        wishlistCars = newWishlistCars
+        wishlistIds = wishlistIds.filter { it != deleteSelectedId }
+        wishlistCars = wishlistCars.filter { it.id != deleteSelectedId }
         deleteSelectedId = -1
         Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
     }
 
     init()
+
+    Log.d("WishListActivity", "wishlistIds: $wishlistIds")
+    Log.d("WishListActivity", "wishlistCars: $wishlistCars")
 
     Surface(
         modifier = Modifier.fillMaxSize(),
