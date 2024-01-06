@@ -81,9 +81,15 @@ class LoadingActivity : BaseActivity<ActivityLoadingBinding>() {
             delay(1000)
         }
 
-        val intent = Intent(binding.root.context, TestResultActivity::class.java)
-        intent.putExtra("response", response)
-        startActivity(intent)
+        if(response.recommendCars?.isNotEmpty() == true) {
+            val intent = Intent(binding.root.context, TestResultActivity::class.java)
+            intent.putExtra("response", response)
+            startActivity(intent)
+        }else {
+            val intent = Intent(binding.root.context, MainActivity::class.java)
+            intent.putExtra("restart", true)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {}

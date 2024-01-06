@@ -21,7 +21,7 @@ interface ApiService {
     @Headers("content-type: application/json")
     suspend fun getRecommendCars(
         @Body choices: RequestRecommend
-    ) : RecommendCars
+    ) : RecommendCars?
 
     @POST("api/v1/feedback")
     @Headers("content-type: application/json")

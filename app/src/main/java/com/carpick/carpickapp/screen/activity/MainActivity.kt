@@ -14,6 +14,7 @@ import com.carpick.carpickapp.screen.fragment.CarPickRankingFragment
 import com.carpick.carpickapp.screen.fragment.CarPickStartFragment
 import com.carpick.carpickapp.screen.fragment.CarPoorFragment
 import com.carpick.carpickapp.screen.fragment.GenderFragment
+import com.carpick.carpickapp.screen.fragment.NoResultFragment
 import com.carpick.carpickapp.ui.dialog.EventDialog
 import com.carpick.carpickapp.util.AppPref
 import com.carpick.carpickapp.util.Util
@@ -22,32 +23,38 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
-    private val answerViewModel : CarpickAnswerViewModel by viewModels()
+    private val answerViewModel: CarpickAnswerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(Util.getDate() > AppPref.today) {
+        if (Util.getDate() > AppPref.today) {
             AppPref.eventPopupCheck = true
             AppPref.today = Util.getDate()
         }
 
-        if(AppPref.eventPopupCheck) {
+        if (AppPref.eventPopupCheck) {
             EventDialog.getInstance("", "https://www.naver.com").show(supportFragmentManager, null)
         }
 
-        changeFragment(CarPickStartFragment())
+        val intent = intent
+        val restart = intent.getBooleanExtra("restart", false)
+        if(restart){
+            changeFragment(NoResultFragment())
+        }else {
+            changeFragment(CarPickStartFragment())
+        }
 
         binding.navBar.setOnItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.car_recommend_fragment -> {
-                    if(answerViewModel.lastPage == -1) {
+                    if (answerViewModel.lastPage == -1) {
                         changeFragment(CarPickStartFragment())
-                    } else if(answerViewModel.lastPage == 0){
+                    } else if (answerViewModel.lastPage == 0) {
                         changeFragment(GenderFragment())
-                    } else if(answerViewModel.lastPage == 1) {
+                    } else if (answerViewModel.lastPage == 1) {
                         changeFragment(AgeFragment())
-                    }else if(answerViewModel.lastPage == 2){
+                    } else if (answerViewModel.lastPage == 2) {
                         changeFragment(CarPickBudgetQnaFragment())
                     } else {
                         changeFragment(CarPickDetailQnaFragment.getInstance(answerViewModel.lastPage))
@@ -57,6 +64,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 R.id.car_ranking_fragment -> {
                     changeFragment(CarPickRankingFragment())
                 }
+
                 R.id.car_poor_fragment -> {
                     changeFragment(CarPoorFragment())
                 }
@@ -71,8 +79,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
                 is CarPickBudgetQnaFragment, is CarPickDetailQnaFragment -> {
                     binding.navBar.menu.findItem(R.id.car_recommend_fragment).isChecked = true
                 }
-                is CarPickRankingFragment -> binding.navBar.menu.findItem(R.id.car_ranking_fragment).isChecked = true
-                is CarPoorFragment -> binding.navBar.menu.findItem(R.id.car_poor_fragment).isChecked = true
+
+                is CarPickRankingFragment -> binding.navBar.menu.findItem(R.id.car_ranking_fragment).isChecked =
+                    true
+
+                is CarPoorFragment -> binding.navBar.menu.findItem(R.id.car_poor_fragment).isChecked =
+                    true
                 // 다른 프래그먼트들에 대한 처리도 추가 가능
             }
         }

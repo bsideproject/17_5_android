@@ -25,7 +25,6 @@ class CarpickAnswerViewModel @Inject constructor(
     private var answerGenderResult : Choice?= null
     private var answerAgeResult : Choice?= null
     private var answerBudgetResult : Choice?= null
-    private var answerUserInfoResult : Choice?= null
 
     private var _apiResponse = ArrayList<QnAListResponseModel>()
     val apiResponse : ArrayList<QnAListResponseModel>
@@ -72,7 +71,7 @@ class CarpickAnswerViewModel @Inject constructor(
             .catch { it.printStackTrace() }
     }
 
-    fun getRecommendCars(answer : List<String>) : Flow<RecommendCars>{
+    fun getRecommendCars(answer : List<String>) : Flow<RecommendCars?>{
         return qnaListRepository.getRecommendCars(answer)
             .catch { it.printStackTrace() }
     }

@@ -15,6 +15,7 @@ import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickDetailQnaBinding
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.model.QnAListResponseModel
+import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
@@ -141,7 +142,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                                                     root.context,
                                                     LoadingActivity::class.java
                                                 )
-                                                intent.putExtra("response", it)
+                                                intent.putExtra("response", it ?: RecommendCars(emptyList()))
                                                 startActivity(intent)
                                             }
                                     }
