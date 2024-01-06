@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -78,25 +79,24 @@ fun WishListEmptyBody(
             color = popupBackground,
             fontWeight = FontWeight(700)
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "위시리스트가 비어있어요.\n추천 받은 차를 위시리스트에\n담아보세요",
             textAlign = TextAlign.Center,
             fontSize = 16.sp,
             color = Color(0xFF9898B7),
             fontWeight = FontWeight(500),
-            modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)
+            lineHeight = 22.4.sp
         )
-
+        Spacer(modifier = Modifier.height(32.dp))
         Image(
             painter = painterResource(id = R.drawable.img_empty),
             contentDescription = "빈 위시리스트",
             modifier = Modifier
                 .width(124.dp)
                 .height(150.dp)
-                .padding(0.dp, 0.dp, 0.dp, 32.dp)
         )
-
+        Spacer(modifier = Modifier.height(32.dp))
         WishListBodyTestBtn(onPressTest)
     }
 }
@@ -215,7 +215,9 @@ fun WishListCarItem(
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(0.dp, 6.dp, 0.dp, 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 6.dp, 0.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Bottom
             ) {
