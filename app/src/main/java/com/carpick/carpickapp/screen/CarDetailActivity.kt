@@ -32,6 +32,7 @@ import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.Tag
 import com.carpick.carpickapp.screen.CarDetail.CarDetailFooter
 import com.carpick.carpickapp.screen.CarDetail.CarDetailHeader
+import com.carpick.carpickapp.screen.CarDetail.CarDetailLoading
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
@@ -113,6 +114,9 @@ fun CarDetailPage(
     var tags by remember {
         mutableStateOf<List<Tag>>(listOf())
     }
+    var loading by remember {
+        mutableStateOf<Boolean>(true)
+    }
 
     fun initData() {
         if(idx == -1) return
@@ -121,6 +125,7 @@ fun CarDetailPage(
                 selectedCar = it[0]
                 specRowDatas = testResultViewModel.setSpecRowDatas(it[0])
                 tags = it[0].tags
+                loading = false
 
             }
         }
@@ -150,49 +155,59 @@ fun CarDetailPage(
 
     initData()
 
-    if(selectedCar == null) return
-
-
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        scaffoldState = scaffoldState,
-    ) {paddingValues ->
+    if(selectedCar == null) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(paddingValues)
+                .background(Color.White)
         ) {
-            CarDetailHeader(
-                onPressBack
-            )
-            TestResultBackLayer(
-                recommendCars,
-                selectedCar!!,
-                selectedIdx = selectedCar!!.id,
-                onPressCarRankListItem = {},
-                isTestResultPage = false
-            )
-            TestResultDetail(
-                onPressMoreAtSimpleSpec = {
-                    onPressMoreAtSimpleSpec(selectedCar!!)
-                },
-                onPressRetest = {},
-                selectedCar!!,
-                specRowDatas,
-                tags,
-                false
-            )
-            CarDetailFooter(
-                onPressShare = {
-                    _onPressShare()
-                },
-
-            )
+            CarDetailLoading(visible = loading)
         }
     }
+    else {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+            scaffoldState = scaffoldState,
+        ) {paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(paddingValues)
+            ) {
+                CarDetailHeader(
+                    onPressBack
+                )
+                TestResultBackLayer(
+                    recommendCars,
+                    selectedCar!!,
+                    selectedIdx = selectedCar!!.id,
+                    onPressCarRankListItem = {},
+                    isTestResultPage = false
+                )
+                TestResultDetail(
+                    onPressMoreAtSimpleSpec = {
+                        onPressMoreAtSimpleSpec(selectedCar!!)
+                    },
+                    onPressRetest = {},
+                    selectedCar!!,
+                    specRowDatas,
+                    tags,
+                    false
+                )
+                CarDetailFooter(
+                    onPressShare = {
+                        _onPressShare()
+                    },
+
+                    )
+            }
+        }
+    }
+
+
 }
 
 @Preview(showBackground = true)
