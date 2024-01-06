@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.TestResult
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -88,13 +89,15 @@ fun FeedbackPopup(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
+                Spacer(modifier = Modifier.height(12.dp))
                 FeedbackPopupHeader(onDismissRequest)
+                Spacer(modifier = Modifier.height(16.dp))
                 FeedbackPopupTitle()
+                Spacer(modifier = Modifier.height(24.dp))
                 FeedbackPopupButtonView(
                     onPressGood = {
                         onPressGood()
@@ -104,6 +107,7 @@ fun FeedbackPopup(
                     },
                     selectedValue
                 )
+                Spacer(modifier = Modifier.height(24.dp))
                 FeedbackInputGrid(
                     inputValue,
                     onValueChange = {
@@ -114,11 +118,13 @@ fun FeedbackPopup(
                         neverShowForGood = it
                     }
                 )
+                Spacer(modifier = Modifier.height(32.dp))
                 FeedbackPopupSubmitButton(
                     onPressSubmit = {
                         onPressSubmit()
                     }
                 )
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -131,7 +137,7 @@ fun FeedbackPopupHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(),
+            .padding(12.dp, 0.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -155,8 +161,7 @@ fun FeedbackPopupTitle() {
         fontWeight = FontWeight(700),
         color = Color(0xFF101317),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(0.dp, 16.dp, 0.dp, 0.dp),
+            .fillMaxWidth(),
         textAlign = TextAlign.Center
     )
 }
@@ -169,8 +174,7 @@ fun FeedbackPopupButtonView(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp, 24.dp, 8.dp, 0.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -244,12 +248,13 @@ fun FeedbackInputGrid(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(0.dp, 24.dp, 0.dp, 0.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .padding(20.dp, 0.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
         FeedbackInput(value, onValueChange)
+        Spacer(modifier = Modifier.height(16.dp))
         FeedbackPopupNeverShowCheckBox(neverShowForGood, onCheckedChange)
     }
 }
@@ -277,8 +282,7 @@ fun FeedbackInput(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(130.dp)
-            .padding(8.dp, 0.dp, 8.dp, 0.dp),
+            .height(130.dp),
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color(0xFFF2F2F6),
@@ -306,11 +310,12 @@ fun FeedbackPopupNeverShowCheckBox(
             onCheckedChange,
             colors = CheckboxDefaults.colors(
                 uncheckedColor = Color(0xFFD4D4E1)
-            )
+            ),
+            modifier = Modifier.size(18.dp)
         )
-
+        Spacer(modifier = Modifier.width(8.dp))
         ClickableText(
-            text = AnnotatedString("다시 보지 않기"),
+            text = AnnotatedString("다시보지 않기"),
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight(600),
@@ -319,7 +324,6 @@ fun FeedbackPopupNeverShowCheckBox(
             onClick = {
                 onCheckedChange(!neverShowForGood)
             },
-            modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
         )
     }
 }
@@ -331,7 +335,7 @@ fun FeedbackPopupSubmitButton(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp, 24.dp, 8.dp, 12.dp),
+            .padding(20.dp, 0.dp),
         contentAlignment = Alignment.Center
     ) {
         Box(
