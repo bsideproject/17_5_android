@@ -25,6 +25,7 @@ import com.carpick.carpickapp.screen.TestResult.testCars
 import com.carpick.carpickapp.screen.WishList.DeleteRequestPopup
 import com.carpick.carpickapp.screen.WishList.WishListBody
 import com.carpick.carpickapp.screen.WishList.WishListHeader
+import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickWishListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +46,11 @@ class WishListActivity : ComponentActivity() {
                         val intent = Intent(this, CarDetailActivity::class.java)
                         intent.putExtra("idx", it)
                         startActivity(intent)
+                    },
+                    onPressTest = {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
                     }
                 )
             }
@@ -56,7 +62,8 @@ class WishListActivity : ComponentActivity() {
 fun WishListPage(
     wishListViewModel: CarPickWishListViewModel,
     onPressBack: () -> Unit,
-    onPressCarItem: (idx: Int) -> Unit
+    onPressCarItem: (idx: Int) -> Unit,
+    onPressTest:() -> Unit
 ) {
 
     var wishlistIds by remember {
@@ -112,7 +119,6 @@ fun WishListPage(
 
     fun _deleteWishlistItem() {
         deleteConfirmPopupVisible = false
-        Log.d("WishListActivity", "deleteSelectedId: $deleteSelectedId")
         wishListViewModel.deleteWishlistById(deleteSelectedId)
         wishlistIds = wishlistIds.filter { it != deleteSelectedId }
         wishlistCars = wishlistCars.filter { it.id != deleteSelectedId }
@@ -121,9 +127,6 @@ fun WishListPage(
     }
 
     init()
-
-    Log.d("WishListActivity", "wishlistIds: $wishlistIds")
-    Log.d("WishListActivity", "wishlistCars: $wishlistCars")
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -142,7 +145,8 @@ fun WishListPage(
                 onPressHeartIcon = {
                     _onPressHeartIcon(it)
                 },
-                dataReceived
+                dataReceived,
+                onPressTest
             )
         }
         DeleteRequestPopup(
@@ -169,6 +173,9 @@ fun GreetingPreview3() {
             },
             onPressCarItem = {
                 Log.d("WishListActivity", "onPressCarItem")
+            },
+            onPressTest = {
+                Log.d("WishListActivity", "onPressTest")
             }
         )
     }
