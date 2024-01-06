@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.WishList
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -59,11 +60,11 @@ fun DeleteRequestPopup(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
+                Spacer(modifier = Modifier.height(12.dp))
                 DeleteRequestPopupHeader(onDismissRequest)
                 DeleteRequestPopupBody()
                 DeleteRequestPopupFooter(
@@ -74,6 +75,7 @@ fun DeleteRequestPopup(
                         _onPressYes()
                     }
                 )
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -86,7 +88,7 @@ fun DeleteRequestPopupHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(),
+            .padding(12.dp, 0.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -109,6 +111,7 @@ fun DeleteRequestPopupBody(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(20.dp, 0.dp)
     ) {
         Spacer(
             modifier = Modifier
@@ -138,7 +141,7 @@ fun DeleteRequestPopupFooter(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp, 0.dp, 4.dp, 12.dp),
+            .padding(20.dp, 0.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
