@@ -226,7 +226,8 @@ fun WishListCarItem(
                         text = "${itemData.detailModelName}\n${itemData.trimName}",
                         fontSize = 14.sp,
                         color = Color(0xFF9898B7),
-                        fontWeight = FontWeight(500)
+                        fontWeight = FontWeight(500),
+                        lineHeight = 19.6.sp
                     )
 
                     Text(
