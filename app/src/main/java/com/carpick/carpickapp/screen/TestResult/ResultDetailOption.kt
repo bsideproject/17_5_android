@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,9 +19,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.carpick.carpickapp.model.CarDetailOptionTest
 import com.carpick.carpickapp.model.RecommendedCar
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
@@ -157,7 +156,8 @@ fun ResultDetailRow(
             color = Color.White,
             fontWeight = FontWeight(700),
             modifier = Modifier
-                .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp)
+                .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp),
+            lineHeight = 19.6.sp
         )
     }
 }
