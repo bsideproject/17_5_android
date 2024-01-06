@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendedCar
-import com.carpick.carpickapp.screen.TestResult.testCars
 import com.carpick.carpickapp.screen.WishList.DeleteRequestPopup
 import com.carpick.carpickapp.screen.WishList.WishListBody
 import com.carpick.carpickapp.screen.WishList.WishListHeader
@@ -66,9 +65,6 @@ fun WishListPage(
     onPressTest:() -> Unit
 ) {
 
-    var wishlistIds by remember {
-        mutableStateOf<List<Int>>(listOf())
-    }
     var wishlistCars by remember {
         mutableStateOf<List<RecommendedCar>>(listOf())
     }
@@ -85,6 +81,7 @@ fun WishListPage(
     val context = LocalContext.current
 
     fun getCars(ids: String) {
+        if(dataReceived) return
         scope.launch {
             wishListViewModel.getCarDetailData(ids).collect { cars ->
                 wishlistCars = cars
@@ -94,13 +91,13 @@ fun WishListPage(
     }
 
     fun init() {
+        if(dataReceived) return
         scope.launch {
             var _ids = mutableListOf<Int>()
             wishListViewModel.getWishlistData().collect {
                 it.forEach {item ->
                     _ids.add(item.id)
                 }
-                wishlistIds = _ids
                 if(_ids.isNotEmpty()) {
                     val ids = _ids.joinToString(",")
                     getCars(ids)
@@ -118,12 +115,13 @@ fun WishListPage(
     }
 
     fun _deleteWishlistItem() {
-        deleteConfirmPopupVisible = false
-        wishListViewModel.deleteWishlistById(deleteSelectedId)
-        wishlistIds = wishlistIds.filter { it != deleteSelectedId }
-        wishlistCars = wishlistCars.filter { it.id != deleteSelectedId }
-        deleteSelectedId = -1
-        Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+        scope.launch {
+            wishListViewModel.deleteWishlistById(deleteSelectedId)
+            deleteConfirmPopupVisible = false
+            wishlistCars = wishlistCars.filter { it.id != deleteSelectedId }
+            deleteSelectedId = -1
+            Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     init()
@@ -139,7 +137,6 @@ fun WishListPage(
                 onPressBack
             )
             WishListBody(
-                wishlistIds,
                 wishlistCars,
                 onPressCarItem,
                 onPressHeartIcon = {

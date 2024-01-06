@@ -37,7 +37,6 @@ import java.text.DecimalFormat
 
 @Composable
 fun WishListBody(
-    wishlistIds: List<Int>,
     wishlistCars: List<RecommendedCar>,
     onPressCarItem: (idx: Int) -> Unit,
     onPressHeartIcon: (idx: Int) -> Unit,
@@ -50,7 +49,7 @@ fun WishListBody(
             .background(Color(0xFFF2F2F6)),
 
     ) {
-        if(wishlistIds.size > 0) {
+        if(wishlistCars.size > 0) {
             WishListBodyListView(
                 wishlistCars,
                 onPressCarItem,
