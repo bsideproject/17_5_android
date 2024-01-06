@@ -74,8 +74,7 @@ class AnswerAdapter : ListAdapter<Choice, AnswerAdapter.AnswerViewHolder>(
             this.item = item
 
             binding.tvAnswer.text = item.content
-
-            binding.tvAnswer.setBackgroundColor(0)
+            binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_f2f2f6)
             binding.tvAnswer.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
@@ -103,7 +102,7 @@ class AnswerAdapter : ListAdapter<Choice, AnswerAdapter.AnswerViewHolder>(
                         )
                     )
                 } else {
-                    binding.tvAnswer.setBackgroundColor(0)
+                    binding.tvAnswer.setBackgroundResource(R.drawable.bg_round_f2f2f6)
                     binding.tvAnswer.setTextColor(
                         ContextCompat.getColor(
                             binding.root.context,
