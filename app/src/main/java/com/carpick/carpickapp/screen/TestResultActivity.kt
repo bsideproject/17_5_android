@@ -40,7 +40,6 @@ import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultBody
-import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.TestResult.WishListAddToast
