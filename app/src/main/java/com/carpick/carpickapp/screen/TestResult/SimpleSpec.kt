@@ -1,11 +1,13 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -159,20 +161,27 @@ fun SimpleSpecRowItem(
     itemData: RowDataTypes,
     isLastIdx: Boolean
 ) {
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxWidth(if(isLastIdx) 1f else .5f)
+            .fillMaxWidth(if (isLastIdx) 1f else .5f)
             .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
-        SimpleSpecRowItemTitle(itemData)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(.7f)
+                .fillMaxHeight()
+        ) {
+            SimpleSpecRowItemTitle(itemData)
 
-        Text(
-            text = itemData.value,
-            fontSize = 14.sp,
-            color = Color.White,
-            fontFamily = PRETENDARD_BOLD,
-            modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
-        )
+            Text(
+                text = itemData.value,
+                fontSize = 14.sp,
+                color = Color.White,
+                fontFamily = PRETENDARD_BOLD,
+                modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
+            )
+
+        }
     }
 }
 
