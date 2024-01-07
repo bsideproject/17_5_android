@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Typography
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -13,7 +14,29 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.core.view.WindowCompat
+import com.carpick.carpickapp.R
+
+val PRETENDARD_EXTRA_BOLD = FontFamily(
+    Font(R.font.pretendard_extrabold, FontWeight(800), FontStyle.Normal),
+)
+val PRETENDARD_BOLD = FontFamily(
+    Font(R.font.pretendard_bold, FontWeight(700), FontStyle.Normal),
+)
+val PRETENDARD_SEMI_BOLD = FontFamily(
+    Font(R.font.pretendard_semibold, FontWeight(600), FontStyle.Normal),
+)
+val PRETENDARD_MEDIUM = FontFamily(
+    Font(R.font.pretendard_medium, FontWeight(500), FontStyle.Normal),
+)
+val PRETENDARD_REGULAR = FontFamily(
+    Font(R.font.pretendard_regular, FontWeight(400), FontStyle.Normal),
+)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

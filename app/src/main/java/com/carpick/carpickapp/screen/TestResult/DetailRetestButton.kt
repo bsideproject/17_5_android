@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
 
 @Composable
 fun DetailRetestButton(
@@ -47,7 +48,7 @@ fun DetailRetestButton(
                 text = "다른 차 추천 받기",
                 fontSize = 14.sp,
                 color = Color.White,
-                fontWeight = FontWeight(700)
+                fontFamily = PRETENDARD_BOLD
             )
         }
     }

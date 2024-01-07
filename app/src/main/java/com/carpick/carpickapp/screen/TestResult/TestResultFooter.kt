@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
@@ -61,7 +62,7 @@ fun WishListBtn(
             text = "위시리스트 바로가기",
             fontSize = 14.sp,
             color = Color.White,
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
@@ -32,7 +33,7 @@ fun TestResultCommonTooltip(
                 text = toolTipContent,
                 fontSize = 14.sp,
                 color = popupBackground,
-                fontWeight = FontWeight(500)
+                fontFamily = PRETENDARD_MEDIUM,
             )
         },
     ) {balloonWindow ->

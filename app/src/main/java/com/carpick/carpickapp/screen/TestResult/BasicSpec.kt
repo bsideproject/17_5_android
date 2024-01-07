@@ -1,6 +1,5 @@
 package com.carpick.carpickapp.screen.TestResult
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,11 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.carpick.carpickapp.model.CarDetailHashTagTest
 import com.carpick.carpickapp.model.Tag
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
@@ -48,7 +47,7 @@ fun BasicSpecTitle() {
         text = "주요특징",
         fontSize = 18.sp,
         color = Color.White,
-        fontWeight = FontWeight(700),
+        fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
     )
 }
@@ -93,8 +92,6 @@ fun HashTag(
         setArrowElevation(15)
     }
 
-    Log.d("TestResultActivity", "HashTag: ${value.toString()}")
-
     TestResultCommonTooltip(
         toolTipContent = value.tagDescription,
         modifier = Modifier
@@ -121,7 +118,7 @@ fun HashTag(
                 Text(
                     text = value.tagName,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight(500),
+                    fontFamily = PRETENDARD_MEDIUM,
                     color = Color(0xFF21212F),
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
@@ -137,7 +134,7 @@ fun HashTag(
                         text = "?",
                         fontSize = 10.sp,
                         color = Color.White,
-                        fontWeight = FontWeight(500)
+                        fontFamily = PRETENDARD_MEDIUM
                     )
                 }
             }

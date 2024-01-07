@@ -15,11 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_REGULAR
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -46,7 +48,7 @@ fun TestResultBackLayer(
                     .padding(24.dp, 8.dp, 0.dp, 0.dp),
                 fontSize = 18.sp,
                 color = popupBackground,
-                fontWeight = FontWeight(700)
+                fontFamily = PRETENDARD_BOLD
             )
         }
 
@@ -57,7 +59,7 @@ fun TestResultBackLayer(
                 .padding(24.dp, carNamePaddingTop, 0.dp, 0.dp),
             fontSize = 18.sp,
             color = popupBackground,
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
         Text(
             text = selectedCar.detailModelName,
@@ -66,7 +68,7 @@ fun TestResultBackLayer(
                 .padding(24.dp, 8.dp, 0.dp, 0.dp),
             fontSize = 14.sp,
             color = popupBackground,
-            fontWeight = FontWeight(400)
+            fontFamily = PRETENDARD_REGULAR
         )
         Text(
             text = selectedCar.trimName,
@@ -75,7 +77,7 @@ fun TestResultBackLayer(
                 .padding(24.dp, 0.dp, 0.dp, 8.dp),
             fontSize = 14.sp,
             color = popupBackground,
-            fontWeight = FontWeight(400)
+            fontFamily = PRETENDARD_REGULAR
         )
         Row(
             modifier = Modifier
@@ -150,7 +152,7 @@ fun CarRankListItem(
                     .width(50.dp)
                     .height(50.dp)
                     .background(color, shape = RoundedCornerShape(9.dp)),
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 GlideImage(
@@ -162,7 +164,7 @@ fun CarRankListItem(
             Text(
                 text = "${idx+1}순위",
                 fontSize = 12.sp,
-                fontWeight = FontWeight(600),
+                fontFamily = PRETENDARD_SEMI_BOLD,
                 color = color
             )
         }
