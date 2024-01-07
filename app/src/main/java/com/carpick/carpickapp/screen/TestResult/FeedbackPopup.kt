@@ -35,19 +35,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 
 @Composable
 fun FeedbackPopup(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    onPressSubmit: (selectedValue: String, inputValue: String, neverShowForGood: Boolean) -> Unit
+    onPressSubmit: (selectedValue: String, inputValue: String, neverShowForGood: Boolean) -> Unit,
+    setPopupNeverShow: (neverShowForGood: Boolean) -> Unit
 ) {
     var inputValue by remember {
         mutableStateOf("")
@@ -94,7 +96,12 @@ fun FeedbackPopup(
                 verticalArrangement = Arrangement.Top
             ) {
                 Spacer(modifier = Modifier.height(12.dp))
-                FeedbackPopupHeader(onDismissRequest)
+                FeedbackPopupHeader(
+                    onDismissRequest = {
+                        setPopupNeverShow(neverShowForGood)
+                        onDismissRequest()
+                    }
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 FeedbackPopupTitle()
                 Spacer(modifier = Modifier.height(24.dp))
@@ -158,7 +165,7 @@ fun FeedbackPopupTitle() {
     Text(
         text = "차량 추천에 대해서 만족하시나요?",
         fontSize = 20.sp,
-        fontWeight = FontWeight(700),
+        fontFamily = PRETENDARD_BOLD,
         color = Color(0xFF101317),
         modifier = Modifier
             .fillMaxWidth(),
@@ -230,7 +237,7 @@ fun FeedbackSelectBtn(
         Text(
             text = btnTxt,
             fontSize = 14.sp,
-            fontWeight = FontWeight(700),
+            fontFamily = PRETENDARD_BOLD,
             color = Color(0xFF3872FF),
             modifier = Modifier.padding(0.dp, 15.dp, 0.dp, 0.dp)
         )
@@ -271,13 +278,13 @@ fun FeedbackInput(
             Text(
                 text = "내용을 입력해 주세요. (선택)",
                 fontSize = 14.sp,
-                fontWeight = FontWeight(600),
+                fontFamily = PRETENDARD_SEMI_BOLD,
                 color = Color(0xFFB6B6CC)
             )
         },
         textStyle = TextStyle(
             fontSize = 14.sp,
-            fontWeight = FontWeight(600),
+            fontFamily = PRETENDARD_SEMI_BOLD,
             color = Color(0xFF4B4B6B),
         ),
         modifier = Modifier
@@ -318,7 +325,7 @@ fun FeedbackPopupNeverShowCheckBox(
             text = AnnotatedString("다시보지 않기"),
             style = TextStyle(
                 fontSize = 14.sp,
-                fontWeight = FontWeight(600),
+                fontFamily = PRETENDARD_SEMI_BOLD,
                 color = Color(0xFF7A7AA2),
             ),
             onClick = {
@@ -351,7 +358,7 @@ fun FeedbackPopupSubmitButton(
             Text(
                 text = "전송하기",
                 fontSize = 16.sp,
-                fontWeight = FontWeight(700),
+                fontFamily = PRETENDARD_BOLD,
                 color = Color.White
             )
         }

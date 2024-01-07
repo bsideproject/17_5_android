@@ -20,12 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
 
 @Composable
 fun DeleteRequestPopup(
@@ -59,11 +60,11 @@ fun DeleteRequestPopup(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
+                Spacer(modifier = Modifier.height(12.dp))
                 DeleteRequestPopupHeader(onDismissRequest)
                 DeleteRequestPopupBody()
                 DeleteRequestPopupFooter(
@@ -74,6 +75,7 @@ fun DeleteRequestPopup(
                         _onPressYes()
                     }
                 )
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -86,7 +88,7 @@ fun DeleteRequestPopupHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(),
+            .padding(12.dp, 0.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -109,6 +111,7 @@ fun DeleteRequestPopupBody(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(20.dp, 0.dp)
     ) {
         Spacer(
             modifier = Modifier
@@ -119,7 +122,7 @@ fun DeleteRequestPopupBody(
             text = "위시리스트에서 추천받은 차량을\n삭제하시겠어요?",
             fontSize = 16.sp,
             color = Color(0xFF101317),
-            fontWeight = FontWeight(500)
+            fontFamily = PRETENDARD_MEDIUM
         )
         Spacer(
             modifier = Modifier
@@ -138,7 +141,7 @@ fun DeleteRequestPopupFooter(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp, 0.dp, 4.dp, 12.dp),
+            .padding(20.dp, 0.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -167,7 +170,7 @@ fun DeleteRequestPopupCancelBtn(
             text = "아니요",
             fontSize = 16.sp,
             color = Color(0xFF101317),
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
     }
 }
@@ -191,7 +194,7 @@ fun DeleteRequestPopupConfirmBtn(
             text = "삭제하기",
             fontSize = 16.sp,
             color = Color.White,
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
     }
 }

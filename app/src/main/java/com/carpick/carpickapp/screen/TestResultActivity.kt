@@ -40,7 +40,6 @@ import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
 import com.carpick.carpickapp.screen.TestResult.TestResultBody
-import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
 import com.carpick.carpickapp.screen.TestResult.WishListAddToast
@@ -229,11 +228,15 @@ fun Page(
         tags = newItem.tags
     }
 
+    fun _setPopupNeverShow(neverShowForGood: Boolean) {
+        editor.putBoolean("popupNeverShow", neverShowForGood)
+        editor.commit()
+    }
+
     fun _onPressSubmitAtFeedbackPopup(selectedValue: String, inputValue: String, neverShowForGood: Boolean) {
+        _setPopupNeverShow(neverShowForGood)
         scope.launch {
             val isGood = selectedValue == "good"
-            editor.putBoolean("popupNeverShow", neverShowForGood)
-            editor.commit()
             testResultViewModel.sendFeedback(SendFeedbackBody(is_good = isGood, content = inputValue)).collect {
                 val result = snackbarHostState.showSnackbar(
                     message = "feedback",
@@ -332,6 +335,9 @@ fun Page(
             },
             onPressSubmit = { selectedValue, inputValue, neverShowForGood ->
                 _onPressSubmitAtFeedbackPopup(selectedValue, inputValue, neverShowForGood)
+            },
+            setPopupNeverShow = { neverShowForGood ->
+                _setPopupNeverShow(neverShowForGood)
             }
         )
     }

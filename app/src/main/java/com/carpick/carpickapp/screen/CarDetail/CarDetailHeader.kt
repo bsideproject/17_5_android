@@ -19,10 +19,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
@@ -66,7 +66,7 @@ fun CarDetailHeader(
             Text(
                 text = "위시리스트",
                 fontSize = 16.sp,
-                fontWeight = FontWeight(600),
+                fontFamily = PRETENDARD_SEMI_BOLD,
                 color = popupBackground
             )
 

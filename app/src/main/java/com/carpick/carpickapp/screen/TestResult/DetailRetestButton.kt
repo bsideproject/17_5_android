@@ -3,7 +3,6 @@ package com.carpick.carpickapp.screen.TestResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,10 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
 
 @Composable
 fun DetailRetestButton(
@@ -47,7 +46,7 @@ fun DetailRetestButton(
                 text = "다른 차 추천 받기",
                 fontSize = 14.sp,
                 color = Color.White,
-                fontWeight = FontWeight(700)
+                fontFamily = PRETENDARD_BOLD
             )
         }
     }

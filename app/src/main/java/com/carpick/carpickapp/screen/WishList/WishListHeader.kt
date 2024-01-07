@@ -19,10 +19,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 
 @Composable
 fun WishListHeader(
@@ -65,7 +65,7 @@ fun WishListHeader(
                 text = "위시리스트",
                 fontSize = 16.sp,
                 color = Color(0xFF21212F),
-                fontWeight = FontWeight(600)
+                fontFamily = PRETENDARD_SEMI_BOLD
             )
 
            Box(

@@ -18,11 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.RecommendedCar
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
@@ -85,7 +85,7 @@ fun ResultDetailOptionTitle() {
         text = "옵션",
         fontSize = 18.sp,
         color = Color.White,
-        fontWeight = FontWeight(700),
+        fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
     )
 }
@@ -154,7 +154,7 @@ fun ResultDetailRow(
             text = itemData.content,
             fontSize = 14.sp,
             color = Color.White,
-            fontWeight = FontWeight(700),
+            fontFamily = PRETENDARD_BOLD,
             modifier = Modifier
                 .padding(0.dp, 4.dp, 0.dp, bottomPadding.dp),
             lineHeight = 19.6.sp
@@ -202,7 +202,7 @@ fun ResultDetailRowTitle(
                 text = itemData.title,
                 fontSize = 14.sp,
                 color = Color(0xFFD4D4E1),
-                fontWeight = FontWeight(500),
+                fontFamily = PRETENDARD_MEDIUM,
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
             )
 
@@ -217,7 +217,7 @@ fun ResultDetailRowTitle(
                     text = "?",
                     fontSize = 10.sp,
                     color = Color.White,
-                    fontWeight = FontWeight(500)
+                    fontFamily = PRETENDARD_MEDIUM
                 )
             }
         }
