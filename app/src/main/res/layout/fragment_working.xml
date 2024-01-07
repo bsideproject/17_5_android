@@ -44,19 +44,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_working_1"
         app:layout_constraintDimensionRatio="180:128"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_sub_title"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_working_2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_working_2"
-        app:layout_constraintDimensionRatio="360:94"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ic_working_1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

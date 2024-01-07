@@ -79,7 +79,7 @@ fun HashTag(
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
         setArrowPosition(0.7f)
-        setBackgroundColor(Color(value.tagRgbColorCode.hashCode()).copy(alpha = 1.0f).hashCode())
+        setBackgroundColor(Color(0xFFF2F2F6).hashCode())
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
         setHeight(BalloonSizeSpec.WRAP)
@@ -89,13 +89,20 @@ fun HashTag(
         setCornerRadius(8f)
         setBalloonAnimation(BalloonAnimation.ELASTIC)
         setArrowOrientation(ArrowOrientation.TOP)
+        setElevation(15)
+        setArrowElevation(15)
     }
+
+    Log.d("TestResultActivity", "HashTag: ${value.toString()}")
 
     TestResultCommonTooltip(
         toolTipContent = value.tagDescription,
         modifier = Modifier
             .padding(4.dp)
-            .background(Color(value.tagRgbColorCode.hashCode()), shape = RoundedCornerShape(99.dp)),
+            .background(
+                color = Color(android.graphics.Color.parseColor(value.tagRgbColorCode)),
+                shape = RoundedCornerShape(99.dp)
+            ),
         builder = builder
     ) {balloonWindow ->
         Box(
@@ -106,7 +113,7 @@ fun HashTag(
 
             Row(
                 modifier = Modifier
-                    .background(Color(value.tagRgbColorCode.hashCode()), shape = RoundedCornerShape(99.dp))
+                    .background(Color(android.graphics.Color.parseColor(value.tagRgbColorCode)), shape = RoundedCornerShape(99.dp))
                     .padding(15.dp, 8.dp),
                 verticalAlignment = Alignment.CenterVertically
 

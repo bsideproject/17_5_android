@@ -35,9 +35,9 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     private fun initView() {
         binding?.run {
             totalPage = answerViewModel.apiResponse.size
-            binding?.tvQnaTitle?.text = answerViewModel.apiResponse[nowPage].questionName
-            binding?.titleLayout?.clWish?.isVisible = false
-            binding?.tvTotalQnaPos?.text = "/ ${answerViewModel.apiResponse.size}"
+            tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
+            titleLayout.clWish.isVisible = false
+            tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
             if (answerViewModel.lastPage <= 1) {
                 answerViewModel.saveLastPage(1)

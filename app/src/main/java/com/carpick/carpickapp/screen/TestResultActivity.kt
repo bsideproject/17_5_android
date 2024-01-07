@@ -39,6 +39,7 @@ import com.carpick.carpickapp.model.SendFeedbackBody
 import com.carpick.carpickapp.screen.TestResult.FeedbackPopup
 import com.carpick.carpickapp.screen.TestResult.RowDataTypes
 import com.carpick.carpickapp.screen.TestResult.TestResultBackLayer
+import com.carpick.carpickapp.screen.TestResult.TestResultBody
 import com.carpick.carpickapp.screen.TestResult.TestResultDetail
 import com.carpick.carpickapp.screen.TestResult.TestResultFooter
 import com.carpick.carpickapp.screen.TestResult.TestResultHeader
@@ -310,16 +311,16 @@ fun Page(
                     _onPressCarRankListItem(idx)
                 }
             )
-            TestResultDetail(
+            TestResultBody(
+                testResultViewModel,
+                recommendCars,
                 onPressMoreAtSimpleSpec = {
-                    onPressMoreAtSimpleSpec(selectedCar)
+                    onPressMoreAtSimpleSpec(it)
                 },
                 onPressRetest = {
                     _onPressRetest()
                 },
-                selectedCar,
-                specRowDatas,
-                tags
+                selectedIdx
             )
             TestResultFooter(onPressWishList)
         }

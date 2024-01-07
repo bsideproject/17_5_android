@@ -6,6 +6,7 @@ import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.RequestRecommend
 import com.carpick.carpickapp.model.SendFeedbackBody
 import com.carpick.carpickapp.model.SendFeedbackResponse
+import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -15,7 +16,7 @@ import retrofit2.http.Path
 interface ApiService {
     @GET("car-recommendation/questions")
     suspend fun getQnAList(
-    ) : List<QnAListResponseModel>
+    ) : ApiResponse<List<QnAListResponseModel>>
 
     @POST("car-recommendation")
     @Headers("content-type: application/json")

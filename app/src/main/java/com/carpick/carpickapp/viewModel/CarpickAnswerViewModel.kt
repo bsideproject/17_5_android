@@ -66,8 +66,8 @@ class CarpickAnswerViewModel @Inject constructor(
         _lastPage = page
     }
 
-    fun getQnaList(): Flow<List<QnAListResponseModel>> {
-        return qnaListRepository.getQnaList()
+    fun getQnaList(exception: (String?) -> Unit): Flow<List<QnAListResponseModel>> {
+        return qnaListRepository.getQnaList(exception)
             .catch { it.printStackTrace() }
     }
 

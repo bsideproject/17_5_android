@@ -31,6 +31,7 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.titleLayout?.clWish?.isVisible = false
 
         initViewModel()
 
@@ -126,6 +127,14 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
                 clNoAnswer.isVisible = false
             }
 
+            titleLayout.clNotNetworkView.setOnSingleClickListener {  }
+            clNotNetwork.setOnSingleClickListener {  }
+            ivNetworkClose.setOnSingleClickListener {
+                titleLayout.clNotNetworkView.isVisible = false
+                clNotNetwork.isVisible = false
+                initViewModel()
+            }
+
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
                 val newFragment = CarPickStartFragment()
                 val transaction = parentFragmentManager.beginTransaction()
@@ -143,7 +152,7 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
         clickTextView: AppCompatTextView
     ) {
         for (view in clGroup) {
-            view.setBackgroundColor(0)
+            view.setBackgroundResource(R.drawable.bg_round_f2f2f6_8dp)
         }
 
         for (view in textviewGroup) {
@@ -168,7 +177,10 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            answerViewModel.getQnaList().collect {
+            answerViewModel.getQnaList(exception = {
+                binding?.titleLayout?.clNotNetworkView?.isVisible= true
+                binding?.clNotNetwork?.isVisible = true
+            }).collect {
                 answerViewModel.setApiResponse(it)
 
                 initView()

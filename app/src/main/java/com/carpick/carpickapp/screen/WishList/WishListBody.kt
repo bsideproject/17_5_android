@@ -37,11 +37,11 @@ import java.text.DecimalFormat
 
 @Composable
 fun WishListBody(
-    wishlistIds: List<Int>,
     wishlistCars: List<RecommendedCar>,
     onPressCarItem: (idx: Int) -> Unit,
     onPressHeartIcon: (idx: Int) -> Unit,
-    dataReceived: Boolean
+    dataReceived: Boolean,
+    onPressTest:() -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -49,7 +49,7 @@ fun WishListBody(
             .background(Color(0xFFF2F2F6)),
 
     ) {
-        if(wishlistIds.size > 0) {
+        if(wishlistCars.size > 0) {
             WishListBodyListView(
                 wishlistCars,
                 onPressCarItem,
@@ -57,14 +57,16 @@ fun WishListBody(
             )
         }
         else if(dataReceived) {
-            WishListEmptyBody()
+            WishListEmptyBody(onPressTest)
         }
 
     }
 }
 
 @Composable
-fun WishListEmptyBody() {
+fun WishListEmptyBody(
+    onPressTest:() -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -95,19 +97,23 @@ fun WishListEmptyBody() {
                 .padding(0.dp, 0.dp, 0.dp, 32.dp)
         )
 
-        WishListBodyTestBtn()
+        WishListBodyTestBtn(onPressTest)
     }
 }
 
 @Composable
-fun WishListBodyTestBtn() {
+fun WishListBodyTestBtn(
+    onPressTest:() -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(80.dp, 0.dp)
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                onPressTest()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
@@ -117,7 +123,7 @@ fun WishListBodyTestBtn() {
             shape = RoundedCornerShape(99.dp)
         ) {
             Text(
-                text = "테스트 다시하기",
+                text = "테스트 하러하기",
                 fontSize = 16.sp,
                 color = Color.White,
                 fontWeight = FontWeight(700)
@@ -220,7 +226,8 @@ fun WishListCarItem(
                         text = "${itemData.detailModelName}\n${itemData.trimName}",
                         fontSize = 14.sp,
                         color = Color(0xFF9898B7),
-                        fontWeight = FontWeight(500)
+                        fontWeight = FontWeight(500),
+                        lineHeight = 19.6.sp
                     )
 
                     Text(
