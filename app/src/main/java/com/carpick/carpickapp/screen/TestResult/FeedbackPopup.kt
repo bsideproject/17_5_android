@@ -48,7 +48,8 @@ import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 fun FeedbackPopup(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    onPressSubmit: (selectedValue: String, inputValue: String, neverShowForGood: Boolean) -> Unit
+    onPressSubmit: (selectedValue: String, inputValue: String, neverShowForGood: Boolean) -> Unit,
+    setPopupNeverShow: (neverShowForGood: Boolean) -> Unit
 ) {
     var inputValue by remember {
         mutableStateOf("")
@@ -95,7 +96,12 @@ fun FeedbackPopup(
                 verticalArrangement = Arrangement.Top
             ) {
                 Spacer(modifier = Modifier.height(12.dp))
-                FeedbackPopupHeader(onDismissRequest)
+                FeedbackPopupHeader(
+                    onDismissRequest = {
+                        setPopupNeverShow(neverShowForGood)
+                        onDismissRequest()
+                    }
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 FeedbackPopupTitle()
                 Spacer(modifier = Modifier.height(24.dp))
