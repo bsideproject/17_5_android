@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.DetailSpec
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,10 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_SEMI_BOLD
 
 @Composable
 fun DetailSpecHeader(
@@ -52,7 +51,7 @@ fun DetailSpecHeader(
                 text = "상세스펙",
                 fontSize = 16.sp,
                 color = Color.White,
-                fontWeight = FontWeight(600)
+                fontFamily = PRETENDARD_SEMI_BOLD
             )
 
             Box(

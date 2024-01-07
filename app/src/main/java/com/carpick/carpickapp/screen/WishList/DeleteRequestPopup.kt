@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.WishList
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,12 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.carpick.carpickapp.R
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
+import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
 
 @Composable
 fun DeleteRequestPopup(
@@ -122,7 +122,7 @@ fun DeleteRequestPopupBody(
             text = "위시리스트에서 추천받은 차량을\n삭제하시겠어요?",
             fontSize = 16.sp,
             color = Color(0xFF101317),
-            fontWeight = FontWeight(500)
+            fontFamily = PRETENDARD_MEDIUM
         )
         Spacer(
             modifier = Modifier
@@ -170,7 +170,7 @@ fun DeleteRequestPopupCancelBtn(
             text = "아니요",
             fontSize = 16.sp,
             color = Color(0xFF101317),
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
     }
 }
@@ -194,7 +194,7 @@ fun DeleteRequestPopupConfirmBtn(
             text = "삭제하기",
             fontSize = 16.sp,
             color = Color.White,
-            fontWeight = FontWeight(700)
+            fontFamily = PRETENDARD_BOLD
         )
     }
 }
