@@ -7,6 +7,9 @@ import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.model.RequestRecommend
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onException
+import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -14,10 +17,18 @@ import javax.inject.Inject
 class QnaListRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    fun getQnaList(): Flow<List<QnAListResponseModel>> {
+    fun getQnaList(exception: (String?) -> Unit): Flow<List<QnAListResponseModel>> {
         return flow {
-            val response = apiService.getQnAList()
-            emit(response)
+            apiService.getQnAList()
+                .suspendOnSuccess {
+                    val response = this.response.body()
+                    response?.let { emit(it) }
+                }
+                .onError {  }
+                .onException {
+                    exception(this.exception.message)
+                }
+
         }
     }
 

@@ -126,6 +126,14 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
                 clNoAnswer.isVisible = false
             }
 
+            titleLayout.clNotNetworkView.setOnSingleClickListener {  }
+            clNotNetwork.setOnSingleClickListener {  }
+            ivNetworkClose.setOnSingleClickListener {
+                titleLayout.clNotNetworkView.isVisible = false
+                clNotNetwork.isVisible = false
+                initViewModel()
+            }
+
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
                 val newFragment = CarPickStartFragment()
                 val transaction = parentFragmentManager.beginTransaction()
@@ -168,7 +176,10 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            answerViewModel.getQnaList().collect {
+            answerViewModel.getQnaList(exception = {
+                binding?.titleLayout?.clNotNetworkView?.isVisible= true
+                binding?.clNotNetwork?.isVisible = true
+            }).collect {
                 answerViewModel.setApiResponse(it)
 
                 initView()
