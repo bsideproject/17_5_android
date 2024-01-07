@@ -143,7 +143,7 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
         clickTextView: AppCompatTextView
     ) {
         for (view in clGroup) {
-            view.setBackgroundColor(0)
+            view.setBackgroundResource(R.drawable.bg_round_f2f2f6_8dp)
         }
 
         for (view in textviewGroup) {
