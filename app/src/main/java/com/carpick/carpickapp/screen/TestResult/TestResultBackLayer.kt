@@ -53,7 +53,7 @@ fun TestResultBackLayer(
         }
 
         Text(
-            text = selectedCar.modelName,
+            text = "${selectedCar.carBrandName} ${selectedCar.modelName}",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, carNamePaddingTop, 0.dp, 0.dp),
@@ -87,7 +87,9 @@ fun TestResultBackLayer(
         ) {
             GlideImage(
                 imageModel = selectedCar.carImageUrl,
-                modifier = Modifier.width(360.dp).height(170.dp)
+                modifier = Modifier
+                    .width(360.dp)
+                    .height(170.dp)
             )
         }
         CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem, isTestResultPage)
@@ -157,7 +159,9 @@ fun CarRankListItem(
             ) {
                 GlideImage(
                     imageModel = item.carImageUrl,
-                    modifier = Modifier.width(40.dp).height(20.dp)
+                    modifier = Modifier
+                        .width(40.dp)
+                        .height(20.dp)
                 )
             }
 
