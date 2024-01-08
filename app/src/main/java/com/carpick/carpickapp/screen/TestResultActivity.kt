@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
@@ -286,9 +287,14 @@ fun Page(
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(0.dp, 130.dp, 0.dp, 0.dp),
                 snackbar = { WishListAddToast(snackbarData = it) }
             )
+        },
+        bottomBar = {
+            TestResultFooter(onPressWishList)
         }
     ) {paddingValues ->
         Column(
@@ -325,7 +331,7 @@ fun Page(
                 },
                 selectedIdx
             )
-            TestResultFooter(onPressWishList)
+            //TestResultFooter(onPressWishList)
         }
 
         FeedbackPopup(

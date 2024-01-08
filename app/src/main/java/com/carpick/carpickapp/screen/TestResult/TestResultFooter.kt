@@ -31,7 +31,7 @@ fun TestResultFooter(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp, 16.dp, 16.dp, 32.dp),
+                .padding(16.dp, 16.dp, 16.dp, 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
