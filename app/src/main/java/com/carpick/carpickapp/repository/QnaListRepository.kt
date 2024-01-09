@@ -32,10 +32,10 @@ class QnaListRepository @Inject constructor(
         }
     }
 
-    fun getRecommendCars(answer : List<String>): Flow<RecommendCars> {
+    fun getRecommendCars(answer : List<String>): Flow<RecommendCars?> {
         return flow {
             val response = apiService.getRecommendCars(RequestRecommend(answer))
-            emit(response)
+            emit(response ?: RecommendCars(emptyList()))
         }
     }
 }
