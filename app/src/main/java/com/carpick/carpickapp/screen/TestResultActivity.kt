@@ -289,7 +289,7 @@ fun Page(
                 hostState = snackbarHostState,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(0.dp, 130.dp, 0.dp, 0.dp),
+                    .padding(0.dp, 76.dp, 0.dp, 0.dp),
                 snackbar = { WishListAddToast(snackbarData = it) }
             )
         },
