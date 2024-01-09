@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.TestResult
 
+import android.content.Context
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import com.carpick.carpickapp.screen.ui.theme.popupBackground
 
 @Composable
 fun TestResultDetail(
+    context: Context,
     onPressMoreAtSimpleSpec: () -> Unit,
     onPressRetest: () -> Unit,
     selectedCar: RecommendedCar,
@@ -34,14 +36,17 @@ fun TestResultDetail(
 
     ) {
         BasicSpec(
+            context,
             tags
         )
         SimpleSpec(
+            context,
             onPressMoreAtSimpleSpec,
             selectedCar,
             specRowDatas
         )
         ResultDetailOption(
+            context,
             selectedCar
         )
         DetailRetestButton(onPressRetest, isTestResultPage)

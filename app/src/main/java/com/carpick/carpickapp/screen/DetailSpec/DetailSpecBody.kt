@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.screen.DetailSpec
 
+import android.content.Context
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import java.text.DecimalFormat
 
 @Composable
 fun DetailSpecBody(
+    context: Context,
     scrollState: ScrollState,
     specs: List<List<RowDataTypes>>
 ) {
@@ -27,6 +29,6 @@ fun DetailSpecBody(
             .verticalScroll(scrollState)
             .padding(0.dp, 24.dp)
     ) {
-        SimpleSpecBody(specs)
+        SimpleSpecBody(context, specs)
     }
 }

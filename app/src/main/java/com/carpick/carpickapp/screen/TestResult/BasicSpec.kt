@@ -1,5 +1,7 @@
 package com.carpick.carpickapp.screen.TestResult
 
+import android.content.Context
+import android.view.Gravity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
+import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.Tag
 import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
 import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
@@ -28,16 +32,18 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.compose.rememberBalloonBuilder
+import com.skydoves.balloon.compose.setTextColor
 
 @Composable
 fun BasicSpec(
+    context: Context,
     tags: List<Tag>
 ) {
     Column(
         modifier = Modifier.padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         BasicSpecTitle()
-        BasicSpecTags(tags)
+        BasicSpecTags(context, tags)
     }
 }
 
@@ -55,6 +61,7 @@ fun BasicSpecTitle() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BasicSpecTags(
+    context: Context,
     tags: List<Tag>
 ) {
 
@@ -65,7 +72,7 @@ fun BasicSpecTags(
     ) {
         tags.forEach { hashTag ->
             run {
-                HashTag(value = hashTag)
+                HashTag(value = hashTag, context)
             }
         }
     }
@@ -73,7 +80,8 @@ fun BasicSpecTags(
 
 @Composable
 fun HashTag(
-    value: Tag
+    value: Tag,
+    context: Context
 ) {
     val builder = rememberBalloonBuilder {
         setArrowSize(10)
@@ -82,14 +90,17 @@ fun HashTag(
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
         setHeight(BalloonSizeSpec.WRAP)
-        setPaddingHorizontal(21)
+        setPaddingHorizontal(17)
         setPaddingVertical(12)
         setMarginHorizontal(12)
         setCornerRadius(8f)
         setBalloonAnimation(BalloonAnimation.ELASTIC)
-        setArrowOrientation(ArrowOrientation.TOP)
         setElevation(15)
-        setArrowElevation(15)
+        setText(value.tagDescription ?: "")
+        setTextColor(popupBackground)
+        setTextSize(12f)
+        setTextGravity(Gravity.START)
+        setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_medium)!!)
     }
 
     TestResultCommonTooltip(

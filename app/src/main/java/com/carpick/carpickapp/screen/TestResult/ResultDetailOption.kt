@@ -1,5 +1,8 @@
 package com.carpick.carpickapp.screen.TestResult
 
+import android.content.Context
+import android.graphics.Typeface
+import android.view.Gravity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,17 +23,22 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
+import com.carpick.carpickapp.R
 import com.carpick.carpickapp.model.RecommendedCar
 import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
 import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_MEDIUM
+import com.carpick.carpickapp.screen.ui.theme.popupBackground
 import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.compose.rememberBalloonBuilder
+import com.skydoves.balloon.compose.setTextColor
 
 @Composable
 fun ResultDetailOption(
+    context: Context,
     selectedCar: RecommendedCar
 ) {
     var rowTotalDatas = listOf<ResultDetailOptionRowData>(
@@ -75,7 +83,7 @@ fun ResultDetailOption(
             .padding(0.dp, 32.dp, 0.dp, 0.dp)
     ) {
         ResultDetailOptionTitle()
-        ResultDetailOptionBody(rowTotalDatas)
+        ResultDetailOptionBody(context, rowTotalDatas)
     }
 }
 
@@ -92,6 +100,7 @@ fun ResultDetailOptionTitle() {
 
 @Composable
 fun ResultDetailOptionBody(
+    context: Context,
     rowTotalDatas: List<ResultDetailOptionRowData>
 ) {
     Box(
@@ -105,7 +114,7 @@ fun ResultDetailOptionBody(
                 .background(Color(0xFF3f3f4D), shape = RoundedCornerShape(10.dp))
         ) {
             for(i in 0 until rowTotalDatas.size) {
-                ResultDetailRow( rowTotalDatas[i], i == 0, i == rowTotalDatas.size-1)
+                ResultDetailRow(context, rowTotalDatas[i], i == 0, i == rowTotalDatas.size-1)
             }
         }
     }
@@ -113,6 +122,7 @@ fun ResultDetailOptionBody(
 
 @Composable
 fun ResultDetailRow(
+    context: Context,
     itemData: ResultDetailOptionRowData,
     isFirstIdx: Boolean,
     isLastIdx: Boolean
@@ -145,6 +155,7 @@ fun ResultDetailRow(
         verticalArrangement = Arrangement.Center
     ) {
         ResultDetailRowTitle(
+            context,
             itemData,
             topPadding,
             itemData.tooltipContent
@@ -164,6 +175,7 @@ fun ResultDetailRow(
 
 @Composable
 fun ResultDetailRowTitle(
+    context: Context,
     itemData: ResultDetailOptionRowData,
     topPadding: Int,
     tooltipContent: String
@@ -175,14 +187,17 @@ fun ResultDetailRowTitle(
         setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
         setWidth(BalloonSizeSpec.WRAP)
         setHeight(BalloonSizeSpec.WRAP)
-        setPaddingHorizontal(21)
+        setPaddingHorizontal(17)
         setPaddingVertical(12)
         setMarginHorizontal(12)
         setCornerRadius(8f)
         setBalloonAnimation(BalloonAnimation.ELASTIC)
-        setArrowOrientation(ArrowOrientation.TOP)
         setElevation(15)
-        setArrowElevation(15)
+        setText(tooltipContent ?: "")
+        setTextColor(popupBackground)
+        setTextSize(12f)
+        setTextGravity(Gravity.START)
+        setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_medium)!!)
     }
 
     TestResultCommonTooltip(

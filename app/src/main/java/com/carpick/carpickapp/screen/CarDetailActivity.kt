@@ -188,6 +188,7 @@ fun CarDetailPage(
                     isTestResultPage = false
                 )
                 TestResultDetail(
+                    context,
                     onPressMoreAtSimpleSpec = {
                         onPressMoreAtSimpleSpec(selectedCar!!)
                     },

@@ -321,6 +321,7 @@ fun Page(
                 }
             )
             TestResultBody(
+                context,
                 testResultViewModel,
                 recommendCars,
                 onPressMoreAtSimpleSpec = {

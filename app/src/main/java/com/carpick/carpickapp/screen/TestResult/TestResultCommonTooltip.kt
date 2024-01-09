@@ -21,14 +21,6 @@ fun TestResultCommonTooltip(
     Balloon(
         builder = builder,
         modifier = modifier,
-        balloonContent = {
-            Text(
-                text = toolTipContent,
-                fontSize = 14.sp,
-                color = popupBackground,
-                fontFamily = PRETENDARD_MEDIUM,
-            )
-        },
     ) {balloonWindow ->
         content(balloonWindow)
     }

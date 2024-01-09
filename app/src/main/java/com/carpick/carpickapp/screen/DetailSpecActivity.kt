@@ -19,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carpick.carpickapp.model.RecommendCars
@@ -69,6 +70,7 @@ fun DetailSpecPage(
     var specs by remember {
         mutableStateOf<List<List<RowDataTypes>>>(listOf())
     }
+    val context = LocalContext.current
 
     if(carData != null) {
         specs = testResultViewModel.setSpecRowDatas(carData, false)
@@ -84,7 +86,7 @@ fun DetailSpecPage(
             DetailSpecHeader(
                 onPressBack
             )
-            DetailSpecBody(scrollState, specs)
+            DetailSpecBody(context, scrollState, specs)
         }
     }
 }
