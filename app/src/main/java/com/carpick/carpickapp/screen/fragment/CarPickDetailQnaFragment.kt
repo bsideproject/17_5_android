@@ -19,7 +19,7 @@ import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.screen.activity.LoadingActivity
 import com.carpick.carpickapp.ui.adapter.AnswerLessAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -32,7 +32,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
     private var answerList = HashMap<Int, Choice>() // request용
 
-    private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel: CarPickAnswerViewModel by activityViewModels()
     private var apiResponse: ArrayList<QnAListResponseModel>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

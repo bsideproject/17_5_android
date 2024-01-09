@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
 @HiltViewModel
-class CarpickAnswerViewModel @Inject constructor(
+class CarPickAnswerViewModel @Inject constructor(
     private val qnaListRepository: QnaListRepository
 ) : ViewModel() {
     private var _answerResult = HashMap<Int,Choice>()

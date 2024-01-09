@@ -1,10 +1,11 @@
 package com.carpick.carpickapp.screen.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.ActivityMainBinding
 import com.carpick.carpickapp.screen.fragment.AgeFragment
@@ -18,12 +19,15 @@ import com.carpick.carpickapp.screen.fragment.NoResultFragment
 import com.carpick.carpickapp.ui.dialog.EventDialog
 import com.carpick.carpickapp.util.AppPref
 import com.carpick.carpickapp.util.Util
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickNoticeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
-    private val answerViewModel: CarpickAnswerViewModel by viewModels()
+    private val answerViewModel: CarPickAnswerViewModel by viewModels()
+    private val noticeViewModel: CarPickNoticeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +37,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), ViewModelStoreOwner {
             AppPref.today = Util.getDate()
         }
 
-        if (AppPref.eventPopupCheck) {
-            EventDialog.getInstance("", "https://www.naver.com").show(supportFragmentManager, null)
+        lifecycleScope.launch {
+            noticeViewModel.getNotice().collect {
+                if(it.data.notice[0].isVisible) {
+                    if (AppPref.eventPopupCheck) {
+                        EventDialog.getInstance(it.data.notice[0].noticeImage, it.data.notice[0].noticeLink).show(supportFragmentManager, null)
+                    }
+                }
+            }
         }
+
 
         val intent = intent
         val restart = intent.getBooleanExtra("restart", false)

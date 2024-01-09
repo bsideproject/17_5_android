@@ -10,6 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.DialogEventBinding
 import com.carpick.carpickapp.util.AppPref
 import com.carpick.carpickapp.util.setOnSingleClickListener
@@ -26,6 +32,12 @@ class EventDialog : DialogFragment() {
 
         imgUrl = arguments?.getString("imgUrl", imgUrl) ?: ""
         redirectUrl = arguments?.getString("redirectUrl", redirectUrl) ?: ""
+
+        Glide.with(this)
+            .asGif()
+            .load(imgUrl)
+            .into(binding.ivEvent)
+
         initListener()
 
         return binding.root
