@@ -34,7 +34,6 @@ class EventDialog : DialogFragment() {
         redirectUrl = arguments?.getString("redirectUrl", redirectUrl) ?: ""
 
         Glide.with(this)
-            .asGif()
             .load(imgUrl)
             .into(binding.ivEvent)
 
