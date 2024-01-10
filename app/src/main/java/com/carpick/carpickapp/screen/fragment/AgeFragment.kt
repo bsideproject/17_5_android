@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import com.carpick.carpickapp.ClickListener
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentAgeBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 
 class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     private var nowPage = 1
@@ -23,7 +21,7 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     private var answerAdapter: AnswerAdapter? = null
     private var selectAnswer = ""
 
-    private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel: CarPickAnswerViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,9 +33,9 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
     private fun initView() {
         binding?.run {
             totalPage = answerViewModel.apiResponse.size
-            binding?.tvQnaTitle?.text = answerViewModel.apiResponse[nowPage].questionName
-            binding?.titleLayout?.clWish?.isVisible = false
-            binding?.tvTotalQnaPos?.text = "/ ${answerViewModel.apiResponse.size}"
+            tvQnaTitle.text = answerViewModel.apiResponse[nowPage].questionName
+            titleLayout.clWish.isVisible = false
+            tvTotalQnaPos.text = "/ ${answerViewModel.apiResponse.size}"
 
             if (answerViewModel.lastPage <= 1) {
                 answerViewModel.saveLastPage(1)

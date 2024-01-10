@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.api
 
+import com.carpick.carpickapp.model.GetNoticeModel
 import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.RecommendCars
 import com.carpick.carpickapp.model.RecommendedCar
@@ -22,7 +23,7 @@ interface ApiService {
     @Headers("content-type: application/json")
     suspend fun getRecommendCars(
         @Body choices: RequestRecommend
-    ) : RecommendCars
+    ) : RecommendCars?
 
     @POST("api/v1/feedback")
     @Headers("content-type: application/json")
@@ -35,4 +36,7 @@ interface ApiService {
         @Path("ids") ids: String
     ): List<RecommendedCar>
 
+    @GET("api/v1/notices/")
+    suspend fun getNotice(
+    ) : GetNoticeModel
 }

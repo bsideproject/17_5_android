@@ -11,12 +11,11 @@ import androidx.fragment.app.activityViewModels
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentWorkingBinding
 import com.carpick.carpickapp.screen.WishListActivity
-import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 
 class CarPoorFragment : BaseFragment<FragmentWorkingBinding>(){
-    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel : CarPickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

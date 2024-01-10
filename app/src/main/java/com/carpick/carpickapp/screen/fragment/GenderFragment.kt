@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentGenderBinding
 import com.carpick.carpickapp.model.Choice
-import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 import kotlinx.coroutines.launch
 
 
@@ -26,11 +24,12 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>() {
     private var totalPage = 12
     private var selectAnswer = ""
 
-    private val answerViewModel: CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel: CarPickAnswerViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.titleLayout?.clWish?.isVisible = false
 
         initViewModel()
 

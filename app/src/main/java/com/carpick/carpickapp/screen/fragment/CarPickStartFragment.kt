@@ -13,11 +13,11 @@ import com.carpick.carpickapp.R
 import com.carpick.carpickapp.databinding.FragmentCarpickStartBinding
 import com.carpick.carpickapp.screen.WishListActivity
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 
 
 class CarPickStartFragment : BaseFragment<FragmentCarpickStartBinding>() {
-    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel : CarPickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

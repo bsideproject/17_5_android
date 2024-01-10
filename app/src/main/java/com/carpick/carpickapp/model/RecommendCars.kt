@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class RecommendCars(
     @SerializedName("recommended_cars")
-    val recommendCars: List<RecommendedCar>
+    val recommendCars: List<RecommendedCar>?
 ):Serializable
 
 data class RecommendedCar(

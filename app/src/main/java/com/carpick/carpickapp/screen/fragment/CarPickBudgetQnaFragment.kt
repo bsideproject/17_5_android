@@ -1,7 +1,6 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.carpick.carpickapp.databinding.FragmentCarpickBudgetQnaBinding
 import com.carpick.carpickapp.model.Choice
 import com.carpick.carpickapp.ui.adapter.AnswerAdapter
 import com.carpick.carpickapp.util.setOnSingleClickListener
-import com.carpick.carpickapp.viewModel.CarpickAnswerViewModel
+import com.carpick.carpickapp.viewModel.CarPickAnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +23,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
     private var answerAdapter : AnswerAdapter? = null
     private var selectAnswer = ""
 
-    private val answerViewModel : CarpickAnswerViewModel by activityViewModels()
+    private val answerViewModel : CarPickAnswerViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
