@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CarpickApp</string>
+    <string name="app_name">Carpick</string>
     <string name="title_activity_test_result">TestResultActivity</string>
     <string name="title_activity_wish_list">WishListActivity</string>
     <string name="title_activity_detail_spec">DetailSpecActivity</string>
