@@ -3,18 +3,23 @@ package com.carpick.carpickapp.screen.TestResult
 import android.content.Context
 import android.graphics.Typeface
 import android.view.Gravity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -25,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -123,6 +129,7 @@ fun ShowMoreButton(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SimpleSpecRow(
     context: Context,
@@ -152,10 +159,9 @@ fun SimpleSpecRow(
             .padding(16.dp, topPadding.dp, 16.dp, bottomPadding.dp)
     }
 
-    Row(
+    FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top
     ) {
         for(i in 0 until rowData.size) {
             SimpleSpecRowItem(
@@ -175,7 +181,7 @@ fun SimpleSpecRowItem(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(if (isLastIdx) 1f else .5f)
+            .fillMaxWidth(.5f)
             .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
         Column(
@@ -243,11 +249,13 @@ fun SimpleSpecRowItemTitle(
             builder = builder,
         ) {balloonWindow ->
             Row(
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable {
-                    balloonWindow.showAlignBottom()
-                }
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clickable {
+                        balloonWindow.showAlignBottom()
+                    }
             ) {
                 Text(
                     text = itemData.title,
@@ -257,20 +265,12 @@ fun SimpleSpecRowItemTitle(
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
 
-                Box(
+                Image(
+                    painter = painterResource(id = R.drawable.ic_tooltip),
+                    contentDescription = "툴팁",
                     modifier = Modifier
-                        .width(15.dp)
-                        .height(15.dp)
-                        .background(Color(0xFF7A7AA2), shape = RoundedCornerShape(99.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "?",
-                        fontSize = 10.sp,
-                        color = Color.White,
-                        fontFamily = PRETENDARD_MEDIUM
-                    )
-                }
+                        .size(15.dp)
+                )
             }
 
         }
