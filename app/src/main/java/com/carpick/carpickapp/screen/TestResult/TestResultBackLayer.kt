@@ -57,7 +57,7 @@ fun TestResultBackLayer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, carNamePaddingTop, 0.dp, 0.dp),
-            fontSize = 18.sp,
+            fontSize = 24.sp,
             color = popupBackground,
             fontFamily = PRETENDARD_BOLD
         )
