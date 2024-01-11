@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_round_eaf0ff"
         android:text="@string/car_pick_recommend"
+        android:textSize="14dp"
         android:textColor="@color/color_3872ff"
         android:fontFamily="@font/pretendard_semibold"
         android:paddingTop="5dp"

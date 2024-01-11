@@ -42,7 +42,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
                 answerViewModel.saveLastPage(nowPage)
             }
 
-            answerAdapter = AnswerAdapter()
+            answerAdapter = AnswerAdapter(answerViewModel.apiResponse[nowPage].choices)
             rvAnswer.adapter = answerAdapter
             roundProgressBar.progress = nowPage * 100 / totalPage
         }

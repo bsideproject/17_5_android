@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,7 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
                 answerViewModel.saveLastPage(1)
             }
 
-            answerAdapter = AnswerAdapter()
+            answerAdapter = AnswerAdapter(answerViewModel.apiResponse[nowPage].choices)
             rvAnswer.adapter = answerAdapter
             roundProgressBar.progress = nowPage * 100 / totalPage
 
@@ -49,6 +50,7 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
 
             answerViewModel.getAgeResult()?.let {
                 selectAnswer = it.content
+                Log.e("lee", "get $it")
                 answerAdapter?.setSelectedItem(it)
             }
 
@@ -58,6 +60,7 @@ class AgeFragment : BaseFragment<FragmentAgeBinding>() {
 
                     clNoAnswer.isVisible = false
 
+                    Log.e("lee", "save $item")
                     answerViewModel.saveAgeResult(item)
 
 
