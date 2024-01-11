@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -109,15 +110,15 @@ fun WishListBodyTestBtn(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(80.dp, 0.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ) {
         Button(
             onClick = {
                 onPressTest()
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .width(200.dp)
                 .height(52.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = popupBackground
@@ -128,7 +129,7 @@ fun WishListBodyTestBtn(
                 text = "테스트 하러하기",
                 fontSize = 16.sp,
                 color = Color.White,
-                fontFamily = PRETENDARD_BOLD
+                fontFamily = PRETENDARD_BOLD,
             )
         }
     }
