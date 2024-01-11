@@ -32,6 +32,7 @@ import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
 import com.skydoves.balloon.compose.rememberBalloonBuilder
 import com.skydoves.balloon.compose.setTextColor
 
@@ -104,15 +105,14 @@ fun HashTag(
         setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_medium)!!)
     }
 
-    TestResultCommonTooltip(
-        toolTipContent = value.tagDescription,
+    Balloon(
+        builder = builder,
         modifier = Modifier
             .padding(4.dp)
             .background(
                 color = Color(android.graphics.Color.parseColor(value.tagRgbColorCode)),
                 shape = RoundedCornerShape(99.dp)
-            ),
-        builder = builder
+            )
     ) {balloonWindow ->
         Box(
             modifier = Modifier.clickable {

@@ -34,6 +34,7 @@ import com.skydoves.balloon.ArrowOrientation
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.compose.Balloon
 import com.skydoves.balloon.compose.rememberBalloonBuilder
 import com.skydoves.balloon.compose.setTextColor
 
@@ -201,9 +202,8 @@ fun ResultDetailRowTitle(
         setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_medium)!!)
     }
 
-    TestResultCommonTooltip(
-        toolTipContent = tooltipContent,
-        builder = builder,
+    Balloon(
+        builder = builder
     ) {balloonWindow ->
         Row(
             horizontalArrangement = Arrangement.Center,
