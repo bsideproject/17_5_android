@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -164,7 +165,7 @@ fun FeedbackPopupHeader(
 fun FeedbackPopupTitle() {
     Text(
         text = "차량 추천에 대해서 만족하시나요?",
-        fontSize = 20.sp,
+        fontSize = with(LocalDensity.current) { 20.dp.toSp() },
         fontFamily = PRETENDARD_BOLD,
         color = Color(0xFF101317),
         modifier = Modifier
@@ -236,7 +237,7 @@ fun FeedbackSelectBtn(
         }
         Text(
             text = btnTxt,
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             fontFamily = PRETENDARD_BOLD,
             color = Color(0xFF3872FF),
             modifier = Modifier.padding(0.dp, 15.dp, 0.dp, 0.dp)
@@ -277,13 +278,13 @@ fun FeedbackInput(
         placeholder = {
             Text(
                 text = "내용을 입력해 주세요. (선택)",
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 fontFamily = PRETENDARD_SEMI_BOLD,
                 color = Color(0xFFB6B6CC)
             )
         },
         textStyle = TextStyle(
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             fontFamily = PRETENDARD_SEMI_BOLD,
             color = Color(0xFF4B4B6B),
         ),
@@ -324,7 +325,7 @@ fun FeedbackPopupNeverShowCheckBox(
         ClickableText(
             text = AnnotatedString("다시보지 않기"),
             style = TextStyle(
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 fontFamily = PRETENDARD_SEMI_BOLD,
                 color = Color(0xFF7A7AA2),
             ),
@@ -357,7 +358,7 @@ fun FeedbackPopupSubmitButton(
         ) {
             Text(
                 text = "전송하기",
-                fontSize = 16.sp,
+                fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                 fontFamily = PRETENDARD_BOLD,
                 color = Color.White
             )

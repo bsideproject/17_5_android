@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,7 +66,7 @@ fun CarDetailHeader(
 
             Text(
                 text = "위시리스트",
-                fontSize = 16.sp,
+                fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                 fontFamily = PRETENDARD_SEMI_BOLD,
                 color = popupBackground
             )

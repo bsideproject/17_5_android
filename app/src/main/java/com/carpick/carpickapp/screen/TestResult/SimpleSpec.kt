@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -69,7 +70,7 @@ fun SimpleSpec(
 fun SimpleSpecTitle() {
     Text(
         text = "간단스펙",
-        fontSize = 18.sp,
+        fontSize = with(LocalDensity.current) { 18.dp.toSp() },
         color = Color.White,
         fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
@@ -121,7 +122,7 @@ fun ShowMoreButton(
         ) {
             Text(
                 text = "더보기",
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color.White,
                fontFamily = PRETENDARD_BOLD
             )
@@ -193,7 +194,7 @@ fun SimpleSpecRowItem(
 
             Text(
                 text = itemData.value,
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color.White,
                 fontFamily = PRETENDARD_BOLD,
                 modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
@@ -236,7 +237,7 @@ fun SimpleSpecRowItemTitle(
         ) {
             Text(
                 text = itemData.title,
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color(0xFFD4D4E1),
                 fontFamily = PRETENDARD_MEDIUM,
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
@@ -259,7 +260,7 @@ fun SimpleSpecRowItemTitle(
             ) {
                 Text(
                     text = itemData.title,
-                    fontSize = 14.sp,
+                    fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                     color = Color(0xFFD4D4E1),
                     fontFamily = PRETENDARD_MEDIUM,
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)

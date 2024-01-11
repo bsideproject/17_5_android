@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.model.RecommendedCar
@@ -46,7 +47,7 @@ fun TestResultBackLayer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(24.dp, 8.dp, 0.dp, 0.dp),
-                fontSize = 18.sp,
+                fontSize = with(LocalDensity.current) { 18.dp.toSp() },
                 color = popupBackground,
                 fontFamily = PRETENDARD_BOLD
             )
@@ -57,7 +58,7 @@ fun TestResultBackLayer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, carNamePaddingTop, 0.dp, 0.dp),
-            fontSize = 18.sp,
+            fontSize = with(LocalDensity.current) { 18.dp.toSp() },
             color = popupBackground,
             fontFamily = PRETENDARD_BOLD
         )
@@ -66,7 +67,7 @@ fun TestResultBackLayer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, 8.dp, 0.dp, 0.dp),
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             color = popupBackground,
             fontFamily = PRETENDARD_REGULAR
         )
@@ -75,7 +76,7 @@ fun TestResultBackLayer(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(24.dp, 0.dp, 0.dp, 8.dp),
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             color = popupBackground,
             fontFamily = PRETENDARD_REGULAR
         )
@@ -167,7 +168,7 @@ fun CarRankListItem(
 
             Text(
                 text = "${idx+1}순위",
-                fontSize = 12.sp,
+                fontSize = with(LocalDensity.current) { 12.dp.toSp() },
                 fontFamily = PRETENDARD_SEMI_BOLD,
                 color = color
             )

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +50,7 @@ fun DetailSpecHeader(
 
             Text(
                 text = "상세스펙",
-                fontSize = 16.sp,
+                fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                 color = Color.White,
                 fontFamily = PRETENDARD_SEMI_BOLD
             )
