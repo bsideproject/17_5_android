@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -51,7 +52,7 @@ fun BasicSpec(
 fun BasicSpecTitle() {
     Text(
         text = "주요특징",
-        fontSize = 18.sp,
+        fontSize = with(LocalDensity.current) { 18.dp.toSp() },
         color = Color.White,
         fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
@@ -128,7 +129,7 @@ fun HashTag(
             ) {
                 Text(
                     text = value.tagName,
-                    fontSize = 14.sp,
+                    fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                     fontFamily = PRETENDARD_MEDIUM,
                     color = Color(0xFF21212F),
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
@@ -143,7 +144,7 @@ fun HashTag(
                 ) {
                     Text(
                         text = "?",
-                        fontSize = 10.sp,
+                        fontSize = with(LocalDensity.current) { 10.dp.toSp() },
                         color = Color.White,
                         fontFamily = PRETENDARD_MEDIUM
                     )

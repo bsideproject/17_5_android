@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -91,7 +92,7 @@ fun ResultDetailOption(
 fun ResultDetailOptionTitle() {
     Text(
         text = "옵션",
-        fontSize = 18.sp,
+        fontSize = with(LocalDensity.current) { 18.dp.toSp() },
         color = Color.White,
         fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
@@ -163,7 +164,7 @@ fun ResultDetailRow(
 
         Text(
             text = itemData.content,
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             color = Color.White,
             fontFamily = PRETENDARD_BOLD,
             modifier = Modifier
@@ -215,7 +216,7 @@ fun ResultDetailRowTitle(
         ) {
             Text(
                 text = itemData.title,
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color(0xFFD4D4E1),
                 fontFamily = PRETENDARD_MEDIUM,
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
@@ -230,7 +231,7 @@ fun ResultDetailRowTitle(
             ) {
                 Text(
                     text = "?",
-                    fontSize = 10.sp,
+                    fontSize = with(LocalDensity.current) { 10.dp.toSp() },
                     color = Color.White,
                     fontFamily = PRETENDARD_MEDIUM
                 )

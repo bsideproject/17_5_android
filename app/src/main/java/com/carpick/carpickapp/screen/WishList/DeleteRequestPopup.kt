@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -120,7 +121,7 @@ fun DeleteRequestPopupBody(
         )
         Text(
             text = "위시리스트에서 추천받은 차량을\n삭제하시겠어요?",
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current) { 16.dp.toSp() },
             color = Color(0xFF101317),
             fontFamily = PRETENDARD_MEDIUM
         )
@@ -168,7 +169,7 @@ fun DeleteRequestPopupCancelBtn(
     ) {
         Text(
             text = "아니요",
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current) { 16.dp.toSp() },
             color = Color(0xFF101317),
             fontFamily = PRETENDARD_BOLD
         )
@@ -192,7 +193,7 @@ fun DeleteRequestPopupConfirmBtn(
     ) {
         Text(
             text = "삭제하기",
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current) { 16.dp.toSp() },
             color = Color.White,
             fontFamily = PRETENDARD_BOLD
         )

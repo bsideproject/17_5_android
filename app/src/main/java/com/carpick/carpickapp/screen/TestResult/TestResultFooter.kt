@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.carpick.carpickapp.screen.ui.theme.PRETENDARD_BOLD
@@ -58,7 +59,7 @@ fun WishListBtn(
     ) {
         Text(
             text = "위시리스트 바로가기",
-            fontSize = 14.sp,
+            fontSize = with(LocalDensity.current) { 14.dp.toSp() },
             color = Color.White,
             fontFamily = PRETENDARD_BOLD
         )

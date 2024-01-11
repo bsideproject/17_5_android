@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,7 +64,7 @@ fun WishListHeader(
 
             Text(
                 text = "위시리스트",
-                fontSize = 16.sp,
+                fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                 color = Color(0xFF21212F),
                 fontFamily = PRETENDARD_SEMI_BOLD
             )

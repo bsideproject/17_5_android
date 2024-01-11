@@ -3,18 +3,23 @@ package com.carpick.carpickapp.screen.TestResult
 import android.content.Context
 import android.graphics.Typeface
 import android.view.Gravity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -25,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -63,7 +70,7 @@ fun SimpleSpec(
 fun SimpleSpecTitle() {
     Text(
         text = "간단스펙",
-        fontSize = 18.sp,
+        fontSize = with(LocalDensity.current) { 18.dp.toSp() },
         color = Color.White,
         fontFamily = PRETENDARD_BOLD,
         modifier = Modifier.padding(24.dp, 0.dp)
@@ -115,7 +122,7 @@ fun ShowMoreButton(
         ) {
             Text(
                 text = "더보기",
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color.White,
                fontFamily = PRETENDARD_BOLD
             )
@@ -123,6 +130,7 @@ fun ShowMoreButton(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SimpleSpecRow(
     context: Context,
@@ -152,10 +160,9 @@ fun SimpleSpecRow(
             .padding(16.dp, topPadding.dp, 16.dp, bottomPadding.dp)
     }
 
-    Row(
+    FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top
     ) {
         for(i in 0 until rowData.size) {
             SimpleSpecRowItem(
@@ -175,7 +182,7 @@ fun SimpleSpecRowItem(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(if (isLastIdx) 1f else .5f)
+            .fillMaxWidth(.5f)
             .padding(0.dp, 16.dp, 0.dp, 16.dp)
     ) {
         Column(
@@ -187,7 +194,7 @@ fun SimpleSpecRowItem(
 
             Text(
                 text = itemData.value,
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color.White,
                 fontFamily = PRETENDARD_BOLD,
                 modifier = Modifier.padding(0.dp, 4.dp, 0.dp, 0.dp)
@@ -230,7 +237,7 @@ fun SimpleSpecRowItemTitle(
         ) {
             Text(
                 text = itemData.title,
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color(0xFFD4D4E1),
                 fontFamily = PRETENDARD_MEDIUM,
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
@@ -243,34 +250,28 @@ fun SimpleSpecRowItemTitle(
             builder = builder,
         ) {balloonWindow ->
             Row(
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable {
-                    balloonWindow.showAlignBottom()
-                }
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .clickable {
+                        balloonWindow.showAlignBottom()
+                    }
             ) {
                 Text(
                     text = itemData.title,
-                    fontSize = 14.sp,
+                    fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                     color = Color(0xFFD4D4E1),
                     fontFamily = PRETENDARD_MEDIUM,
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
 
-                Box(
+                Image(
+                    painter = painterResource(id = R.drawable.ic_tooltip),
+                    contentDescription = "툴팁",
                     modifier = Modifier
-                        .width(15.dp)
-                        .height(15.dp)
-                        .background(Color(0xFF7A7AA2), shape = RoundedCornerShape(99.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "?",
-                        fontSize = 10.sp,
-                        color = Color.White,
-                        fontFamily = PRETENDARD_MEDIUM
-                    )
-                }
+                        .size(15.dp)
+                )
             }
 
         }

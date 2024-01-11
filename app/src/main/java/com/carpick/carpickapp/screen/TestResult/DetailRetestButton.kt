@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +45,7 @@ fun DetailRetestButton(
             )
             Text(
                 text = "다른 차 추천 받기",
-                fontSize = 14.sp,
+                fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                 color = Color.White,
                 fontFamily = PRETENDARD_BOLD
             )

@@ -2,6 +2,7 @@ package com.carpick.carpickapp.screen.WishList
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -75,7 +79,7 @@ fun WishListEmptyBody(
     ) {
         Text(
             text = "앗!",
-            fontSize = 32.sp,
+            fontSize = with(LocalDensity.current) { 32.dp.toSp() },
             color = popupBackground,
             fontFamily = PRETENDARD_BOLD
         )
@@ -83,7 +87,7 @@ fun WishListEmptyBody(
         Text(
             text = "위시리스트가 비어있어요.\n추천 받은 차를 위시리스트에\n담아보세요",
             textAlign = TextAlign.Center,
-            fontSize = 16.sp,
+            fontSize = with(LocalDensity.current) { 16.dp.toSp() },
             color = Color(0xFF9898B7),
             fontFamily = PRETENDARD_MEDIUM,
             lineHeight = 22.4.sp
@@ -107,15 +111,15 @@ fun WishListBodyTestBtn(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(80.dp, 0.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ) {
         Button(
             onClick = {
                 onPressTest()
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .width(200.dp)
                 .height(52.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = popupBackground
@@ -124,9 +128,9 @@ fun WishListBodyTestBtn(
         ) {
             Text(
                 text = "테스트 하러하기",
-                fontSize = 16.sp,
+                fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                 color = Color.White,
-                fontFamily = PRETENDARD_BOLD
+                fontFamily = PRETENDARD_BOLD,
             )
         }
     }
@@ -147,7 +151,7 @@ fun WishListBodyListView(
             item {
                 Text(
                     text = "${wishlistCars.size}개의 저장된 차가 있어요.",
-                    fontSize = 12.sp,
+                    fontSize = with(LocalDensity.current) { 12.dp.toSp() },
                     color = Color(0xFF7A7AA2),
                     fontFamily = PRETENDARD_MEDIUM,
                     modifier = Modifier
@@ -199,7 +203,7 @@ fun WishListCarItem(
             ) {
                 Text(
                     text = itemData.modelName,
-                    fontSize = 16.sp,
+                    fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                     color = popupBackground,
                     fontFamily = PRETENDARD_BOLD
                 )
@@ -222,11 +226,13 @@ fun WishListCarItem(
                 verticalAlignment = Alignment.Bottom
             ) {
                 Column(
-                    modifier = Modifier.width(124.dp)
+                    modifier = Modifier
+                        .wrapContentWidth(Alignment.Start)
+                        .weight(1f)
                 ) {
                     Text(
                         text = "${itemData.detailModelName}\n${itemData.trimName}",
-                        fontSize = 14.sp,
+                        fontSize = with(LocalDensity.current) { 14.dp.toSp() },
                         color = Color(0xFF9898B7),
                         fontFamily = PRETENDARD_MEDIUM,
                         lineHeight = 19.6.sp
@@ -234,7 +240,7 @@ fun WishListCarItem(
 
                     Text(
                         text = dec.format(convertPrice),
-                        fontSize = 16.sp,
+                        fontSize = with(LocalDensity.current) { 16.dp.toSp() },
                         color = Color(0xFF3872FF),
                         fontFamily = PRETENDARD_BOLD,
                         modifier = Modifier.padding(0.dp, 12.dp, 0.dp, 0.dp)
@@ -245,7 +251,7 @@ fun WishListCarItem(
                     imageModel = itemData.carImageUrl,
                     modifier = Modifier
                         .width(118.dp)
-                        .height(60.dp)
+                        .height(60.dp),
                 )
             }
         }
