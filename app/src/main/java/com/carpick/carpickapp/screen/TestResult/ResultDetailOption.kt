@@ -3,6 +3,7 @@ package com.carpick.carpickapp.screen.TestResult
 import android.content.Context
 import android.graphics.Typeface
 import android.view.Gravity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -22,6 +24,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -222,20 +225,12 @@ fun ResultDetailRowTitle(
                 modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
             )
 
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.ic_tooltip),
+                contentDescription = "툴팁",
                 modifier = Modifier
-                    .width(15.dp)
-                    .height(15.dp)
-                    .background(Color(0xFF7A7AA2), shape = RoundedCornerShape(99.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "?",
-                    fontSize = with(LocalDensity.current) { 10.dp.toSp() },
-                    color = Color.White,
-                    fontFamily = PRETENDARD_MEDIUM
-                )
-            }
+                    .size(15.dp)
+            )
         }
     }
 
