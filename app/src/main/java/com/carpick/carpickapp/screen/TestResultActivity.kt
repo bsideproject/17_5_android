@@ -23,6 +23,7 @@ import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +48,7 @@ import com.carpick.carpickapp.screen.TestResult.WishListAddToast
 import com.carpick.carpickapp.screen.activity.MainActivity
 import com.carpick.carpickapp.screen.ui.theme.CarpickAppTheme
 import com.carpick.carpickapp.viewModel.CarPickTestResultViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.Firebase
 import com.google.firebase.dynamiclinks.androidParameters
 import com.google.firebase.dynamiclinks.dynamicLinks
@@ -120,6 +122,11 @@ fun Page(
     val context = LocalContext.current
     val pref = context.getSharedPreferences("TestResult", 0)
     val editor = pref.edit()
+    val systemUiController = rememberSystemUiController()
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(color = Color.White)
+    }
 
     var wishlistIds by remember {
         mutableStateOf(mutableListOf<Int>())
