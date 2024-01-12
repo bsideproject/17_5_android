@@ -229,6 +229,7 @@ fun SimpleSpecRowItemTitle(
         setTextGravity(Gravity.START)
         setTextTypeface(Typeface.MONOSPACE)
         setTextTypeface(ResourcesCompat.getFont(context, R.font.pretendard_medium)!!)
+        setMaxWidth(300)
     }
 
     if(itemData.tooltipContent == null) {
