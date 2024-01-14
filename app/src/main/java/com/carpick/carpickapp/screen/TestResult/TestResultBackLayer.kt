@@ -1,6 +1,7 @@
 package com.carpick.carpickapp.screen.TestResult
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -89,8 +90,9 @@ fun TestResultBackLayer(
             GlideImage(
                 imageModel = selectedCar.carImageUrl,
                 modifier = Modifier
-                    .width(360.dp)
+                    .fillMaxWidth()
                     .height(170.dp)
+                    .padding(24.dp, 0.dp)
             )
         }
         CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem, isTestResultPage)
