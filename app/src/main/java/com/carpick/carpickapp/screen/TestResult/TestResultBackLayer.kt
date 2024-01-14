@@ -90,9 +90,8 @@ fun TestResultBackLayer(
             GlideImage(
                 imageModel = selectedCar.carImageUrl,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(360.dp)
                     .height(170.dp)
-                    .padding(24.dp, 0.dp)
             )
         }
         CarRankListView(recommendCars, selectedIdx, onPressCarRankListItem, isTestResultPage)
