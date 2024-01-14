@@ -2,6 +2,7 @@ package com.carpick.carpickapp.screen.TestResult
 
 import android.content.Context
 import android.view.Gravity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
@@ -122,7 +124,10 @@ fun HashTag(
 
             Row(
                 modifier = Modifier
-                    .background(Color(android.graphics.Color.parseColor(value.tagRgbColorCode)), shape = RoundedCornerShape(99.dp))
+                    .background(
+                        Color(android.graphics.Color.parseColor(value.tagRgbColorCode)),
+                        shape = RoundedCornerShape(99.dp)
+                    )
                     .padding(15.dp, 8.dp),
                 verticalAlignment = Alignment.CenterVertically
 
@@ -135,20 +140,13 @@ fun HashTag(
                     modifier = Modifier.padding(0.dp, 0.dp, 2.dp, 0.dp)
                 )
 
-                Box(
+                Image(
+                    painter = painterResource(id = R.drawable.ic_tag_tooltip),
+                    contentDescription = "툴팁",
                     modifier = Modifier
                         .width(15.dp)
                         .height(15.dp)
-                        .background(popupBackground, shape = RoundedCornerShape(99.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "?",
-                        fontSize = with(LocalDensity.current) { 10.dp.toSp() },
-                        color = Color.White,
-                        fontFamily = PRETENDARD_MEDIUM
-                    )
-                }
+                )
             }
         }
     }
