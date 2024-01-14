@@ -163,7 +163,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     val progressBarValue = nowPage * 100 / totalPage
                     roundProgressBar.progress = progressBarValue
 
-                    tvNowQnaPos.text = "${nowPage + 1}"
+                    tvNowQnaPos.text = "${nowPage + 1} "
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     apiResponse?.let { apiResponse ->
