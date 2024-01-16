@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.api
 
+import android.os.Build
 import com.carpick.carpickapp.model.GetNoticeModel
 import com.carpick.carpickapp.model.QnAListResponseModel
 import com.carpick.carpickapp.model.RecommendCars
@@ -10,6 +11,7 @@ import com.carpick.carpickapp.model.SendFeedbackResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -28,6 +30,7 @@ interface ApiService {
     @POST("api/v1/feedback")
     @Headers("content-type: application/json")
     suspend fun sendFeedback(
+        @Header("user-agent") model: String,
         @Body feedback: SendFeedbackBody
     ): SendFeedbackResponse
 
@@ -39,4 +42,8 @@ interface ApiService {
     @GET("api/v1/notices/")
     suspend fun getNotice(
     ) : GetNoticeModel
+}
+
+private fun getModel() : String {
+    return Build.MODEL
 }

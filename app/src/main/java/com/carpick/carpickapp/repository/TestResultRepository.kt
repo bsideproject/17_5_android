@@ -1,5 +1,6 @@
 package com.carpick.carpickapp.repository
 
+import android.os.Build
 import com.carpick.carpickapp.api.ApiService
 import com.carpick.carpickapp.db.CarPickDao
 import com.carpick.carpickapp.model.SendFeedbackBody
@@ -27,7 +28,8 @@ class TestResultRepository @Inject constructor(
 
     fun sendFeedback(feedbackBody: SendFeedbackBody): Flow<SendFeedbackResponse> {
         return flow {
-            val response = apiService.sendFeedback(feedbackBody)
+            val model = Build.MODEL
+            val response = apiService.sendFeedback(model, feedbackBody)
             emit(response)
         }
     }
