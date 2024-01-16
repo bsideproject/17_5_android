@@ -167,6 +167,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
                     apiResponse?.let { apiResponse ->
+                        tvQnaTitle.text = apiResponse[nowPage].questionName
                         answerLessAdapter?.submitList(apiResponse[nowPage].choices)
                     }
                 } else {
@@ -191,6 +192,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                         roundProgressBar.progress = progressBarValue
 
                         answerLessAdapter?.setUiState(answerList, nowPage)
+                        tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
                         answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                     }
                 }
@@ -205,6 +207,7 @@ class CarPickDetailQnaFragment : BaseFragment<FragmentCarpickDetailQnaBinding>()
                     roundProgressBar.progress = progressBarValue
 
                     answerLessAdapter?.setUiState(answerList, nowPage)
+                    tvQnaTitle.text = apiResponse?.get(nowPage)?.questionName
                     answerLessAdapter?.submitList(apiResponse?.get(nowPage)?.choices)
                 } else {
                     moveCarPickBudgetFragment()
