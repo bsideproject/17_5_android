@@ -130,7 +130,8 @@ fun FeedbackPopup(
                 FeedbackPopupSubmitButton(
                     onPressSubmit = {
                         onPressSubmit()
-                    }
+                    },
+                    selectedValue
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -338,7 +339,8 @@ fun FeedbackPopupNeverShowCheckBox(
 
 @Composable
 fun FeedbackPopupSubmitButton(
-    onPressSubmit: () -> Unit
+    onPressSubmit: () -> Unit,
+    selectedValue: String
 ) {
     Box(
         modifier = Modifier
@@ -352,6 +354,7 @@ fun FeedbackPopupSubmitButton(
                 .height(44.dp)
                 .background(Color(0xFF3872FF), shape = RoundedCornerShape(33.dp))
                 .clickable {
+                    if(selectedValue == "") return@clickable
                     onPressSubmit()
                 },
             contentAlignment = Alignment.Center
