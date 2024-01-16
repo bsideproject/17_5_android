@@ -20,7 +20,7 @@
         android:text="@string/car_pick_recommend"
         android:textSize="14dp"
         android:textColor="@color/color_3872ff"
-        android:fontFamily="@font/pretendard_semibold"
+        android:fontFamily="@font/font_pretendard_semi_bold"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingStart="13dp"
