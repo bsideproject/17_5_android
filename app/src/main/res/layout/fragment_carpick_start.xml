@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/car_pick_recommend_title"
-        android:fontFamily="@font/pretendard_bold"
+        android:fontFamily="@font/font_pretendard_bold"
         android:textSize="32dp"
         android:textColor="@color/color_21212f"
         android:gravity="center"

@@ -99,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:fontFamily="@font/pretendard_bold"
+                android:fontFamily="@font/font_pretendard_bold"
                 android:text="가능한 예산은 얼마인가요?"
                 android:textColor="@color/color_21212f"
                 android:textSize="24dp"
