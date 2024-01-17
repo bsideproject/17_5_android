@@ -44,7 +44,7 @@ class CarPickBudgetQnaFragment : BaseFragment<FragmentCarpickBudgetQnaBinding>()
 
             answerAdapter = AnswerAdapter(answerViewModel.apiResponse[nowPage].choices)
             rvAnswer.adapter = answerAdapter
-            roundProgressBar.progress = nowPage * 100 / totalPage
+            roundProgressBar.progress = (nowPage+1) * 100 / totalPage
         }
 
         answerAdapter?.submitList(answerViewModel.apiResponse[nowPage].choices)

@@ -20,11 +20,11 @@
 
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">10sp</item>
-        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="fontFamily">@font/font_pretendard_bold</item>
     </style>
 
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">10sp</item>
-        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="fontFamily">@font/font_pretendard_bold</item>
     </style>
 </resources>

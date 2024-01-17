@@ -21,12 +21,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_wait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/pretendard_medium"
+        android:fontFamily="@font/font_pretendard_medium"
         android:text="잠시만 기다려주세요."
         android:textColor="@color/color_36364d"
         android:textSize="18dp"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/pretendard_extrabold"
+        android:fontFamily="@font/font_pretendard_bold"
         android:text="차량 추천중입니다!"
         android:textColor="@color/color_21212f"
         android:textSize="32dp"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/font_pretendard_medium"
             android:text="나이/성별 분석중"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/font_pretendard_medium"
             android:text="예산 분석 중"
             android:textSize="16dp"
             app:layout_constraintStart_toEndOf="@id/second_img"
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/font_pretendard_medium"
             android:text="개별 답변 분석 중"
             android:textSize="16dp"
 

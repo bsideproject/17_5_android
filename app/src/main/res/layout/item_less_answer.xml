@@ -28,7 +28,7 @@
         tools:text="시내주행"
         android:textSize="18dp"
         android:textColor="@color/color_3872ff"
-        android:fontFamily="@font/pretendard_bold"
+        android:fontFamily="@font/font_pretendard_bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
