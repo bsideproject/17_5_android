@@ -72,14 +72,12 @@ class CarDetailActivity : ComponentActivity() {
                         startActivity(intent)
                     },
                     shareResultByLink = {link ->
-                        val sendIntent = Intent()
-                        sendIntent.action = Intent.ACTION_SEND
-                        sendIntent.putExtra(
-                            Intent.EXTRA_TEXT,
-                            "https://carpick.page.link/?link=$link"
-                        )
-                        sendIntent.type = "text/plain"
-                        startActivity(sendIntent)
+                        val sendData = "https://carpick.page.link/?link=$link"
+                        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, sendData)
+                        }
+                        startActivity(Intent.createChooser(sendIntent, sendData))
                     }
                 )
             }
