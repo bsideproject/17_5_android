@@ -70,16 +70,20 @@ class CarPickTestResultViewModel @Inject constructor(
                 RowDataTypes("가격", "${priceDec.format(selectedCar.price/10000)}", specTooltips["가격"]),
                 RowDataTypes("차종", selectedCar.carBodyTypeName, specTooltips["차종"]),
                 RowDataTypes("연료", fuelTypeName[selectedCar.fuelTypeName] ?: "", specTooltips["연료"]),
-
             )
 
             if(selectedCar.displacement != null) {
                 rowTotalDatas.add(RowDataTypes("배기량", "${displacementDec.format(selectedCar.displacement)}", specTooltips["배기량"]))
             }
-
-            rowTotalDatas.add(RowDataTypes("복합연비", "${selectedCar.combinedFuelEconomy}km/l", specTooltips["복합연비"]))
-            rowTotalDatas.add(RowDataTypes("도심연비", "${selectedCar.cityFuelEconomy}km/l", specTooltips["도심연비"]))
-            rowTotalDatas.add(RowDataTypes("고속연비", "${selectedCar.highwayFuelEconomy}km/l", specTooltips["고속연비"]))
+            if(selectedCar.combinedFuelEconomy != null) {
+                rowTotalDatas.add(RowDataTypes("복합연비", "${selectedCar.combinedFuelEconomy}km/l", specTooltips["복합연비"]))
+            }
+            if(selectedCar.cityFuelEconomy != null) {
+                rowTotalDatas.add(RowDataTypes("도심연비", "${selectedCar.cityFuelEconomy}km/l", specTooltips["도심연비"]))
+            }
+            if(selectedCar.highwayFuelEconomy != null) {
+                rowTotalDatas.add(RowDataTypes("고속연비", "${selectedCar.highwayFuelEconomy}km/l", specTooltips["고속연비"]))
+            }
             rowTotalDatas.add(RowDataTypes("전장", "${lengthDec.format(selectedCar.length)}", specTooltips["전장"]))
             rowTotalDatas.add(RowDataTypes("전폭", "${lengthDec.format(selectedCar.width)}", specTooltips["전폭"]))
             rowTotalDatas.add(RowDataTypes("전고", "${lengthDec.format(selectedCar.height)}", specTooltips["전고"]))

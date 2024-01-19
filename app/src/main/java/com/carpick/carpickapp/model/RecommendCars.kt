@@ -21,9 +21,9 @@ data class RecommendedCar(
     @SerializedName("car_image_url")
     val carImageUrl: String,
     @SerializedName("city_fuel_economy")
-    val cityFuelEconomy: Double,
+    val cityFuelEconomy: Double?,
     @SerializedName("combined_fuel_economy")
-    val combinedFuelEconomy: Double,
+    val combinedFuelEconomy: Double?,
     @SerializedName("convenience_option_description")
     val convenienceOptionDescription: String,
     @SerializedName("detail_model_name")
@@ -45,7 +45,7 @@ data class RecommendedCar(
     val fuelTypeName: String,
     val height: Int,
     @SerializedName("highway_fuel_economy")
-    val highwayFuelEconomy: Double,
+    val highwayFuelEconomy: Double?,
     val id: Int,
     @SerializedName("internal_option_description")
     val internalOptionDescription: String,
